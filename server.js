@@ -30,10 +30,13 @@ app.use(cors())
 // connect mongodb server
 
 mongoose
-  .connect(process.env.MONGODB_CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://alizainbhatti5:YeZZGPRHubAY5aax@nbaanalysiscluster.ux7glkz.mongodb.net/test",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("connection successful"))
   .catch((err) => console.error(err))
 
