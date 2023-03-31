@@ -29,16 +29,16 @@ app.use(cors())
 
 // connect mongodb server
 
-mongoose
-  .connect(
-    "mongodb+srv://alizainbhatti5:YeZZGPRHubAY5aax@nbaanalysiscluster.ux7glkz.mongodb.net/test",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
-  .then(() => console.log("connection successful"))
-  .catch((err) => console.error(err))
+// mongoose
+//   .connect(
+//     "mongodb+srv://alizainbhatti5:YeZZGPRHubAY5aax@nbaanalysiscluster.ux7glkz.mongodb.net/test",
+//     {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     }
+//   )
+//   .then(() => console.log("connection successful"))
+//   .catch((err) => console.error(err))
 
 app.get("/", (req, res) => {
   https.get(
