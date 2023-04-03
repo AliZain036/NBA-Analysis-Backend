@@ -11,6 +11,21 @@ const stripe = Stripe(
   "sk_test_51Mg4d0A5j1K1pUTFhowYmQMWTVOMvzelqTl3GQ3U2aVNm7qj9Q8E1uncv7jtDNF3Qep4EMWKNh7OdcL9CCdNALJA00gu74VIgF"
 )
 
+// app.use(cors())
+app.use(
+  cors({
+    origin: "https://nba-analysis-swart.vercel.app",
+  })
+)
+
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://nba-analysis-swart.vercel.app"
+  )
+  next()
+})
+
 const Schedule = require("./models/commonModels")
 
 // const commonRoutes = require('./routes/commonRoutes')
@@ -24,7 +39,6 @@ require("dotenv").config()
 // app.use(bodyParser.json())
 app.use(express.json())
 
-app.use(cors())
 // app.use('/common', commonRoutes)
 
 // connect mongodb server
