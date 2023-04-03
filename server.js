@@ -6,6 +6,7 @@ const https = require("https")
 const path = require("path")
 const mongoose = require("mongoose")
 const Stripe = require("stripe")
+const { createProxyMiddleware } = require("http-proxy-middleware")
 
 const stripe = Stripe(
   "sk_test_51Mg4d0A5j1K1pUTFhowYmQMWTVOMvzelqTl3GQ3U2aVNm7qj9Q8E1uncv7jtDNF3Qep4EMWKNh7OdcL9CCdNALJA00gu74VIgF"
@@ -25,6 +26,15 @@ app.use((req, res, next) => {
   )
   next()
 })
+
+app.use(
+  "*",
+  createProxyMiddleware({
+    target: "http://13.53.171.179:8080",
+    changeOrigin: true,
+    secure: true,
+  })
+)
 
 const Schedule = require("./models/commonModels")
 
