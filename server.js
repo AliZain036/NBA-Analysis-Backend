@@ -14,6 +14,12 @@ const { createProxyMiddleware } = require("http-proxy-middleware")
 const csvtojson = require("csvtojson")
 const request = require("request")
 const unzipper = require("unzipper")
+
+app.use(cors({ origin: "*" }))
+require("dotenv").config()
+
+app.use(express.json())
+
 const { getLatestFileName } = require("./util")
 const {
   seasonMedianByPlayer,
@@ -28,10 +34,6 @@ let latestFile = null
 let latestYear = 0
 
 const fileName = getLatestFileName("Stadium", "./sportsDataCSV")
-console.log(fileName, "fileName")
-
-try {
-} catch (error) {}
 
 mongoose
   .connect(
@@ -220,11 +222,6 @@ function getDataFromCsv() {
   })
 }
 
-app.use(cors())
-
-require("dotenv").config()
-
-app.use(express.json())
 
 app.get("/convert-csv-to-json", (request, response) => {
   try {
