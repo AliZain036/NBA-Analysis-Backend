@@ -302,11 +302,6 @@ app.get("/schedules/:season", async (req, res, next) => {
         data += chunk
       })
       response.on("end", async () => {
-        // console.log(data[0])
-        // Schedule.create(data[0][0])
-        //   .then((res) => console.log("successfull"))
-        //   .catch((err) => console.error(err.name))
-        // console.log({ response })
         res.send(data)
         next()
       })

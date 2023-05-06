@@ -140,8 +140,11 @@ const playerSeasonData = async (req, res) => {
       Games: "1",
       SeasonType: { $in: ["1", "3"] },
     })
-    console.log("Data fetched from db")
-    res.status(200).json({ success: true, data: playerSeasonData })
+      .lean()
+      .exec()
+      .then((docs) => {
+        res.status(200).json({ success: true, data: docs })
+      })
   } catch (error) {
     console.error(error)
     res.status(500).json({ success: false, message: error.message })
