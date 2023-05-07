@@ -1,11 +1,19 @@
 const https = require("https")
 const csvToJson = require("csvtojson")
-const playerGameModal = require("../models/playerGameModal")
 const PlayerSeasonModal = require("../models/PlayerSeasonModal")
+const {
+  PlayerGame,
+  SeasonGeoMean,
+  SeasonMinimum,
+  SeasonMaximum,
+  SeasonRange,
+  SeasonMode,
+  SeasonMedian,
+} = require("../models/playerGameModal")
 
 const seasonMedianByPlayer = async (req, res) => {
   try {
-    const data = await playerGameModal.find({
+    const data = await PlayerGame.find({
       Games: "1",
       SeasonType: { $in: ["1", "3"] },
     })
@@ -171,7 +179,7 @@ function groupPlayersByPlayerID(arrays) {
 
 const seasonMinByPlayer = async (req, res) => {
   try {
-    const data = await playerGameModal.find({
+    const data = await PlayerGame.find({
       Games: "1",
     })
     res.status(200).json({ success: true, data })
@@ -180,4 +188,67 @@ const seasonMinByPlayer = async (req, res) => {
   }
 }
 
-module.exports = { seasonMedianByPlayer, playerSeasonData }
+const getSeasonGeoMean = async (req, res) => {
+  try {
+    const docs = await SeasonGeoMean.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonMin = async (req, res) => {
+  try {
+    const docs = await SeasonMinimum.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonMax = async (req, res) => {
+  try {
+    const docs = await SeasonMaximum.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonRange = async (req, res) => {
+  try {
+    const docs = await SeasonRange.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonMode = async (req, res) => {
+  try {
+    const docs = await SeasonMode.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonMedian = async (req, res) => {
+  try {
+    const docs = await SeasonMedian.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+module.exports = {
+  seasonMedianByPlayer,
+  playerSeasonData,
+  getSeasonMin,
+  getSeasonMax,
+  getSeasonMedian,
+  getSeasonGeoMean,
+  getSeasonRange,
+  getSeasonMode
+}

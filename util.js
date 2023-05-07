@@ -27,4 +27,8 @@ const getLatestFileName = (fileStartsWith = "", directoryPath) => {
   return fileName
 }
 
+function calculateMedian(data) {
+  
+}
+
 module.exports = { getLatestFileName }
