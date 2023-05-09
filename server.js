@@ -37,8 +37,12 @@ const {
   SeasonRange,
   SeasonMode,
   SeasonGeoMean,
+  SeasonVersusAverage,
+  SeasonVersusMedian,
+  SeasonMedian,
 } = require("./models/playerGameModal")
 const seasonRouter = require("./routes/seasonRoutes")
+const player = require("./models/player")
 
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING, {
@@ -48,14 +52,22 @@ mongoose
   .then((res) => {
     try {
       console.log("Connection successfully established")
-      // PlayerGame.find({ Games: 1, SeasonType: { $in: [1, 3] } })
-      //   .lean()
-      //   .exec()
-      //   .then((docs) => {
-      //     console.log("Fetched Data")
-      //     const combinedGames = mergeSamePlayerObjects(docs)
-      //     calculateGeoMean(combinedGames)
+      // convertToJSONandSavePlayerGameData()
+      // downloadFile(fantasyDataCSVFileUrl, zipFilePath)
+      //   .then(() => {
+      //     return extractFile(zipFilePath, extractDir)
       //   })
+      //   .then(() => {
+      //     console.log("File extracted")
+      //     convertToJSONandSavePlayerSeasonData()
+      //     convertToJSONandSavePlayerGameData()
+      //     convertToJSONandSavePlayerData()
+      //   })
+      //   .catch((err) => {
+      //     console.error(err)
+      //   })
+      // calculateVersusOpponent()
+      // convertToJSONandSavePlayerGameData()
     } catch (error) {
       console.error(error.message, " error")
     }
@@ -95,10 +107,9 @@ async function convertToJSONandSavePlayerSeasonData() {
     csvtojson()
       .fromFile(PlayerSeasonFilePath)
       .then((playerSeasonData) => {
-        console.log("Success converting to json")
         PlayerSeasonModal.deleteMany({}).then((_) => {
           PlayerSeasonModal.insertMany(playerSeasonData).then((_) =>
-            console.log(_)
+            console.log("Player season data inserted successfully")
           )
         })
       })
@@ -107,7 +118,25 @@ async function convertToJSONandSavePlayerSeasonData() {
   }
 }
 
-const calculateMedian = (playersGames) => {
+async function convertToJSONandSavePlayerData() {
+  try {
+    const PlayerFilePath = "./sportsDataCSV/Player.2023.csv"
+    csvtojson()
+      .fromFile(PlayerFilePath)
+      .then((playersData) => {
+        console.log("Success converting to json")
+        player.deleteMany({}).then((_) => {
+          player
+            .insertMany(playersData)
+            .then((_) => console.log("Players inserted successfully"))
+        })
+      })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const calculateMedian = async (playersGames = [], collectionName = "") => {
   const tempArrForMedian = []
   const minStatsValue = []
   const maxStatsValue = []
@@ -248,17 +277,33 @@ const calculateMedian = (playersGames) => {
     })
   })
 
-  try {
-    SeasonMinimum.deleteMany().then((_) =>
-      SeasonMinimum.insertMany(minStatsValue)
-    )
-    SeasonMaximum.deleteMany().then((_) =>
-      SeasonMaximum.insertMany(maxStatsValue)
-    )
-    SeasonRange.deleteMany().then((_) => SeasonRange.insertMany(rangeStatsArr))
-    console.log("Succeess writing the documents")
-  } catch (error) {
-    console.error(error)
+  if (collectionName === "Season Versus") {
+    try {
+      const deleteSeasonVersusMedianRes = await SeasonVersusMedian.deleteMany()
+      console.log(deleteSeasonVersusMedianRes)
+      const res = await SeasonVersusMedian.insertMany(tempArrForMedian)
+      console.log(res)
+    } catch (error) {
+      console.error(error)
+    }
+  } else {
+    try {
+      SeasonMinimum.deleteMany().then((_) =>
+        SeasonMinimum.insertMany(minStatsValue)
+      )
+      SeasonMaximum.deleteMany().then((_) =>
+        SeasonMaximum.insertMany(maxStatsValue)
+      )
+      SeasonRange.deleteMany().then((_) =>
+        SeasonRange.insertMany(rangeStatsArr)
+      )
+      SeasonMedian.deleteMany().then((_) =>
+        SeasonMedian.insertMany(tempArrForMedian)
+      )
+      console.log("Succeess writing the documents")
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 
@@ -411,7 +456,6 @@ function calculateMode(playersGames) {
   SeasonMode.deleteMany().then((_) => {
     SeasonMode.insertMany(temp).then((_) => console.log("Saved season mode"))
   })
-
 }
 
 const calculateGeoMean = (playersData = []) => {
@@ -469,7 +513,9 @@ const calculateGeoMean = (playersData = []) => {
     })
   })
   SeasonGeoMean.deleteMany().then((_) => {
-    SeasonGeoMean.insertMany(playersGeoMeanData).then((_) => console.log("Season geomean saved"))
+    SeasonGeoMean.insertMany(playersGeoMeanData).then((_) =>
+      console.log("Season geomean saved")
+    )
   })
 }
 
@@ -479,9 +525,10 @@ async function convertToJSONandSavePlayerGameData() {
     csvtojson()
       .fromFile(PlayerGameFilePath)
       .then((docs) => {
-        console.log("Player game data successfully converted to json")
+        console.log("Data converteed to json")
         PlayerGame.deleteMany({}).then((_) => {
           PlayerGame.insertMany(docs).then((_) => {
+            console.log("Player game data saved successfully")
             PlayerGame.find({ Games: 1, SeasonType: { $in: [1, 3] } })
               .lean()
               .exec()
@@ -491,7 +538,6 @@ async function convertToJSONandSavePlayerGameData() {
                 calculateMode(combinedGames)
                 calculateGeoMean(combinedGames)
               })
-            console.log("Player game data successfully saved to db")
           })
         })
       })
@@ -499,35 +545,20 @@ async function convertToJSONandSavePlayerGameData() {
     console.error(error)
   }
 }
-// fs.readdir(extractDir, function (err, files) {
-//   if (err) {
-//     console.log("Error getting directory information:", err)
-//   } else {
-//     files.forEach(function (file) {
-//       if (file.startsWith("PlayerGame.") && file.endsWith(".csv")) {
-//         const year = parseInt(file.substring(11, 15))
-//         if (year > latestYear) {
-//           latestYear = year
-//           latestFile = path.join(extractDir, file)
-//         }
-//       }
-//     })
-
-//     console.log("Latest file:", latestFile)
-//   }
-// })
 
 nodeCron
   .schedule("0 0 * * *", () => {
     try {
-      convertToJSONandSavePlayerSeasonData()
-      convertToJSONandSavePlayerGameData()
       downloadFile(fantasyDataCSVFileUrl, zipFilePath)
         .then(() => {
           return extractFile(zipFilePath, extractDir)
         })
         .then(() => {
           console.log("File extracted")
+          convertToJSONandSavePlayerSeasonData()
+          convertToJSONandSavePlayerGameData()
+          convertToJSONandSavePlayerData()
+          calculateSeasonVersusCalculations()
         })
         .catch((err) => {
           console.error(err)
@@ -559,16 +590,119 @@ const file = fs.createWriteStream("./sportsDataCSV/Player.2023.csv")
 
 const downloadFile = (url, dest) => {
   return new Promise((resolve, reject) => {
+    // function deleteFilesInDirectory(directoryPath) {
+    console.log("downloaded zip file")
+    fs.readdir("./sportsDataCSV", (err, files) => {
+      if (err) {
+        console.error("Error reading directory:", err)
+        return
+      }
+
+      files.forEach((file) => {
+        const filePath = path.join("./sportsDataCSV", file)
+
+        fs.unlink(filePath, (error) => {
+          if (error) {
+            console.error("Error deleting file:", filePath, error)
+          } else {
+          }
+        })
+      })
+    })
+    // }
     const fileStream = fs.createWriteStream(dest)
     request(url)
       .pipe(fileStream)
       .on("finish", () => {
+        console.log("file downloaded successfully")
         resolve()
       })
       .on("error", (err) => {
         reject(err)
       })
   })
+}
+
+const calculateSeasonVersusCalculations = async () => {
+  try {
+    const month = new Date().getMonth() + 1
+    const date = new Date().getDate()
+    const year = new Date().getFullYear()
+    const dayFilterString = `${month + "/" + date + "/" + year} 12:00:00 AM`
+    console.log(dayFilterString)
+    PlayerGame.find({ Day: dayFilterString })
+      .lean()
+      .exec()
+      .then((result) => {
+        if (result.length > 0) {
+          let teamsWiithOpponent = []
+          let teams = []
+          result.forEach((team) => {
+            if (!teamsWiithOpponent.find((item) => item.team === team.Team)) {
+              teamsWiithOpponent.push({
+                team: team.Team,
+                opponent: team.Opponent,
+              })
+              teams.push(team.Team)
+            }
+          })
+          try {
+            player
+              .find({ Team: { $in: [...teams] } })
+              .lean()
+              .exec()
+              .then((_) => {
+                console.log({ _ })
+                let teamsWithPlayers = []
+                teams.forEach((team) => {
+                  teamsWithPlayers.push({
+                    team: team,
+                    players: _.filter((player) => player.Team === team),
+                  })
+                })
+                console.log({ teamsWithPlayers })
+                let playerGames = []
+                teamsWiithOpponent.forEach((item, index) => {
+                  let team = teamsWithPlayers.find(
+                    (teamWPlayers) => teamWPlayers.team === item.team
+                  )
+                  team.players.forEach(async (pl, ind) => {
+                    try {
+                      await SeasonVersusAverage.deleteMany()
+                      const games = await PlayerGame.find({
+                        PlayerID: pl.PlayerID,
+                        Opponent: item.opponent,
+                      })
+                        .lean()
+                        .exec()
+                      playerGames.push(games)
+                      if (
+                        index + 1 === teamsWiithOpponent.length &&
+                        team.players.length === ind + 1
+                      ) {
+                        console.log({ playerGames })
+                        let arr = playerGames.flat()
+                        const samePlayerObjects = mergeSamePlayerObjects(arr)
+                        console.log({ arr, samePlayerObjects })
+                        calculateMedian(samePlayerObjects, "Season Versus")
+                      }
+                    } catch (error) {
+                      console.error(error)
+                    }
+                    // })
+                  })
+                })
+              })
+          } catch (error) {
+            console.error(error)
+          }
+        } else {
+          console.log("No data found")
+        }
+      })
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 // app.get("/seasonMedianByPlayer", async (req, res) => {
