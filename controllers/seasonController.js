@@ -1,6 +1,15 @@
 const https = require("https")
 const csvToJson = require("csvtojson")
-const PlayerSeasonModal = require("../models/PlayerSeasonModal")
+const {
+  PlayerSeason,
+  PlayerSeasonAverage,
+  PlayerSeasonMinimum,
+  PlayerSeasonMaximum,
+  PlayerSeasonRange,
+  PlayerSeasonMode,
+  PlayerSeasonMedian,
+  PlayerSeasonGeoMean,
+} = require("../models/PlayerSeasonModal")
 const {
   PlayerGame,
   SeasonGeoMean,
@@ -9,6 +18,13 @@ const {
   SeasonRange,
   SeasonMode,
   SeasonMedian,
+  SeasonVersusAverage,
+  SeasonVersusMinimum,
+  SeasonVersusMaximum,
+  SeasonVersusRange,
+  SeasonVersusMode,
+  SeasonVersusMedian,
+  SeasonVersusGeoMean,
 } = require("../models/playerGameModal")
 
 const seasonMedianByPlayer = async (req, res) => {
@@ -144,7 +160,7 @@ const seasonMedianByPlayer = async (req, res) => {
 
 const playerSeasonData = async (req, res) => {
   try {
-    const playerSeasonData = await PlayerSeasonModal.find({
+    const playerSeasonData = await PlayerSeason.find({
       Games: "1",
       SeasonType: { $in: ["1", "3"] },
     })
@@ -190,7 +206,33 @@ const seasonMinByPlayer = async (req, res) => {
 
 const getSeasonGeoMean = async (req, res) => {
   try {
-    const docs = await SeasonGeoMean.find({})
+    const docs = await PlayerSeasonGeoMean.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonVersusGeoMean = async (req, res) => {
+  try {
+    const docs = await SeasonVersusGeoMean.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonAverage = async (req, res) => {
+  try {
+    const docs = await PlayerSeasonAverage.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonVersusAverage = async (req, res) => {
+  try {
+    const docs = await SeasonVersusAverage.find({})
     res.status(200).json({ success: true, docs })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
@@ -199,7 +241,15 @@ const getSeasonGeoMean = async (req, res) => {
 
 const getSeasonMin = async (req, res) => {
   try {
-    const docs = await SeasonMinimum.find({})
+    const docs = await PlayerSeasonMinimum.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonVersusMin = async (req, res) => {
+  try {
+    const docs = await SeasonVersusMinimum.find({})
     res.status(200).json({ success: true, docs })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
@@ -208,7 +258,15 @@ const getSeasonMin = async (req, res) => {
 
 const getSeasonMax = async (req, res) => {
   try {
-    const docs = await SeasonMaximum.find({})
+    const docs = await PlayerSeasonMaximum.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonVersusMax = async (req, res) => {
+  try {
+    const docs = await SeasonVersusMaximum.find({})
     res.status(200).json({ success: true, docs })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
@@ -217,7 +275,15 @@ const getSeasonMax = async (req, res) => {
 
 const getSeasonRange = async (req, res) => {
   try {
-    const docs = await SeasonRange.find({})
+    const docs = await PlayerSeasonRange.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonVersusRange = async (req, res) => {
+  try {
+    const docs = await SeasonVersusRange.find({})
     res.status(200).json({ success: true, docs })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
@@ -226,7 +292,15 @@ const getSeasonRange = async (req, res) => {
 
 const getSeasonMode = async (req, res) => {
   try {
-    const docs = await SeasonMode.find({})
+    const docs = await PlayerSeasonMode.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonVersusMode = async (req, res) => {
+  try {
+    const docs = await SeasonVersusMode.find({})
     res.status(200).json({ success: true, docs })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
@@ -235,7 +309,15 @@ const getSeasonMode = async (req, res) => {
 
 const getSeasonMedian = async (req, res) => {
   try {
-    const docs = await SeasonMedian.find({})
+    const docs = await PlayerSeasonMedian.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonVersusMedian = async (req, res) => {
+  try {
+    const docs = await SeasonVersusMedian.find({})
     res.status(200).json({ success: true, docs })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
@@ -250,5 +332,14 @@ module.exports = {
   getSeasonMedian,
   getSeasonGeoMean,
   getSeasonRange,
-  getSeasonMode
+  getSeasonMode,
+  getSeasonAverage,
+  getSeasonVersusAverage,
+  getSeasonVersusMin,
+  getSeasonVersusMax,
+  getSeasonVersusRange,
+  getSeasonVersusMode,
+  getSeasonVersusMedian,
+  getSeasonVersusMedian,
+  getSeasonVersusGeoMean
 }

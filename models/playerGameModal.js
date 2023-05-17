@@ -70,6 +70,20 @@ const SeasonVersusMedian = mongoose.model(
   "SeasonVersusMedian",
   PlayerGameSchema
 )
+const SeasonVersusMode = mongoose.model("SeasonVersusMode", PlayerGameSchema)
+const SeasonVersusGeoMean = mongoose.model(
+  "SeasonVersusGeoMean",
+  PlayerGameSchema
+)
+const SeasonVersusMinimum = mongoose.model(
+  "SeasonVersusMinimum",
+  PlayerGameSchema
+)
+const SeasonVersusMaximum = mongoose.model(
+  "SeasonVersusMaximum",
+  PlayerGameSchema
+)
+const SeasonVersusRange = mongoose.model("SeasonVersusRange", PlayerGameSchema)
 
 module.exports = {
   PlayerGame,
@@ -80,5 +94,10 @@ module.exports = {
   SeasonMedian,
   SeasonGeoMean,
   SeasonVersusAverage,
-  SeasonVersusMedian
+  SeasonVersusMedian,
+  SeasonVersusMode,
+  SeasonVersusMinimum,
+  SeasonVersusMaximum,
+  SeasonVersusRange,
+  SeasonVersusGeoMean,
 }

@@ -23,7 +23,4 @@ const Player = new mongoose.Schema({
   DraftKingsName: String,
 })
 
-Player.index({ Team: 1 })
-Player.index({ Opponent: 1 })
-
 module.exports = mongoose.model("Player", Player)

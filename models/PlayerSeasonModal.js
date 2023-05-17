@@ -44,7 +44,13 @@ const PlayerSeason = new mongoose.Schema({
   TripleDoubles: { type: Number, required: true },
 })
 
-PlayerSeason.index({ SeasonType: 1 })
-PlayerSeason.index({ Games: 1 })
-
-module.exports = mongoose.model("PlayerSeason", PlayerSeason)
+module.exports = {
+  PlayerSeason: mongoose.model("PlayerSeason", PlayerSeason),
+  PlayerSeasonAverage: mongoose.model("PlayerSeasonAverage", PlayerSeason),
+  PlayerSeasonMode: mongoose.model("PlayerSeasonMode", PlayerSeason),
+  PlayerSeasonMedian: mongoose.model("PlayerSeasonMedian", PlayerSeason),
+  PlayerSeasonGeoMean: mongoose.model("PlayerSeasonGeoMean", PlayerSeason),
+  PlayerSeasonMinimum: mongoose.model("PlayerSeasonMinimum", PlayerSeason),
+  PlayerSeasonMaximum: mongoose.model("PlayerSeasonMaximum", PlayerSeason),
+  PlayerSeasonRange: mongoose.model("PlayerSeasonRange", PlayerSeason),
+}

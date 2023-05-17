@@ -15,6 +15,8 @@ const { createProxyMiddleware } = require("http-proxy-middleware")
 const csvtojson = require("csvtojson")
 const request = require("request")
 const unzipper = require("unzipper")
+// const fetch = require("node-fetch")
+const jszip = require("jszip")
 // const gameRoutes = require('./routes/gameRoutes')
 
 app.use(cors({ origin: "*" }))
@@ -27,7 +29,16 @@ const {
   seasonMedianByPlayer,
   playerSeasonData,
 } = require("./controllers/seasonController")
-const PlayerSeasonModal = require("./models/PlayerSeasonModal")
+const {
+  PlayerSeason,
+  PlayerSeasonAverage,
+  PlayerSeasonMinimum,
+  PlayerSeasonMaximum,
+  PlayerSeasonRange,
+  PlayerSeasonMedian,
+  PlayerSeasonMode,
+  PlayerSeasonGeoMean,
+} = require("./models/PlayerSeasonModal")
 const gameRouter = require("./routes/gameRoutes")
 const scheduleRouter = require("./routes/scheduleRoutes")
 const {
@@ -40,6 +51,11 @@ const {
   SeasonVersusAverage,
   SeasonVersusMedian,
   SeasonMedian,
+  SeasonVersusMode,
+  SeasonVersusGeoMean,
+  SeasonVersusMinimum,
+  SeasonVersusMaximum,
+  SeasonVersusRange,
 } = require("./models/playerGameModal")
 const seasonRouter = require("./routes/seasonRoutes")
 const player = require("./models/player")
@@ -49,30 +65,57 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((res) => {
+  .then(async (res) => {
     try {
+
       console.log("Connection successfully established")
+      // getLastTenGamesData()
+      // convertToJSONandSavePlayerData()
       // convertToJSONandSavePlayerGameData()
-      // downloadFile(fantasyDataCSVFileUrl, zipFilePath)
-      //   .then(() => {
-      //     return extractFile(zipFilePath, extractDir)
-      //   })
-      //   .then(() => {
-      //     console.log("File extracted")
-      //     convertToJSONandSavePlayerSeasonData()
-      //     convertToJSONandSavePlayerGameData()
-      //     convertToJSONandSavePlayerData()
-      //   })
-      //   .catch((err) => {
-      //     console.error(err)
-      //   })
-      // calculateVersusOpponent()
-      // convertToJSONandSavePlayerGameData()
+      // convertToJSONandSavePlayerSeasonData()
+      downloadFile(fantasyDataCSVFileUrl, zipFilePath)
+        .then(() => {
+          return extractFile(zipFilePath, extractDir)
+        })
+        .then(() => {
+          console.log("File extracted")
+          convertToJSONandSavePlayerSeasonData()
+          convertToJSONandSavePlayerGameData()
+          convertToJSONandSavePlayerData()
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     } catch (error) {
       console.error(error.message, " error")
     }
   })
   .catch((err) => console.error(err))
+//
+app.get("PlayerGameProjectionStatsByDate", (req, res, next) => {
+  const year = new Date().getFullYear()
+  const date = new Date().getDate()
+  const month = new Date().getMonth() + 1
+  https.get(
+    `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
+      },
+    },
+    (response) => {
+      let data = ""
+      response.on("data", (chunk) => {
+        data += chunk
+      })
+      response.on("end", () => {
+        console.log({ data })
+        res.send(data)
+      })
+    }
+  )
+})
 
 function mergeSamePlayerObjects(playerData) {
   let players = []
@@ -88,6 +131,89 @@ function mergeSamePlayerObjects(playerData) {
     result.push(players[playerID])
   }
   return result
+}
+
+const getLastTenGamesData = async () => {
+  try {
+    let teams = [
+      { name: "ATL", games: [] },
+      { name: "BKN", games: [] },
+      { name: "BOS", games: [] },
+      { name: "CHA", games: [] },
+      { name: "CHI", games: [] },
+      { name: "CLE", games: [] },
+      { name: "DAL", games: [] },
+      { name: "DEN", games: [] },
+      { name: "DET", games: [] },
+      { name: "GS", games: [] },
+      { name: "HOU", games: [] },
+      { name: "IND", games: [] },
+      { name: "LAC", games: [] },
+      { name: "LAL", games: [] },
+      { name: "MEM", games: [] },
+      { name: "MIA", games: [] },
+      { name: "MIL", games: [] },
+      { name: "MIN", games: [] },
+      { name: "NO", games: [] },
+      { name: "NY", games: [] },
+      { name: "OKC", games: [] },
+      { name: "ORL", games: [] },
+      { name: "PHI", games: [] },
+      { name: "PHO", games: [] },
+      { name: "POR", games: [] },
+      { name: "SA", games: [] },
+      { name: "SAC", games: [] },
+      { name: "TOR", games: [] },
+      { name: "UTA", games: [] },
+      { name: "WAS", games: [] },
+    ]
+    const playerGameData = await PlayerGame.find({}).sort({ SeasonType: -1 })
+    console.log({ playerGameData })
+    teams.forEach((team, index) => {
+      const gamesForTeam = playerGameData.filter(
+        (game) => game.Team === team.name && game.Games === 1
+      )
+      teams[index].games = gamesForTeam
+    })
+    console.log({ teams })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const calculateSeasonAverage = async (data) => {
+  try {
+    const average = []
+    data.forEach((player) => {
+      if (player.Games >= 1) {
+        let playerAverage = {
+          ...player,
+          gamesPlayed: player.Games,
+          Points: player.Points / player.Games,
+          Assists: player.Assists / player.Games,
+          FreeThrowsMade: player.FreeThrowsMade / player.Games,
+          ThreePointersMade: player.ThreePointersMade / player.Games,
+          PersonalFouls: player.PersonalFouls / player.Games,
+          BlockedShots: player.BlockedShots / player.Games,
+          Rebounds: player.Rebounds / player.Games,
+          Steals: player.Steals / player.Games,
+        }
+        Object.keys(playerAverage).forEach((key) => {
+          if (isNaN(playerAverage[key]) && key === "Points") {
+            console.log("key: " + key + " value: " + playerAverage[key], player)
+          }
+        })
+        average.push(playerAverage)
+      }
+    })
+    PlayerSeasonAverage.deleteMany({}).then((_) => {
+      PlayerSeasonAverage.insertMany(average).then((_) =>
+        console.log("Player season average calculated")
+      )
+    })
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 app.use("/game", gameRouter)
@@ -107,10 +233,24 @@ async function convertToJSONandSavePlayerSeasonData() {
     csvtojson()
       .fromFile(PlayerSeasonFilePath)
       .then((playerSeasonData) => {
-        PlayerSeasonModal.deleteMany({}).then((_) => {
-          PlayerSeasonModal.insertMany(playerSeasonData).then((_) =>
-            console.log("Player season data inserted successfully")
-          )
+        console.log({playerSeasonData})
+        PlayerSeason.deleteMany({}).then((_) => {
+          PlayerSeason.insertMany(playerSeasonData).then(async (_) => {
+            {
+              console.log("Player season data inserted successfully")
+              calculateSeasonAverage(_)
+              const playerGameData = await PlayerSeason.find({
+                SeasonType: { $in: [1, 3] },
+                Games: { $ne: 0 },
+              })
+                .lean()
+                .exec()
+              const combinedGames = mergeSamePlayerObjects(playerGameData)
+              calculateMedian(combinedGames)
+              calculateMode(combinedGames)
+              calculateGeoMean(combinedGames)
+            }
+          })
         })
       })
   } catch (error) {
@@ -184,8 +324,8 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       medianSteals = sortBySteals[middleIndex].Steals
     } else {
       medianPoints =
-        (sortByPoints[middleIndex - 1].Points +
-          sortByPoints[middleIndex].Points) /
+        (sortByPoints[middleIndex - 1]?.Points +
+          sortByPoints[middleIndex]?.Points) /
         2
       medianThreePointersMade =
         (sortByThreePointersMade[middleIndex - 1].ThreePointersMade +
@@ -216,6 +356,11 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
           sortBySteals[middleIndex].Steals) /
         2
     }
+    Object.keys(playerArr[0]).forEach((key) => {
+      if (isNaN(playerArr[0][key]) && key === "Points") {
+        console.log(playerArr)
+      }
+    })
     tempArrForMedian.push({
       ...playerArr[0],
       Points: medianPoints,
@@ -279,26 +424,42 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
 
   if (collectionName === "Season Versus") {
     try {
-      const deleteSeasonVersusMedianRes = await SeasonVersusMedian.deleteMany()
-      console.log(deleteSeasonVersusMedianRes)
-      const res = await SeasonVersusMedian.insertMany(tempArrForMedian)
-      console.log(res)
+      SeasonVersusMinimum.deleteMany().then((_) =>
+        SeasonVersusMinimum.insertMany(minStatsValue).then(() =>
+          console.log("SeasonVersusMinimum saved successfully")
+        )
+      )
+      SeasonVersusMaximum.deleteMany().then((_) =>
+        SeasonVersusMaximum.insertMany(maxStatsValue).then(() =>
+          console.log("SeasonVersusMaximum saved successfully")
+        )
+      )
+      SeasonVersusRange.deleteMany().then((_) =>
+        SeasonVersusRange.insertMany(rangeStatsArr).then(() =>
+          console.log("SeasonVersusRange saved successfully")
+        )
+      )
+      SeasonVersusMedian.deleteMany().then((_) =>
+        SeasonVersusMedian.insertMany(tempArrForMedian).then(() =>
+          console.log("SeasonVersusMedian saved successfully")
+        )
+      )
     } catch (error) {
       console.error(error)
     }
   } else {
     try {
-      SeasonMinimum.deleteMany().then((_) =>
-        SeasonMinimum.insertMany(minStatsValue)
+      PlayerSeasonMinimum.deleteMany().then((_) =>
+        PlayerSeasonMinimum.insertMany(minStatsValue)
       )
-      SeasonMaximum.deleteMany().then((_) =>
-        SeasonMaximum.insertMany(maxStatsValue)
+      PlayerSeasonMaximum.deleteMany().then((_) =>
+        PlayerSeasonMaximum.insertMany(maxStatsValue)
       )
-      SeasonRange.deleteMany().then((_) =>
-        SeasonRange.insertMany(rangeStatsArr)
+      PlayerSeasonRange.deleteMany().then((_) =>
+        PlayerSeasonRange.insertMany(rangeStatsArr)
       )
-      SeasonMedian.deleteMany().then((_) =>
-        SeasonMedian.insertMany(tempArrForMedian)
+      PlayerSeasonMedian.deleteMany().then((_) =>
+        PlayerSeasonMedian.insertMany(tempArrForMedian)
       )
       console.log("Succeess writing the documents")
     } catch (error) {
@@ -307,12 +468,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
   }
 }
 
-function calculateMode(playersGames) {
-  // PlayerGame.find({ Games: 1, SeasonType: { $in: [1, 3] } })
-  //   .lean()
-  //   .exec()
-  //   .then((_) => {
-  //     const playersGames = mergeSamePlayerObjects(_)
+function calculateMode(playersGames, collectionName = "") {
   const temp = []
   playersGames?.forEach((playerData = [], index) => {
     const pointsMap = playerData.reduce((map, player) => {
@@ -453,12 +609,22 @@ function calculateMode(playersGames) {
       Steals: StealsModes[0],
     })
   })
-  SeasonMode.deleteMany().then((_) => {
-    SeasonMode.insertMany(temp).then((_) => console.log("Saved season mode"))
-  })
+  if (collectionName === "Season Versus") {
+    SeasonVersusMode.deleteMany().then((_) => {
+      SeasonVersusMode.insertMany(temp).then((_) =>
+        console.log("Saved SeasonVersusMode")
+      )
+    })
+  } else {
+    PlayerSeasonMode.deleteMany().then((_) => {
+      PlayerSeasonMode.insertMany(temp).then((_) =>
+        console.log("Saved season mode")
+      )
+    })
+  }
 }
 
-const calculateGeoMean = (playersData = []) => {
+const calculateGeoMean = (playersData = [], collectionName = "") => {
   let playersGeoMeanData = []
   playersData.forEach((player = []) => {
     let pointsProduct = 1
@@ -512,11 +678,19 @@ const calculateGeoMean = (playersData = []) => {
       Steals: stealsGeoMean.toFixed(2),
     })
   })
-  SeasonGeoMean.deleteMany().then((_) => {
-    SeasonGeoMean.insertMany(playersGeoMeanData).then((_) =>
-      console.log("Season geomean saved")
-    )
-  })
+  if (collectionName === "Season Versus") {
+    SeasonVersusGeoMean.deleteMany().then((_) => {
+      SeasonVersusGeoMean.insertMany(playersGeoMeanData).then((_) =>
+        console.log("Season SeasonVersusGeoMean")
+      )
+    })
+  } else {
+    PlayerSeasonGeoMean.deleteMany().then((_) => {
+      PlayerSeasonGeoMean.insertMany(playersGeoMeanData).then((_) =>
+        console.log("Season geomean saved")
+      )
+    })
+  }
 }
 
 async function convertToJSONandSavePlayerGameData() {
@@ -529,15 +703,7 @@ async function convertToJSONandSavePlayerGameData() {
         PlayerGame.deleteMany({}).then((_) => {
           PlayerGame.insertMany(docs).then((_) => {
             console.log("Player game data saved successfully")
-            PlayerGame.find({ Games: 1, SeasonType: { $in: [1, 3] } })
-              .lean()
-              .exec()
-              .then((_) => {
-                const combinedGames = mergeSamePlayerObjects(_)
-                calculateMedian(combinedGames)
-                calculateMode(combinedGames)
-                calculateGeoMean(combinedGames)
-              })
+            calculateSeasonVersusCalculations()
           })
         })
       })
@@ -579,19 +745,10 @@ const fantasyDataCSVFileUrl =
   "https://sportsdata.io/members/download-file?product=5aff2d7c-d41e-40a8-bb7c-b18096c1ca3b"
 let jsonData = {}
 const file = fs.createWriteStream("./sportsDataCSV/Player.2023.csv")
-// request(fantasyDataCSVFileUrl)
-//   .pipe(file)
-//   .on("finish", () => {
-//     console.log("file is successfully downloaded")
-//   })
-//   .on("error", () => {
-//     console.log("file url is incorrect")
-//   })
 
 const downloadFile = (url, dest) => {
   return new Promise((resolve, reject) => {
     // function deleteFilesInDirectory(directoryPath) {
-    console.log("downloaded zip file")
     fs.readdir("./sportsDataCSV", (err, files) => {
       if (err) {
         console.error("Error reading directory:", err)
@@ -614,7 +771,7 @@ const downloadFile = (url, dest) => {
     request(url)
       .pipe(fileStream)
       .on("finish", () => {
-        console.log("file downloaded successfully")
+        console.log("downloaded zip file")
         resolve()
       })
       .on("error", (err) => {
@@ -626,83 +783,187 @@ const downloadFile = (url, dest) => {
 const calculateSeasonVersusCalculations = async () => {
   try {
     const month = new Date().getMonth() + 1
-    const date = new Date().getDate()
+    const date = new Date().getDate() - 1
     const year = new Date().getFullYear()
-    const dayFilterString = `${month + "/" + date + "/" + year} 12:00:00 AM`
-    console.log(dayFilterString)
-    PlayerGame.find({ Day: dayFilterString })
-      .lean()
-      .exec()
-      .then((result) => {
-        if (result.length > 0) {
-          let teamsWiithOpponent = []
-          let teams = []
-          result.forEach((team) => {
-            if (!teamsWiithOpponent.find((item) => item.team === team.Team)) {
-              teamsWiithOpponent.push({
-                team: team.Team,
-                opponent: team.Opponent,
-              })
-              teams.push(team.Team)
-            }
-          })
-          try {
-            player
-              .find({ Team: { $in: [...teams] } })
+    https.get(
+      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
+        },
+      },
+      (response) => {
+        let data = ""
+        response.on("data", (chunk) => {
+          data += chunk
+        })
+        response.on("end", () => {
+          let scheduledGames = JSON.parse(data)
+          // const arr = [...scheduledGames.map((pl) => pl.OpponentID)]
+          // const uniqueArr = arr.filter((el) => !uniqueArr.includes(el))
+          let arr = []
+          scheduledGames.forEach(async (game, index) => {
+            let playerGames = await PlayerGame.find({
+              SeasonType: { $in: [1, 3] },
+              Games: 1,
+              PlayerID: game.PlayerID,
+              OpponentID: game.OpponentID,
+            })
               .lean()
               .exec()
-              .then((_) => {
-                console.log({ _ })
-                let teamsWithPlayers = []
-                teams.forEach((team) => {
-                  teamsWithPlayers.push({
-                    team: team,
-                    players: _.filter((player) => player.Team === team),
-                  })
-                })
-                console.log({ teamsWithPlayers })
-                let playerGames = []
-                teamsWiithOpponent.forEach((item, index) => {
-                  let team = teamsWithPlayers.find(
-                    (teamWPlayers) => teamWPlayers.team === item.team
-                  )
-                  team.players.forEach(async (pl, ind) => {
-                    try {
-                      await SeasonVersusAverage.deleteMany()
-                      const games = await PlayerGame.find({
-                        PlayerID: pl.PlayerID,
-                        Opponent: item.opponent,
-                      })
-                        .lean()
-                        .exec()
-                      playerGames.push(games)
-                      if (
-                        index + 1 === teamsWiithOpponent.length &&
-                        team.players.length === ind + 1
-                      ) {
-                        console.log({ playerGames })
-                        let arr = playerGames.flat()
-                        const samePlayerObjects = mergeSamePlayerObjects(arr)
-                        console.log({ arr, samePlayerObjects })
-                        calculateMedian(samePlayerObjects, "Season Versus")
-                      }
-                    } catch (error) {
-                      console.error(error)
-                    }
-                    // })
-                  })
-                })
-              })
-          } catch (error) {
-            console.error(error)
-          }
-        } else {
-          console.log("No data found")
-        }
-      })
+            if (playerGames.length > 0) {
+              arr.push(playerGames)
+            } else {
+              console.log({ game })
+            }
+            if (index === scheduledGames.length - 1) {
+              console.log(arr)
+              let combinedGames = mergeSamePlayerObjects(arr)
+              calculateAverage(arr, "Season Versus")
+              calculateMedian(arr, "Season Versus")
+              calculateMode(arr, "Season Versus")
+              calculateGeoMean(arr, "Season Versus")
+            }
+          })
+          // res.send(data)
+        })
+      }
+    )
   } catch (error) {
     console.error(error)
   }
+}
+
+const calculateAverage = async (playersData, type = "") => {
+  const temp = []
+
+  // Calculate Points average for each player
+  playersData?.map((playerArr, index) => {
+    const avg = 0
+    const result = playerArr.reduce(
+      (accumulator, currentObject) => {
+        if (currentObject.PlayerID === accumulator.PlayerID) {
+          accumulator.Points += currentObject.Points
+          accumulator.ThreePointersMade += currentObject.ThreePointersMade
+          accumulator.FreeThrowsMade += currentObject.FreeThrowsMade
+          accumulator.Assists += currentObject.Assists
+          accumulator.Rebounds += currentObject.Rebounds
+          accumulator.PersonalFouls += currentObject.PersonalFouls
+          accumulator.BlockedShots += currentObject.BlockedShots
+          accumulator.Steals += currentObject.Steals
+          accumulator.Count++
+        } else {
+          accumulator = {
+            PlayerID: currentObject.PlayerID,
+            Points: currentObject.Points,
+            ThreePointersMade: currentObject.ThreePointersMade,
+            FreeThrowsMade: currentObject.FreeThrowsMade,
+            Assists: currentObject.Assists,
+            Rebounds: currentObject.Rebounds,
+            PersonalFouls: currentObject.PersonalFouls,
+            BlockedShots: currentObject.BlockedShots,
+            Steals: currentObject.Steals,
+            Count: 1,
+          }
+        }
+        return accumulator
+      },
+      {
+        PlayerID: playerArr[0]?.PlayerID,
+        Points: playerArr[0]?.Points,
+        ThreePointersMade: playerArr[0]?.ThreePointersMade,
+        FreeThrowsMade: playerArr[0]?.FreeThrowsMade,
+        Assists: playerArr[0]?.Assists,
+        Rebounds: playerArr[0]?.Rebounds,
+        PersonalFouls: playerArr[0]?.PersonalFouls,
+        BlockedShots: playerArr[0]?.BlockedShots,
+        Steals: playerArr[0]?.Steals,
+        Count: 0,
+      }
+    )
+
+    const PointsAverage = result.Points / result.Count || 0
+    const ThreePointersMadeAverage =
+      result.ThreePointersMade / result.Count || 0
+    const FreeThrowsMadeAverage = result.FreeThrowsMade / result.Count || 0
+    const AssistsAverage = result.Assists / result.Count || 0
+    const ReboundsAverage = result.Rebounds / result.Count || 0
+    const PersonalFoulsAverage = result.PersonalFouls / result.Count || 0
+    const BlockedShotsAverage = result.BlockedShots / result.Count || 0
+    const StealsAverage = result.Steals / result.Count || 0
+
+    const gamesPlayed = playerArr.reduce((acc, player) => {
+      if (player.Games === 1) {
+        return acc + 1
+      } else {
+        return acc
+      }
+    }, 0)
+
+    // Create object with calculated average for requireed fields and push it in array to show in the table
+    const playerWithAveragePoints = {
+      ...playerArr[0],
+      Points: PointsAverage.toFixed(2),
+      ThreePointersMade: ThreePointersMadeAverage.toFixed(2),
+      FreeThrowsMade: FreeThrowsMadeAverage.toFixed(2),
+      Assists: AssistsAverage.toFixed(2),
+      Rebounds: ReboundsAverage.toFixed(2),
+      PersonalFouls: PersonalFoulsAverage.toFixed(2),
+      BlockedShots: BlockedShotsAverage.toFixed(2),
+      Steals: StealsAverage.toFixed(2),
+      gamesPlayed: gamesPlayed,
+    }
+    temp.push(playerWithAveragePoints)
+  })
+  // setLastTenGamesWorstRankedPlayers((prev) => ({
+  //   ...prev,
+  //   Points: [...temp].sort((a, b) => a.Points - b.Points).slice(0, 50),
+  //   ThreePointersMade: [...temp]
+  //     .sort((a, b) => a.ThreePointersMade - b.ThreePointersMade)
+  //     .slice(0, 50),
+  //   FreeThrowsMade: [...temp]
+  //     .sort((a, b) => a.FreeThrowsMade - b.FreeThrowsMade)
+  //     .slice(0, 50),
+  //   Assists: [...temp].sort((a, b) => a.Assists - b.Assists).slice(0, 50),
+  //   Rebounds: [...temp].sort((a, b) => a.Rebounds - b.Rebounds).slice(0, 50),
+  //   PersonalFouls: [...temp]
+  //     .sort((a, b) => a.PersonalFouls - b.PersonalFouls)
+  //     .slice(0, 50),
+  //   BlockedShots: [...temp]
+  //     .sort((a, b) => a.BlockedShots - b.BlockedShots)
+  //     .slice(0, 50),
+  //   Steals: [...temp].sort((a, b) => a.Steals - b.Steals).slice(0, 50),
+  // }))
+  // setLastTenGamesTopRankedPlayers((prev) => ({
+  //   ...prev,
+  //   Points: [...temp].sort((a, b) => b.Points - a.Points).slice(0, 50),
+  //   ThreePointersMade: [...temp]
+  //     .sort((a, b) => b.ThreePointersMade - a.ThreePointersMade)
+  //     .slice(0, 50),
+  //   FreeThrowsMade: [...temp]
+  //     .sort((a, b) => b.FreeThrowsMade - a.FreeThrowsMade)
+  //     .slice(0, 50),
+  //   Assists: [...temp].sort((a, b) => b.Assists - a.Assists).slice(0, 50),
+  //   Rebounds: [...temp].sort((a, b) => b.Rebounds - a.Rebounds).slice(0, 50),
+  //   PersonalFouls: [...temp]
+  //     .sort((a, b) => b.PersonalFouls - a.PersonalFouls)
+  //     .slice(0, 50),
+  //   BlockedShots: [...temp]
+  //     .sort((a, b) => b.BlockedShots - a.BlockedShots)
+  //     .slice(0, 50),
+  //   Steals: [...temp].sort((a, b) => b.Steals - a.Steals).slice(0, 50),
+  // }))
+  if (type === "Season Versus") {
+    SeasonVersusAverage.deleteMany().then((_) => {
+      console.log(_)
+      SeasonVersusAverage.insertMany(temp).then((_) =>
+        console.log("seasonVersusAvg calculated and inserted")
+      )
+    })
+  }
+  console.log({ seasonVersusAvg: temp })
+  console.log({ temp })
 }
 
 // app.get("/seasonMedianByPlayer", async (req, res) => {
@@ -735,9 +996,11 @@ const extractFile = (filePath, extractDir) => {
     fs.createReadStream(filePath)
       .pipe(unzipper.Extract({ path: extractDir }))
       .on("close", () => {
+        console.log("Close")
         resolve()
       })
       .on("error", (err) => {
+        console.error(err)
         reject(err)
       })
   })
