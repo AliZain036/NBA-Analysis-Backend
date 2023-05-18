@@ -19,6 +19,7 @@ const PlayerGameSchema = new mongoose.Schema({
   DateTime: String,
   HomeOrAway: String,
   Games: Number,
+  GamesCount: { type: Number },
   FantasyPoints: Number,
   Minutes: Number,
   Seconds: Number,
@@ -50,12 +51,14 @@ const PlayerGameSchema = new mongoose.Schema({
   TripleDoubles: Number,
 })
 
-PlayerGameSchema.index({ SeasonType: 1 })
-PlayerGameSchema.index({ Games: 1 })
-PlayerGameSchema.index({ PlayerID: 1 })
-PlayerGameSchema.index({ Opponent: 1 })
-
 const PlayerGame = mongoose.model("PlayerGame", PlayerGameSchema)
+const LastTenGamesAverage = mongoose.model("LastTenGamesAverage", PlayerGameSchema)
+const LastTenGamesMode = mongoose.model("LastTenGamesMode", PlayerGameSchema)
+const LastTenGamesMedian = mongoose.model("LastTenGamesMedian", PlayerGameSchema)
+const LastTenGamesGeoMean = mongoose.model("LastTenGamesGeoMean", PlayerGameSchema)
+const LastTenGamesMinimum = mongoose.model("LastTenGamesMinimum", PlayerGameSchema)
+const LastTenGamesMaximum = mongoose.model("LastTenGamesMaximum", PlayerGameSchema)
+const LastTenGamesRange = mongoose.model("LastTenGamesRange", PlayerGameSchema)
 const SeasonMinimum = mongoose.model("SeasonMinimum", PlayerGameSchema)
 const SeasonMaximum = mongoose.model("SeasonMaximum", PlayerGameSchema)
 const SeasonRange = mongoose.model("SeasonRange", PlayerGameSchema)
@@ -87,6 +90,13 @@ const SeasonVersusRange = mongoose.model("SeasonVersusRange", PlayerGameSchema)
 
 module.exports = {
   PlayerGame,
+  LastTenGamesAverage,
+  LastTenGamesGeoMean,
+  LastTenGamesMaximum,
+  LastTenGamesMedian,
+  LastTenGamesMinimum,
+  LastTenGamesMode,
+  LastTenGamesRange,
   SeasonMinimum,
   SeasonMaximum,
   SeasonRange,

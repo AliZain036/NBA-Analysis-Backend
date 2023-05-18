@@ -15,7 +15,8 @@ const { createProxyMiddleware } = require("http-proxy-middleware")
 const csvtojson = require("csvtojson")
 const request = require("request")
 const unzipper = require("unzipper")
-// const fetch = require("node-fetch")
+const axios = require("axios")
+
 const jszip = require("jszip")
 // const gameRoutes = require('./routes/gameRoutes')
 
@@ -43,11 +44,6 @@ const gameRouter = require("./routes/gameRoutes")
 const scheduleRouter = require("./routes/scheduleRoutes")
 const {
   PlayerGame,
-  SeasonMaximum,
-  SeasonMinimum,
-  SeasonRange,
-  SeasonMode,
-  SeasonGeoMean,
   SeasonVersusAverage,
   SeasonVersusMedian,
   SeasonMedian,
@@ -56,9 +52,19 @@ const {
   SeasonVersusMinimum,
   SeasonVersusMaximum,
   SeasonVersusRange,
+  LastTenGamesAverage,
+  LastTenGamesMinimum,
+  LastTenGamesMaximum,
+  LastTenGamesRange,
+  LastTenGamesMedian,
+  LastTenGamesGeoMean,
+  LastTenGamesMode,
 } = require("./models/playerGameModal")
 const seasonRouter = require("./routes/seasonRoutes")
 const player = require("./models/player")
+
+const fantasyDataCSVFileUrl =
+  "https://sportsdata.io/members/download-file?product=5aff2d7c-d41e-40a8-bb7c-b18096c1ca3b"
 
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING, {
@@ -67,30 +73,57 @@ mongoose
   })
   .then(async (res) => {
     try {
-
       console.log("Connection successfully established")
-      // getLastTenGamesData()
-      // convertToJSONandSavePlayerData()
+      // downloadAndExtractZip()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
-      downloadFile(fantasyDataCSVFileUrl, zipFilePath)
-        .then(() => {
-          return extractFile(zipFilePath, extractDir)
-        })
-        .then(() => {
-          console.log("File extracted")
-          convertToJSONandSavePlayerSeasonData()
-          convertToJSONandSavePlayerGameData()
-          convertToJSONandSavePlayerData()
-        })
-        .catch((err) => {
-          console.error(err)
-        })
     } catch (error) {
       console.error(error.message, " error")
     }
   })
   .catch((err) => console.error(err))
+
+const outputDir = "./sportsDataCSV"
+
+// Create the output directory if it doesn't exist
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir)
+}
+
+// Function to download and extract the zip file
+async function downloadAndExtractZip() {
+  try {
+    // Download the zip file
+    const response = await axios.get(fantasyDataCSVFileUrl, {
+      responseType: "arraybuffer",
+    })
+
+    // Save the zip file locally
+    const zipFilePath = path.join(outputDir, "file.zip")
+    fs.writeFileSync(zipFilePath, response.data)
+
+    // Extract the zip contents
+    const extractedFiles = await unzipper.Open.file(zipFilePath)
+    for (const file of extractedFiles.files) {
+      const filePath = path.join(outputDir, file.path)
+      const fileContent = await file.buffer()
+
+      // Provide header information if required
+      const header = "Header1,Header2,Header3" // Replace with your actual header information
+
+      // Write the file content with header to the output file
+      fs.writeFileSync(filePath, `${fileContent}`)
+    }
+
+    console.log("Zip file downloaded and extracted successfully!")
+
+    convertToJSONandSavePlayerData()
+    convertToJSONandSavePlayerGameData()
+    convertToJSONandSavePlayerSeasonData()
+  } catch (error) {
+    console.error("Error downloading and extracting the zip file:", error)
+  }
+}
 //
 app.get("PlayerGameProjectionStatsByDate", (req, res, next) => {
   const year = new Date().getFullYear()
@@ -167,15 +200,29 @@ const getLastTenGamesData = async () => {
       { name: "UTA", games: [] },
       { name: "WAS", games: [] },
     ]
-    const playerGameData = await PlayerGame.find({}).sort({ SeasonType: -1 })
-    console.log({ playerGameData })
-    teams.forEach((team, index) => {
-      const gamesForTeam = playerGameData.filter(
-        (game) => game.Team === team.name && game.Games === 1
-      )
+    let lastTenGamesData = []
+    teams.forEach(async (team, index) => {
+      const gamesForTeam = await PlayerGame.find({
+        SeasonType: { $in: [1, 3] },
+        Games: 1,
+        Team: team.name,
+      })
+        .sort({ Day: -1 })
+        .limit(10)
+        .lean()
+        .exec()
       teams[index].games = gamesForTeam
+      lastTenGamesData[index] = gamesForTeam
+      if (index === 29) {
+        let arr = []
+        lastTenGamesData.forEach((teamGames) => arr.push(...teamGames))
+        let samePlayerGames = mergeSamePlayerObjects(arr)
+        calculateAverage(samePlayerGames, "Last Ten Games")
+        calculateMedian(samePlayerGames, "Last Ten Games")
+        calculateGeoMean(samePlayerGames, "Last Ten Games")
+        calculateMode(samePlayerGames, "Last Ten Games")
+      }
     })
-    console.log({ teams })
   } catch (error) {
     console.error(error)
   }
@@ -189,14 +236,17 @@ const calculateSeasonAverage = async (data) => {
         let playerAverage = {
           ...player,
           gamesPlayed: player.Games,
-          Points: player.Points / player.Games,
-          Assists: player.Assists / player.Games,
-          FreeThrowsMade: player.FreeThrowsMade / player.Games,
-          ThreePointersMade: player.ThreePointersMade / player.Games,
-          PersonalFouls: player.PersonalFouls / player.Games,
-          BlockedShots: player.BlockedShots / player.Games,
-          Rebounds: player.Rebounds / player.Games,
-          Steals: player.Steals / player.Games,
+          Points: (player.Points / player.Games).toFixed(2),
+          Assists: (player.Assists / player.Games).toFixed(2),
+          FreeThrowsMade: (player.FreeThrowsMade / player.Games).toFixed(2),
+          ThreePointersMade: (player.ThreePointersMade / player.Games).toFixed(
+            2
+          ),
+          PersonalFouls: (player.PersonalFouls / player.Games).toFixed(2),
+          BlockedShots: (player.BlockedShots / player.Games).toFixed(2),
+          Rebounds: (player.Rebounds / player.Games).toFixed(2),
+          Steals: (player.Steals / player.Games).toFixed(2),
+          GamesCount: player.Games,
         }
         Object.keys(playerAverage).forEach((key) => {
           if (isNaN(playerAverage[key]) && key === "Points") {
@@ -222,10 +272,6 @@ app.use("/season", seasonRouter)
 
 const zipFilePath = "./sportsdata.zip"
 const extractDir = "./sportsDataCSV"
-let latestFile = null
-let latestYear = 0
-
-const fileName = getLatestFileName("Stadium", "./sportsDataCSV")
 
 async function convertToJSONandSavePlayerSeasonData() {
   try {
@@ -233,18 +279,17 @@ async function convertToJSONandSavePlayerSeasonData() {
     csvtojson()
       .fromFile(PlayerSeasonFilePath)
       .then((playerSeasonData) => {
-        console.log({playerSeasonData})
         PlayerSeason.deleteMany({}).then((_) => {
           PlayerSeason.insertMany(playerSeasonData).then(async (_) => {
             {
               console.log("Player season data inserted successfully")
-              calculateSeasonAverage(_)
               const playerGameData = await PlayerSeason.find({
                 SeasonType: { $in: [1, 3] },
                 Games: { $ne: 0 },
               })
                 .lean()
                 .exec()
+              calculateSeasonAverage(playerGameData)
               const combinedGames = mergeSamePlayerObjects(playerGameData)
               calculateMedian(combinedGames)
               calculateMode(combinedGames)
@@ -371,21 +416,23 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       PersonalFouls: medianPersonalFouls,
       BlockedShots: medianBlockedShots,
       Steals: medianSteals,
+      GamesCount: playerArr?.length,
     })
     minStatsValue.push({
-      ...playerArr[length - 1],
-      Points: sortByPoints[0].Points,
-      FreeThrowsMade: sortByFreeThrowsMade[length - 1].FreeThrowsMade,
-      ThreePointersMade: sortByThreePointersMade[length - 1].ThreePointersMade,
-      Assists: sortByAssists[length - 1].Assists,
-      Rebounds: sortByRebounds[length - 1].Rebounds,
-      PersonalFouls: sortByPersonalFouls[length - 1].PersonalFouls,
-      BlockedShots: sortByBlockedShots[length - 1].BlockedShots,
-      Steals: sortBySteals[length - 1].Steals,
+      ...playerArr[0],
+      Points: sortByPoints[sortByPoints.length - 1].Points,
+      FreeThrowsMade: sortByFreeThrowsMade[0].FreeThrowsMade,
+      ThreePointersMade: sortByThreePointersMade[0].ThreePointersMade,
+      Assists: sortByAssists[0].Assists,
+      Rebounds: sortByRebounds[0].Rebounds,
+      PersonalFouls: sortByPersonalFouls[0].PersonalFouls,
+      BlockedShots: sortByBlockedShots[0].BlockedShots,
+      Steals: sortBySteals[0].Steals,
+      GamesCount: playerArr?.length,
     })
     maxStatsValue.push({
       ...playerArr[0],
-      Points: sortByPoints[sortByPoints?.length - 1].Points,
+      Points: sortByPoints[0].Points,
       FreeThrowsMade:
         sortByFreeThrowsMade[sortByFreeThrowsMade?.length - 1].FreeThrowsMade,
       ThreePointersMade:
@@ -398,11 +445,12 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       BlockedShots:
         sortByBlockedShots[sortByBlockedShots.length - 1].BlockedShots,
       Steals: sortBySteals[sortBySteals.length - 1].Steals,
+      GamesCount: playerArr?.length,
     })
     rangeStatsArr.push({
       ...playerArr[0],
       Points:
-        sortByPoints[sortByPoints?.length - 1].Points - sortByPoints[0].Points,
+        sortByPoints[0].Points - sortByPoints[sortByPoints?.length - 1].Points,
       FreeThrowsMade:
         sortByFreeThrowsMade[length - 1].FreeThrowsMade -
         sortByFreeThrowsMade[0].FreeThrowsMade,
@@ -419,6 +467,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
         sortByBlockedShots[length - 1].BlockedShots -
         sortByBlockedShots[0].BlockedShots,
       Steals: sortBySteals[length - 1].Steals - sortBySteals[0].Steals,
+      GamesCount: playerArr?.length,
     })
   })
 
@@ -447,6 +496,27 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
     } catch (error) {
       console.error(error)
     }
+  } else if (collectionName === "Last Ten Games") {
+    LastTenGamesMinimum.deleteMany().then((_) =>
+      LastTenGamesMinimum.insertMany(minStatsValue).then(() =>
+        console.log("last ten games minimum saved successfully")
+      )
+    )
+    LastTenGamesMaximum.deleteMany().then((_) =>
+      LastTenGamesMaximum.insertMany(maxStatsValue).then(() =>
+        console.log("last ten games maximum saved successfully")
+      )
+    )
+    LastTenGamesRange.deleteMany().then((_) =>
+      LastTenGamesRange.insertMany(rangeStatsArr).then(() =>
+        console.log("last ten games range saved successfully")
+      )
+    )
+    LastTenGamesMedian.deleteMany().then((_) =>
+      LastTenGamesMedian.insertMany(tempArrForMedian).then(() =>
+        console.log("last ten games median saved successfully")
+      )
+    )
   } else {
     try {
       PlayerSeasonMinimum.deleteMany().then((_) =>
@@ -607,12 +677,19 @@ function calculateMode(playersGames, collectionName = "") {
       PersonalFouls: PersonalFoulsModes[0],
       BlockedShots: BlockedShotsModes[0],
       Steals: StealsModes[0],
+      GamesCount: playerData?.length,
     })
   })
   if (collectionName === "Season Versus") {
     SeasonVersusMode.deleteMany().then((_) => {
       SeasonVersusMode.insertMany(temp).then((_) =>
         console.log("Saved SeasonVersusMode")
+      )
+    })
+  } else if (collectionName === "Last Ten Games") {
+    LastTenGamesMode.deleteMany().then((_) => {
+      LastTenGamesMode.insertMany(temp).then((_) =>
+        console.log("Saved last ten games mode")
       )
     })
   } else {
@@ -676,12 +753,19 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
       PersonalFouls: personalFoulsGeoMean.toFixed(2),
       BlockedShots: blockedShotsGeoMean.toFixed(2),
       Steals: stealsGeoMean.toFixed(2),
+      GamesCount: player?.length,
     })
   })
   if (collectionName === "Season Versus") {
     SeasonVersusGeoMean.deleteMany().then((_) => {
       SeasonVersusGeoMean.insertMany(playersGeoMeanData).then((_) =>
         console.log("Season SeasonVersusGeoMean")
+      )
+    })
+  } else if (collectionName === "Last Ten Games") {
+    LastTenGamesGeoMean.deleteMany().then((_) => {
+      LastTenGamesGeoMean.insertMany(playersGeoMeanData).then((_) =>
+        console.log("Last ten games geomean saved into database")
       )
     })
   } else {
@@ -703,6 +787,7 @@ async function convertToJSONandSavePlayerGameData() {
         PlayerGame.deleteMany({}).then((_) => {
           PlayerGame.insertMany(docs).then((_) => {
             console.log("Player game data saved successfully")
+            getLastTenGamesData()
             calculateSeasonVersusCalculations()
           })
         })
@@ -713,22 +798,9 @@ async function convertToJSONandSavePlayerGameData() {
 }
 
 nodeCron
-  .schedule("0 0 * * *", () => {
+  .schedule("30 18 * * *", () => {
     try {
-      downloadFile(fantasyDataCSVFileUrl, zipFilePath)
-        .then(() => {
-          return extractFile(zipFilePath, extractDir)
-        })
-        .then(() => {
-          console.log("File extracted")
-          convertToJSONandSavePlayerSeasonData()
-          convertToJSONandSavePlayerGameData()
-          convertToJSONandSavePlayerData()
-          calculateSeasonVersusCalculations()
-        })
-        .catch((err) => {
-          console.error(err)
-        })
+      downloadAndExtractZip()
     } catch (error) {
       console.error(error)
     }
@@ -741,44 +813,42 @@ const stripe = Stripe(
   "sk_test_51Mg4d0A5j1K1pUTFhowYmQMWTVOMvzelqTl3GQ3U2aVNm7qj9Q8E1uncv7jtDNF3Qep4EMWKNh7OdcL9CCdNALJA00gu74VIgF"
 )
 
-const fantasyDataCSVFileUrl =
-  "https://sportsdata.io/members/download-file?product=5aff2d7c-d41e-40a8-bb7c-b18096c1ca3b"
 let jsonData = {}
 const file = fs.createWriteStream("./sportsDataCSV/Player.2023.csv")
 
-const downloadFile = (url, dest) => {
-  return new Promise((resolve, reject) => {
-    // function deleteFilesInDirectory(directoryPath) {
-    fs.readdir("./sportsDataCSV", (err, files) => {
-      if (err) {
-        console.error("Error reading directory:", err)
-        return
-      }
+// const downloadFile = (url, dest) => {
+//   return new Promise((resolve, reject) => {
+//     // function deleteFilesInDirectory(directoryPath) {
+//     fs.readdir("./sportsDataCSV", (err, files) => {
+//       if (err) {
+//         console.error("Error reading directory:", err)
+//         return
+//       }
 
-      files.forEach((file) => {
-        const filePath = path.join("./sportsDataCSV", file)
+//       files.forEach((file) => {
+//         const filePath = path.join("./sportsDataCSV", file)
 
-        fs.unlink(filePath, (error) => {
-          if (error) {
-            console.error("Error deleting file:", filePath, error)
-          } else {
-          }
-        })
-      })
-    })
-    // }
-    const fileStream = fs.createWriteStream(dest)
-    request(url)
-      .pipe(fileStream)
-      .on("finish", () => {
-        console.log("downloaded zip file")
-        resolve()
-      })
-      .on("error", (err) => {
-        reject(err)
-      })
-  })
-}
+//         fs.unlink(filePath, (error) => {
+//           if (error) {
+//             console.error("Error deleting file:", filePath, error)
+//           } else {
+//           }
+//         })
+//       })
+//     })
+//     // }
+//     const fileStream = fs.createWriteStream(dest)
+//     request(url)
+//       .pipe(fileStream)
+//       .on("finish", () => {
+//         console.log("downloaded zip file")
+//         resolve()
+//       })
+//       .on("error", (err) => {
+//         reject(err)
+//       })
+//   })
+// }
 
 const calculateSeasonVersusCalculations = async () => {
   try {
@@ -818,8 +888,6 @@ const calculateSeasonVersusCalculations = async () => {
               console.log({ game })
             }
             if (index === scheduledGames.length - 1) {
-              console.log(arr)
-              let combinedGames = mergeSamePlayerObjects(arr)
               calculateAverage(arr, "Season Versus")
               calculateMedian(arr, "Season Versus")
               calculateMode(arr, "Season Versus")
@@ -913,47 +981,10 @@ const calculateAverage = async (playersData, type = "") => {
       BlockedShots: BlockedShotsAverage.toFixed(2),
       Steals: StealsAverage.toFixed(2),
       gamesPlayed: gamesPlayed,
+      GamesCount: playerArr?.length,
     }
     temp.push(playerWithAveragePoints)
   })
-  // setLastTenGamesWorstRankedPlayers((prev) => ({
-  //   ...prev,
-  //   Points: [...temp].sort((a, b) => a.Points - b.Points).slice(0, 50),
-  //   ThreePointersMade: [...temp]
-  //     .sort((a, b) => a.ThreePointersMade - b.ThreePointersMade)
-  //     .slice(0, 50),
-  //   FreeThrowsMade: [...temp]
-  //     .sort((a, b) => a.FreeThrowsMade - b.FreeThrowsMade)
-  //     .slice(0, 50),
-  //   Assists: [...temp].sort((a, b) => a.Assists - b.Assists).slice(0, 50),
-  //   Rebounds: [...temp].sort((a, b) => a.Rebounds - b.Rebounds).slice(0, 50),
-  //   PersonalFouls: [...temp]
-  //     .sort((a, b) => a.PersonalFouls - b.PersonalFouls)
-  //     .slice(0, 50),
-  //   BlockedShots: [...temp]
-  //     .sort((a, b) => a.BlockedShots - b.BlockedShots)
-  //     .slice(0, 50),
-  //   Steals: [...temp].sort((a, b) => a.Steals - b.Steals).slice(0, 50),
-  // }))
-  // setLastTenGamesTopRankedPlayers((prev) => ({
-  //   ...prev,
-  //   Points: [...temp].sort((a, b) => b.Points - a.Points).slice(0, 50),
-  //   ThreePointersMade: [...temp]
-  //     .sort((a, b) => b.ThreePointersMade - a.ThreePointersMade)
-  //     .slice(0, 50),
-  //   FreeThrowsMade: [...temp]
-  //     .sort((a, b) => b.FreeThrowsMade - a.FreeThrowsMade)
-  //     .slice(0, 50),
-  //   Assists: [...temp].sort((a, b) => b.Assists - a.Assists).slice(0, 50),
-  //   Rebounds: [...temp].sort((a, b) => b.Rebounds - a.Rebounds).slice(0, 50),
-  //   PersonalFouls: [...temp]
-  //     .sort((a, b) => b.PersonalFouls - a.PersonalFouls)
-  //     .slice(0, 50),
-  //   BlockedShots: [...temp]
-  //     .sort((a, b) => b.BlockedShots - a.BlockedShots)
-  //     .slice(0, 50),
-  //   Steals: [...temp].sort((a, b) => b.Steals - a.Steals).slice(0, 50),
-  // }))
   if (type === "Season Versus") {
     SeasonVersusAverage.deleteMany().then((_) => {
       console.log(_)
@@ -961,35 +992,15 @@ const calculateAverage = async (playersData, type = "") => {
         console.log("seasonVersusAvg calculated and inserted")
       )
     })
+  } else if (type === "Last Ten Games") {
+    LastTenGamesAverage.deleteMany().then(() => {
+      console.log("Deleted existing last ten games average")
+      LastTenGamesAverage.insertMany(temp).then((_) =>
+        console.log("Last ten games average inserted into database")
+      )
+    })
   }
-  console.log({ seasonVersusAvg: temp })
-  console.log({ temp })
 }
-
-// app.get("/seasonMedianByPlayer", async (req, res) => {
-//   try {
-//     const teamData = "./sportsDataCSV/PlayerGame.2023.csv"
-//     const data = await playerGameModal.find({
-//       Games: "1",
-//       SeasonType: { $in: ["1", "3"] },
-//     })
-//     // .then((res) => console.log(res, " + res"))
-//     console.log(data, " + res")
-//     res.status(200).json({ success: true, data })
-//     // .then((result) => {
-//     // playerGameModal.find({ Games: "1" }).then((res) => {
-//     //   console.log("data added successfully")
-//     //   // res.status(200).json({ success: true, data: result })
-//     // })
-//     // })
-//   } catch (error) {
-//     console.error(error.message)
-//     res.status(500).json({ success: false, message: error.message })
-//   }
-// })
-
-// app.get("/seasonMedianByPlayer", seasonMedianByPlayer)
-// app.get("/playerSeasonData", playerSeasonData)
 
 const extractFile = (filePath, extractDir) => {
   return new Promise((resolve, reject) => {
@@ -1003,31 +1014,6 @@ const extractFile = (filePath, extractDir) => {
         console.error(err)
         reject(err)
       })
-  })
-}
-
-function getDataFromCsv() {
-  https.request(fantasyDataCSVFileUrl, (error, response, body) => {
-    if (error) {
-      console.error(error.message)
-      throw error
-    }
-    console.log("success")
-    csv(
-      body,
-      {
-        columns: true,
-        delimiter: ",",
-      },
-      (err, data) => {
-        if (err) {
-          console.error(error.message)
-          throw err
-        }
-        console.log("data success")
-        jsonData = JSON.stringify(data)
-      }
-    )
   })
 }
 
@@ -1050,28 +1036,6 @@ app.get("/convert-csv-to-json", (request, response) => {
   }
 })
 
-app.get("/", (req, res) => {
-  // getDataFromCsv()
-  https.get(
-    "https://api.sportsdata.io/api/nba/fantasy/json/Players",
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "5f32177ca5c549979aee86c4d2376c14",
-      },
-    },
-    (response) => {
-      let data = ""
-      response.on("data", (chunk) => {
-        data += chunk
-      })
-      response.on("end", () => {
-        res.send(data)
-      })
-    }
-  )
-})
-
 app.get("/PlayerSeasonStats/:season", (req, res) => {
   const season = req.params.season
   https.get(
@@ -1079,7 +1043,7 @@ app.get("/PlayerSeasonStats/:season", (req, res) => {
     {
       headers: {
         "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "5f32177ca5c549979aee86c4d2376c14",
+        "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
       },
     },
     (response) => {
@@ -1124,7 +1088,7 @@ app.get("/playerSeasonStats/:season", async (req, res) => {
     {
       headers: {
         "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "5f32177ca5c549979aee86c4d2376c14",
+        "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
       },
     },
     async (response) => {
@@ -1133,12 +1097,7 @@ app.get("/playerSeasonStats/:season", async (req, res) => {
         data += chunk
       })
       response.on("end", async () => {
-        // Schedule.create(data[0][0])
-        //   .then((res) => console.log("successfull"))
-        //   .catch((err) => console.error(err.name))
-        // console.log({ response })
         res.send(data)
-        // next()
       })
     }
   )
@@ -1164,12 +1123,6 @@ app.post("/create-payment-intent", async (req, res) => {
       success_url: "https://www.google.com",
       cancel_url: "https://mariza-9e743.web.app/confirm-order",
     })
-    // const charge = await stripe.charges.create({
-    //   amount: req.amount * 100,
-    //   currency: "USD",
-    //   source: "pm_1MqMbwA5j1K1pUTFpgi1nkew",
-    //   description: "Payment for " + data.email,
-    // })
     res.status(200).send(session)
   } catch (error) {
     res.status(500).json({ error })
@@ -1184,7 +1137,7 @@ ${gameid}`,
     {
       headers: {
         "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "5f32177ca5c549979aee86c4d2376c14",
+        "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
       },
     },
     (response) => {
@@ -1206,7 +1159,7 @@ app.get("/PlayerGameStatsByDate/:date", (req, res) => {
     {
       headers: {
         "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "5f32177ca5c549979aee86c4d2376c14",
+        "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
       },
     },
     (response) => {

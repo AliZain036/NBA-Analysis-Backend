@@ -1,4 +1,13 @@
 const https = require("https")
+const {
+  LastTenGamesAverage,
+  LastTenGamesMinimum,
+  LastTenGamesMaximum,
+  LastTenGamesRange,
+  LastTenGamesMode,
+  LastTenGamesMedian,
+  LastTenGamesGeoMean,
+} = require("../models/playerGameModal")
 
 const getLastTenGames = async (req, res) => {
   try {
@@ -38,4 +47,71 @@ const getTodaysGames = async (req, res) => {
   }
 }
 
-module.exports = { getLastTenGames, getTodaysGames }
+const getLastTenGamesAverage = async (req, res) => {
+  try {
+    const docs = await LastTenGamesAverage.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenGamesMinimum = async (req, res) => {
+  try {
+    const docs = await LastTenGamesMinimum.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenGamesMaximum = async (req, res) => {
+  try {
+    const docs = await LastTenGamesMaximum.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenGamesRange = async (req, res) => {
+  try {
+    const docs = await LastTenGamesRange.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenGamesMode = async (req, res) => {
+  try {
+    const docs = await LastTenGamesMode.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenGamesMedian = async (req, res) => {
+  try {
+    const docs = await LastTenGamesMedian.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenGamesGeoMean = async (req, res) => {
+  try {
+    const docs = await LastTenGamesGeoMean.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+
+module.exports = {
+  getLastTenGames,
+  getTodaysGames,
+  getLastTenGamesAverage,
+  getLastTenGamesMode,
+  getLastTenGamesMedian,
+  getLastTenGamesGeoMean,
+  getLastTenGamesMaximum,
+  getLastTenGamesMinimum,
+  getLastTenGamesRange,
+}

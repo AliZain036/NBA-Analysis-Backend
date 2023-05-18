@@ -13,6 +13,7 @@ const PlayerSeason = new mongoose.Schema({
   Position: { type: String, required: true },
   Started: { type: Number, required: true },
   Games: { type: Number, required: true },
+  GamesCount: { type: Number },
   FantasyPoints: { type: Number, required: true },
   Minutes: { type: Number, required: true },
   Seconds: { type: Number, required: true },
