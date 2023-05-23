@@ -75,6 +75,8 @@ mongoose
     try {
       console.log("Connection successfully established")
       // downloadAndExtractZip()
+      // getLastTenGamesData()
+      // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
     } catch (error) {
@@ -84,7 +86,7 @@ mongoose
   .catch((err) => console.error(err))
 
 const outputDir = "./sportsDataCSV"
-
+//
 // Create the output directory if it doesn't exist
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir)
@@ -117,7 +119,9 @@ async function downloadAndExtractZip() {
 
     console.log("Zip file downloaded and extracted successfully!")
 
+    getLastTenGamesData()
     convertToJSONandSavePlayerData()
+    calculateSeasonVersusCalculations()
     convertToJSONandSavePlayerGameData()
     convertToJSONandSavePlayerSeasonData()
   } catch (error) {
@@ -213,6 +217,11 @@ const getLastTenGamesData = async () => {
         .exec()
       teams[index].games = gamesForTeam
       lastTenGamesData[index] = gamesForTeam
+      gamesForTeam.forEach((item) => {
+        if (item.Name === "Larry Nance Jr.") {
+          console.log({ item })
+        }
+      })
       if (index === 29) {
         let arr = []
         lastTenGamesData.forEach((teamGames) => arr.push(...teamGames))
@@ -283,17 +292,12 @@ async function convertToJSONandSavePlayerSeasonData() {
           PlayerSeason.insertMany(playerSeasonData).then(async (_) => {
             {
               console.log("Player season data inserted successfully")
-              const playerGameData = await PlayerSeason.find({
-                SeasonType: { $in: [1, 3] },
-                Games: { $ne: 0 },
-              })
-                .lean()
-                .exec()
-              calculateSeasonAverage(playerGameData)
-              const combinedGames = mergeSamePlayerObjects(playerGameData)
-              calculateMedian(combinedGames)
-              calculateMode(combinedGames)
-              calculateGeoMean(combinedGames)
+              // const playerGameData = await PlayerSeason.find({
+              //   SeasonType: { $in: [1, 3] },
+              //   Games: { $ne: 0 },
+              // })
+              //   .lean()
+              //   .exec()
             }
           })
         })
@@ -328,7 +332,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
   const rangeStatsArr = []
 
   playersGames?.forEach((playerArr = [], index) => {
-    const sortByPoints = [...playerArr].sort((a, b) => a - b)
+    const sortByPoints = [...playerArr].sort((a, b) => a.Points - b.Points)
     const sortByThreePointersMade = [...playerArr].sort(
       (a, b) => a.ThreePointersMade - b.ThreePointersMade
     )
@@ -346,6 +350,21 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       (a, b) => a.BlockedShots - b.BlockedShots
     )
     const sortBySteals = [...playerArr].sort((a, b) => a.Steals - b.Steals)
+    if (index === 0) {
+      sortByPoints.forEach((item) => console.log("Points ==", item.Points))
+      sortByThreePointersMade.forEach((item) =>
+        console.log("Points ==", item.ThreePointersMade)
+      )
+      sortByFreeThrowsMade.forEach((item) =>
+        console.log("Points ==", item.FreeThrowsMade)
+      )
+      sortByAssists.forEach((item) => console.log("Points ==", item.Assists))
+      sortByRebounds.forEach((item) => console.log("Points ==", item.Rebounds))
+      sortByBlockedShots.forEach((item) =>
+        console.log("Points ==", item.BlockedShots)
+      )
+      sortBySteals.forEach((item) => console.log("Points ==", item.Steals))
+    }
 
     const length = playerArr.length
     const middleIndex = Math.floor(length / 2)
@@ -420,7 +439,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
     })
     minStatsValue.push({
       ...playerArr[0],
-      Points: sortByPoints[sortByPoints.length - 1].Points,
+      Points: sortByPoints[0].Points,
       FreeThrowsMade: sortByFreeThrowsMade[0].FreeThrowsMade,
       ThreePointersMade: sortByThreePointersMade[0].ThreePointersMade,
       Assists: sortByAssists[0].Assists,
@@ -432,7 +451,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
     })
     maxStatsValue.push({
       ...playerArr[0],
-      Points: sortByPoints[0].Points,
+      Points: sortByPoints[sortByPoints.length - 1].Points,
       FreeThrowsMade:
         sortByFreeThrowsMade[sortByFreeThrowsMade?.length - 1].FreeThrowsMade,
       ThreePointersMade:
@@ -450,7 +469,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
     rangeStatsArr.push({
       ...playerArr[0],
       Points:
-        sortByPoints[0].Points - sortByPoints[sortByPoints?.length - 1].Points,
+        sortByPoints[sortByPoints?.length - 1].Points - sortByPoints[0].Points,
       FreeThrowsMade:
         sortByFreeThrowsMade[length - 1].FreeThrowsMade -
         sortByFreeThrowsMade[0].FreeThrowsMade,
@@ -669,15 +688,15 @@ function calculateMode(playersGames, collectionName = "") {
 
     temp.push({
       ...playerData[0],
-      Points: modes[0],
-      ThreePointersMade: ThreePointersMadeModes[0],
-      FreeThrowsMade: FreeThrowsMadeModes[0],
-      Assists: AssistsModes[0],
-      Rebounds: ReboundsModes[0],
-      PersonalFouls: PersonalFoulsModes[0],
-      BlockedShots: BlockedShotsModes[0],
-      Steals: StealsModes[0],
-      GamesCount: playerData?.length,
+      Points: +modes[0],
+      ThreePointersMade: +ThreePointersMadeModes[0],
+      FreeThrowsMade: +FreeThrowsMadeModes[0],
+      Assists: +AssistsModes[0],
+      Rebounds: +ReboundsModes[0],
+      PersonalFouls: +PersonalFoulsModes[0],
+      BlockedShots: +BlockedShotsModes[0],
+      Steals: +StealsModes[0],
+      GamesCount: +playerData?.length,
     })
   })
   if (collectionName === "Season Versus") {
@@ -783,12 +802,22 @@ async function convertToJSONandSavePlayerGameData() {
     csvtojson()
       .fromFile(PlayerGameFilePath)
       .then((docs) => {
-        console.log("Data converteed to json")
+        console.log("Data converted to json")
         PlayerGame.deleteMany({}).then((_) => {
-          PlayerGame.insertMany(docs).then((_) => {
-            console.log("Player game data saved successfully")
+          PlayerGame.insertMany(docs).then(async (_) => {
+            console.log("Player game data saved successfully ======= ")
             getLastTenGamesData()
-            calculateSeasonVersusCalculations()
+            const playerGameData = await PlayerGame.find({
+              Games: 1,
+              SeasonType: { $in: [1, 3] },
+            })
+              .lean()
+              .exec()
+            const combinedGames = mergeSamePlayerObjects(playerGameData)
+            calculateAverage(combinedGames)
+            calculateMedian(combinedGames)
+            calculateMode(combinedGames)
+            calculateGeoMean(combinedGames)
           })
         })
       })
@@ -907,67 +936,84 @@ const calculateAverage = async (playersData, type = "") => {
   const temp = []
 
   // Calculate Points average for each player
-  playersData?.map((playerArr, index) => {
+  playersData?.map((playerArr = [], index) => {
     const avg = 0
-    const result = playerArr.reduce(
-      (accumulator, currentObject) => {
-        if (currentObject.PlayerID === accumulator.PlayerID) {
-          accumulator.Points += currentObject.Points
-          accumulator.ThreePointersMade += currentObject.ThreePointersMade
-          accumulator.FreeThrowsMade += currentObject.FreeThrowsMade
-          accumulator.Assists += currentObject.Assists
-          accumulator.Rebounds += currentObject.Rebounds
-          accumulator.PersonalFouls += currentObject.PersonalFouls
-          accumulator.BlockedShots += currentObject.BlockedShots
-          accumulator.Steals += currentObject.Steals
-          accumulator.Count++
-        } else {
-          accumulator = {
-            PlayerID: currentObject.PlayerID,
-            Points: currentObject.Points,
-            ThreePointersMade: currentObject.ThreePointersMade,
-            FreeThrowsMade: currentObject.FreeThrowsMade,
-            Assists: currentObject.Assists,
-            Rebounds: currentObject.Rebounds,
-            PersonalFouls: currentObject.PersonalFouls,
-            BlockedShots: currentObject.BlockedShots,
-            Steals: currentObject.Steals,
-            Count: 1,
-          }
-        }
-        return accumulator
-      },
-      {
-        PlayerID: playerArr[0]?.PlayerID,
-        Points: playerArr[0]?.Points,
-        ThreePointersMade: playerArr[0]?.ThreePointersMade,
-        FreeThrowsMade: playerArr[0]?.FreeThrowsMade,
-        Assists: playerArr[0]?.Assists,
-        Rebounds: playerArr[0]?.Rebounds,
-        PersonalFouls: playerArr[0]?.PersonalFouls,
-        BlockedShots: playerArr[0]?.BlockedShots,
-        Steals: playerArr[0]?.Steals,
-        Count: 0,
-      }
-    )
-
-    const PointsAverage = result.Points / result.Count || 0
+    // const result = playerArr.reduce(
+    //   (accumulator, currentObject) => {
+    //     if (currentObject.PlayerID === accumulator.PlayerID) {
+    //       accumulator.Points += currentObject.Points
+    //       accumulator.ThreePointersMade += currentObject.ThreePointersMade
+    //       accumulator.FreeThrowsMade += currentObject.FreeThrowsMade
+    //       accumulator.Assists += currentObject.Assists
+    //       accumulator.Rebounds += currentObject.Rebounds
+    //       accumulator.PersonalFouls += currentObject.PersonalFouls
+    //       accumulator.BlockedShots += currentObject.BlockedShots
+    //       accumulator.Steals += currentObject.Steals
+    //       accumulator.Count++
+    //     } else {
+    //       accumulator = {
+    //         PlayerID: currentObject.PlayerID,
+    //         Points: currentObject.Points,
+    //         ThreePointersMade: currentObject.ThreePointersMade,
+    //         FreeThrowsMade: currentObject.FreeThrowsMade,
+    //         Assists: currentObject.Assists,
+    //         Rebounds: currentObject.Rebounds,
+    //         PersonalFouls: currentObject.PersonalFouls,
+    //         BlockedShots: currentObject.BlockedShots,
+    //         Steals: currentObject.Steals,
+    //         Count: 1,
+    //       }
+    //     }
+    //     return accumulator
+    //   },
+    //   {
+    //     PlayerID: playerArr[0]?.PlayerID,
+    //     Points: playerArr[0]?.Points,
+    //     ThreePointersMade: playerArr[0]?.ThreePointersMade,
+    //     FreeThrowsMade: playerArr[0]?.FreeThrowsMade,
+    //     Assists: playerArr[0]?.Assists,
+    //     Rebounds: playerArr[0]?.Rebounds,
+    //     PersonalFouls: playerArr[0]?.PersonalFouls,
+    //     BlockedShots: playerArr[0]?.BlockedShots,
+    //     Steals: playerArr[0]?.Steals,
+    //     Count: 0,
+    //   }
+    // )
+    let totalPoints = 0
+    let totalThreePointersMadeAvg = 0
+    let totalFreeThrowsMade = 0
+    let totalAssists = 0
+    let totalRebounds = 0
+    let totalPersonalFouls = 0
+    let totalBlockedShots = 0
+    let totalSteals = 0
+    playerArr.forEach((playerObj) => {
+      totalPoints += playerObj.Points
+      totalThreePointersMadeAvg += playerObj.ThreePointersMade
+      totalFreeThrowsMade += playerObj.FreeThrowsMade
+      totalAssists += playerObj.Assists
+      totalRebounds += playerObj.Rebounds
+      totalPersonalFouls += playerObj.PersonalFouls
+      totalBlockedShots += playerObj.BlockedShots
+      totalSteals += playerObj.Steals
+    })
+    const PointsAverage = totalPoints / playerArr.length || 0
     const ThreePointersMadeAverage =
-      result.ThreePointersMade / result.Count || 0
-    const FreeThrowsMadeAverage = result.FreeThrowsMade / result.Count || 0
-    const AssistsAverage = result.Assists / result.Count || 0
-    const ReboundsAverage = result.Rebounds / result.Count || 0
-    const PersonalFoulsAverage = result.PersonalFouls / result.Count || 0
-    const BlockedShotsAverage = result.BlockedShots / result.Count || 0
-    const StealsAverage = result.Steals / result.Count || 0
+      totalThreePointersMadeAvg / playerArr.length || 0
+    const FreeThrowsMadeAverage = totalFreeThrowsMade / playerArr.length || 0
+    const AssistsAverage = totalAssists / playerArr.length || 0
+    const ReboundsAverage = totalRebounds / playerArr.length || 0
+    const PersonalFoulsAverage = totalPersonalFouls / playerArr.length || 0
+    const BlockedShotsAverage = totalBlockedShots / playerArr.length || 0
+    const StealsAverage = totalSteals / playerArr.length || 0
 
-    const gamesPlayed = playerArr.reduce((acc, player) => {
-      if (player.Games === 1) {
-        return acc + 1
-      } else {
-        return acc
-      }
-    }, 0)
+    // const gamesPlayed = playerArr.reduce((acc, player) => {
+    //   if (player.Games === 1) {
+    //     return acc + 1
+    //   } else {
+    //     return acc
+    //   }
+    // }, 0)
 
     // Create object with calculated average for requireed fields and push it in array to show in the table
     const playerWithAveragePoints = {
@@ -980,7 +1026,7 @@ const calculateAverage = async (playersData, type = "") => {
       PersonalFouls: PersonalFoulsAverage.toFixed(2),
       BlockedShots: BlockedShotsAverage.toFixed(2),
       Steals: StealsAverage.toFixed(2),
-      gamesPlayed: gamesPlayed,
+      // gamesPlayed: gamesPlayed,
       GamesCount: playerArr?.length,
     }
     temp.push(playerWithAveragePoints)
@@ -997,6 +1043,13 @@ const calculateAverage = async (playersData, type = "") => {
       console.log("Deleted existing last ten games average")
       LastTenGamesAverage.insertMany(temp).then((_) =>
         console.log("Last ten games average inserted into database")
+      )
+    })
+  } else {
+    PlayerSeasonAverage.deleteMany().then(() => {
+      console.log("Deleted existing PlayerSeasonAverage")
+      PlayerSeasonAverage.insertMany(temp).then((_) =>
+        console.log("PlayerSeasonAverage inserted into database")
       )
     })
   }
