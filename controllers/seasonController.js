@@ -25,6 +25,10 @@ const {
   SeasonVersusMode,
   SeasonVersusMedian,
   SeasonVersusGeoMean,
+  SeasonDefenceVsPositionAverage,
+  SeasonDefenceVsPositionMode,
+  SeasonDefenceVsPositionMedian,
+  SeasonDefenceVsPositionGeoMean,
 } = require("../models/playerGameModal")
 
 const seasonMedianByPlayer = async (req, res) => {
@@ -230,6 +234,41 @@ const getSeasonAverage = async (req, res) => {
     res.status(500).json({ success: false, message: error.message })
   }
 }
+
+const getSeasonDefenceVsPositionAverage = async (req, res) => {
+  try {
+    const docs = await SeasonDefenceVsPositionAverage.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+const getSeasonDefenceVsPositionMode = async (req, res) => {
+  try {
+    const docs = await SeasonDefenceVsPositionMode.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonDefenceVsPositionMedian = async (req, res) => {
+  try {
+    const docs = await SeasonDefenceVsPositionMedian.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+const getSeasonDefenceVsPositionGeoMean = async (req, res) => {
+  try {
+    const docs = await SeasonDefenceVsPositionGeoMean.find({})
+    res.status(200).json({ success: true, docs })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
 const getSeasonVersusAverage = async (req, res) => {
   try {
     const docs = await SeasonVersusAverage.find({})
@@ -341,5 +380,9 @@ module.exports = {
   getSeasonVersusMode,
   getSeasonVersusMedian,
   getSeasonVersusMedian,
-  getSeasonVersusGeoMean
+  getSeasonVersusGeoMean,
+  getSeasonDefenceVsPositionAverage,
+  getSeasonDefenceVsPositionGeoMean,
+  getSeasonDefenceVsPositionMedian,
+  getSeasonDefenceVsPositionMode
 }

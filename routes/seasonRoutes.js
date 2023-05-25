@@ -14,6 +14,10 @@ const {
   getSeasonVersusMode,
   getSeasonVersusRange,
   getSeasonVersusAverage,
+  getSeasonDefenceVsPositionAverage,
+  getSeasonDefenceVsPositionMode,
+  getSeasonDefenceVsPositionMedian,
+  getSeasonDefenceVsPositionGeoMean,
 } = require("../controllers/seasonController")
 
 const seasonRouter = require("express").Router()
@@ -25,6 +29,11 @@ seasonRouter.get("/minimum", getSeasonMin)
 seasonRouter.get("/maximum", getSeasonMax)
 seasonRouter.get("/mode", getSeasonMode)
 seasonRouter.get("/range", getSeasonRange)
+
+seasonRouter.get('/defence-vs-position-average', getSeasonDefenceVsPositionAverage)
+seasonRouter.get('/defence-vs-position-mode', getSeasonDefenceVsPositionMode)
+seasonRouter.get('/defence-vs-position-median', getSeasonDefenceVsPositionMedian)
+seasonRouter.get('/defence-vs-position-geomean', getSeasonDefenceVsPositionGeoMean)
 
 seasonRouter.get("/versus-geoMean", getSeasonVersusGeoMean)
 seasonRouter.get("/versus-average", getSeasonVersusAverage)

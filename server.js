@@ -59,6 +59,10 @@ const {
   LastTenGamesMedian,
   LastTenGamesGeoMean,
   LastTenGamesMode,
+  SeasonDefenceVsPositionAverage,
+  SeasonDefenceVsPositionMedian,
+  SeasonDefenceVsPositionMode,
+  SeasonDefenceVsPositionGeoMean,
 } = require("./models/playerGameModal")
 const seasonRouter = require("./routes/seasonRoutes")
 const player = require("./models/player")
@@ -74,6 +78,7 @@ mongoose
   .then(async (res) => {
     try {
       console.log("Connection successfully established")
+      // calculateDefenceVersusPositionStats()
       // downloadAndExtractZip()
       // getLastTenGamesData()
       // calculateSeasonVersusCalculations()
@@ -124,6 +129,7 @@ async function downloadAndExtractZip() {
     calculateSeasonVersusCalculations()
     convertToJSONandSavePlayerGameData()
     convertToJSONandSavePlayerSeasonData()
+    calculateDefenceVersusPositionStats()
   } catch (error) {
     console.error("Error downloading and extracting the zip file:", error)
   }
@@ -153,6 +159,78 @@ app.get("PlayerGameProjectionStatsByDate", (req, res, next) => {
     }
   )
 })
+
+const calculateDefenceVersusPositionStats = async () => {
+  try {
+    const month = new Date().getMonth() + 1
+    const date = new Date().getDate() - 1
+    const year = new Date().getFullYear()
+    https.get(
+      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
+        },
+      },
+      (response) => {
+        let data = ""
+        response.on("data", (chunk) => {
+          data += chunk
+        })
+        response.on("end", () => {
+          let scheduledGames = JSON.parse(data)
+          // const arr = [...scheduledGames.map((pl) => pl.OpponentID)]
+          // const uniqueArr = arr.filter((el) => !uniqueArr.includes(el))
+          console.log({ scheduledGames })
+          let arr = []
+          scheduledGames = removeDuplicatesByOpponentID(scheduledGames)
+          scheduledGames.forEach(async (game, index) => {
+            let playerGames = await PlayerGame.find({
+              SeasonType: { $in: [1, 3] },
+              Games: 1,
+              Position: { $in: ["PG", "SG", "SF", "PF", "C"] },
+              OpponentID: game.OpponentID,
+            })
+              .lean()
+              .exec()
+            if (playerGames.length > 0) {
+              arr.push(playerGames)
+            } else {
+              console.log({ game })
+            }
+            if (index === scheduledGames.length - 1) {
+              let allObjects = arr.flat()
+              let combinedGames = mergeSamePlayerObjects(allObjects)
+              // console.log({ allObjects, combinedGames })
+              calculateAverage(combinedGames, "Defence VS Position")
+              calculateMedian(combinedGames, "Defence VS Position")
+              calculateMode(combinedGames, "Defence VS Position")
+              calculateGeoMean(combinedGames, "Defence VS Position")
+            }
+          })
+          // res.send(data)
+        })
+      }
+    )
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+function removeDuplicatesByOpponentID(array) {
+  const uniqueObjects = []
+  const opponentIDs = []
+
+  array.forEach((object) => {
+    if (!opponentIDs.includes(object.OpponentID)) {
+      opponentIDs.push(object.OpponentID)
+      uniqueObjects.push(object)
+    }
+  })
+
+  return uniqueObjects
+}
 
 function mergeSamePlayerObjects(playerData) {
   let players = []
@@ -339,6 +417,9 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
     const sortByFreeThrowsMade = [...playerArr].sort(
       (a, b) => a.FreeThrowsMade - b.FreeThrowsMade
     )
+    const sortByFreeThrowsAttempted = [...playerArr].sort(
+      (a, b) => a.FreeThrowsAttempted - b.FreeThrowsAttempted
+    )
     const sortByAssists = [...playerArr].sort((a, b) => a.Assists - b.Assists)
     const sortByRebounds = [...playerArr].sort(
       (a, b) => a.Rebounds - b.Rebounds
@@ -350,27 +431,28 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       (a, b) => a.BlockedShots - b.BlockedShots
     )
     const sortBySteals = [...playerArr].sort((a, b) => a.Steals - b.Steals)
-    if (index === 0) {
-      sortByPoints.forEach((item) => console.log("Points ==", item.Points))
-      sortByThreePointersMade.forEach((item) =>
-        console.log("Points ==", item.ThreePointersMade)
-      )
-      sortByFreeThrowsMade.forEach((item) =>
-        console.log("Points ==", item.FreeThrowsMade)
-      )
-      sortByAssists.forEach((item) => console.log("Points ==", item.Assists))
-      sortByRebounds.forEach((item) => console.log("Points ==", item.Rebounds))
-      sortByBlockedShots.forEach((item) =>
-        console.log("Points ==", item.BlockedShots)
-      )
-      sortBySteals.forEach((item) => console.log("Points ==", item.Steals))
-    }
+    // if (index === 0) {
+    //   sortByPoints.forEach((item) => console.log("Points ==", item.Points))
+    //   sortByThreePointersMade.forEach((item) =>
+    //     console.log("Points ==", item.ThreePointersMade)
+    //   )
+    //   sortByFreeThrowsMade.forEach((item) =>
+    //     console.log("Points ==", item.FreeThrowsMade)
+    //   )
+    //   sortByAssists.forEach((item) => console.log("Points ==", item.Assists))
+    //   sortByRebounds.forEach((item) => console.log("Points ==", item.Rebounds))
+    //   sortByBlockedShots.forEach((item) =>
+    //     console.log("Points ==", item.BlockedShots)
+    //   )
+    //   sortBySteals.forEach((item) => console.log("Points ==", item.Steals))
+    // }
 
     const length = playerArr.length
     const middleIndex = Math.floor(length / 2)
     let medianPoints,
       medianThreePointersMade,
       medianFreeThrowsMade,
+      medianFreeThrowsAttempted,
       medianAssists,
       medianRebounds,
       medianPersonalFouls,
@@ -381,6 +463,8 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       medianThreePointersMade =
         sortByThreePointersMade[middleIndex].ThreePointersMade
       medianFreeThrowsMade = sortByFreeThrowsMade[middleIndex].FreeThrowsMade
+      medianFreeThrowsAttempted =
+        sortByFreeThrowsAttempted[middleIndex].FreeThrowsAttempted
       medianAssists = sortByAssists[middleIndex].Assists
       medianRebounds = sortByRebounds[middleIndex].Rebounds
       medianPersonalFouls = sortByPersonalFouls[middleIndex].PersonalFouls
@@ -398,6 +482,10 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       medianFreeThrowsMade =
         (sortByFreeThrowsMade[middleIndex - 1].FreeThrowsMade +
           sortByFreeThrowsMade[middleIndex].FreeThrowsMade) /
+        2
+      medianFreeThrowsAttempted =
+        (sortByFreeThrowsAttempted[middleIndex - 1].FreeThrowsAttempted +
+          sortByFreeThrowsAttempted[middleIndex].FreeThrowsAttempted) /
         2
       medianAssists =
         (sortByAssists[middleIndex - 1].Assists +
@@ -430,6 +518,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       Points: medianPoints,
       ThreePointersMade: medianThreePointersMade,
       FreeThrowsMade: medianFreeThrowsMade,
+      FreeThrowsAttempted: medianFreeThrowsAttempted,
       Assists: medianAssists,
       Rebounds: medianRebounds,
       PersonalFouls: medianPersonalFouls,
@@ -441,6 +530,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       ...playerArr[0],
       Points: sortByPoints[0].Points,
       FreeThrowsMade: sortByFreeThrowsMade[0].FreeThrowsMade,
+      FreeThrowsAttempted: sortByFreeThrowsAttempted[0].FreeThrowsAttempted,
       ThreePointersMade: sortByThreePointersMade[0].ThreePointersMade,
       Assists: sortByAssists[0].Assists,
       Rebounds: sortByRebounds[0].Rebounds,
@@ -454,6 +544,9 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       Points: sortByPoints[sortByPoints.length - 1].Points,
       FreeThrowsMade:
         sortByFreeThrowsMade[sortByFreeThrowsMade?.length - 1].FreeThrowsMade,
+      FreeThrowsAttempted:
+        sortByFreeThrowsAttempted[sortByFreeThrowsAttempted?.length - 1]
+          .FreeThrowsAttempted,
       ThreePointersMade:
         sortByThreePointersMade[sortByFreeThrowsMade?.length - 1]
           .ThreePointersMade,
@@ -473,6 +566,9 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       FreeThrowsMade:
         sortByFreeThrowsMade[length - 1].FreeThrowsMade -
         sortByFreeThrowsMade[0].FreeThrowsMade,
+      FreeThrowsAttempted:
+        sortByFreeThrowsAttempted[length - 1].FreeThrowsAttempted -
+        sortByFreeThrowsAttempted[0].FreeThrowsAttempted,
       ThreePointersMade:
         sortByThreePointersMade[length - 1].ThreePointersMade -
         sortByThreePointersMade[0].ThreePointersMade,
@@ -534,6 +630,13 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
     LastTenGamesMedian.deleteMany().then((_) =>
       LastTenGamesMedian.insertMany(tempArrForMedian).then(() =>
         console.log("last ten games median saved successfully")
+      )
+    )
+  }
+  if (collectionName === "Defence VS Position") {
+    SeasonDefenceVsPositionMedian.deleteMany().then((_) =>
+      SeasonDefenceVsPositionMedian.insertMany(tempArrForMedian).then(() =>
+        console.log("SeasonDefenceVsPositionMedian median saved successfully")
       )
     )
   } else {
@@ -604,6 +707,22 @@ function calculateMode(playersGames, collectionName = "") {
     )
     const FreeThrowsMadeModes = FreeThrowsMadeSortedEntries.filter(
       (entry) => entry[1] === FreeThrowsMadeSortedEntries[0][1]
+    ).map((entry) => entry[0])
+
+    const FreeThrowsAttemptedMap = playerData.reduce((map, player) => {
+      const FreeThrowsAttempted = player.FreeThrowsAttempted
+      if (FreeThrowsAttempted in map) {
+        map[FreeThrowsAttempted]++
+      } else {
+        map[FreeThrowsAttempted] = 1
+      }
+      return map
+    }, {})
+    const FreeThrowsAttemptedSortedEntries = Object.entries(
+      FreeThrowsAttemptedMap
+    ).sort((a, b) => b[1] - a[1])
+    const FreeThrowsAttemptedModes = FreeThrowsAttemptedSortedEntries.filter(
+      (entry) => entry[1] === FreeThrowsAttemptedSortedEntries[0][1]
     ).map((entry) => entry[0])
 
     const AssistsMap = playerData.reduce((map, player) => {
@@ -691,6 +810,7 @@ function calculateMode(playersGames, collectionName = "") {
       Points: +modes[0],
       ThreePointersMade: +ThreePointersMadeModes[0],
       FreeThrowsMade: +FreeThrowsMadeModes[0],
+      FreeThrowsAttempted: +FreeThrowsAttemptedModes[0],
       Assists: +AssistsModes[0],
       Rebounds: +ReboundsModes[0],
       PersonalFouls: +PersonalFoulsModes[0],
@@ -711,6 +831,12 @@ function calculateMode(playersGames, collectionName = "") {
         console.log("Saved last ten games mode")
       )
     })
+  } else if (collectionName === "Defence VS Position") {
+    SeasonDefenceVsPositionMode.deleteMany().then((_) => {
+      SeasonDefenceVsPositionMode.insertMany(temp).then((_) =>
+        console.log("Saved SeasonDefenceVsPositionMode")
+      )
+    })
   } else {
     PlayerSeasonMode.deleteMany().then((_) => {
       PlayerSeasonMode.insertMany(temp).then((_) =>
@@ -726,6 +852,7 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
     let pointsProduct = 1
     let threePointersMadeProduct = 1
     let freeThrowsMadeProduct = 1
+    let freeThrowsAttemptedProduct = 1
     let assistsProduct = 1
     let reboundsProduct = 1
     let personalFoulsProduct = 1
@@ -735,6 +862,7 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
       pointsProduct *= item.Points
       threePointersMadeProduct *= item.ThreePointersMade
       freeThrowsMadeProduct *= item.FreeThrowsMade
+      freeThrowsAttemptedProduct *= item.FreeThrowsAttempted
       assistsProduct *= item.Assists
       reboundsProduct *= item.Rebounds
       personalFoulsProduct *= item.PersonalFouls
@@ -748,6 +876,10 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
     )
     const freeThrowsMadeGeoMean = Math.pow(
       freeThrowsMadeProduct,
+      1 / player.length
+    )
+    const freeThrowsAttemptedGeoMean = Math.pow(
+      freeThrowsAttemptedProduct,
       1 / player.length
     )
     const assistsGeoMean = Math.pow(assistsProduct, 1 / player.length)
@@ -767,6 +899,7 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
       Points: pointsGeoMean.toFixed(2),
       ThreePointersMade: threePointersMadeGeoMean.toFixed(2),
       FreeThrowsMade: freeThrowsMadeGeoMean.toFixed(2),
+      FreeThrowsAttempted: freeThrowsAttemptedGeoMean.toFixed(2),
       Assists: assistsGeoMean.toFixed(2),
       Rebounds: reboundsGeoMean.toFixed(2),
       PersonalFouls: personalFoulsGeoMean.toFixed(2),
@@ -785,6 +918,12 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
     LastTenGamesGeoMean.deleteMany().then((_) => {
       LastTenGamesGeoMean.insertMany(playersGeoMeanData).then((_) =>
         console.log("Last ten games geomean saved into database")
+      )
+    })
+  } else if (collectionName === "Defence VS Position") {
+    SeasonDefenceVsPositionGeoMean.deleteMany().then((_) => {
+      SeasonDefenceVsPositionGeoMean.insertMany(playersGeoMeanData).then((_) =>
+        console.log("SeasonDefenceVsPositionGeoMean saved into database")
       )
     })
   } else {
@@ -982,6 +1121,7 @@ const calculateAverage = async (playersData, type = "") => {
     let totalPoints = 0
     let totalThreePointersMadeAvg = 0
     let totalFreeThrowsMade = 0
+    let totalFreeThrowsAttempted = 0
     let totalAssists = 0
     let totalRebounds = 0
     let totalPersonalFouls = 0
@@ -991,6 +1131,7 @@ const calculateAverage = async (playersData, type = "") => {
       totalPoints += playerObj.Points
       totalThreePointersMadeAvg += playerObj.ThreePointersMade
       totalFreeThrowsMade += playerObj.FreeThrowsMade
+      totalFreeThrowsAttempted += playerObj.FreeThrowsAttempted
       totalAssists += playerObj.Assists
       totalRebounds += playerObj.Rebounds
       totalPersonalFouls += playerObj.PersonalFouls
@@ -1001,6 +1142,8 @@ const calculateAverage = async (playersData, type = "") => {
     const ThreePointersMadeAverage =
       totalThreePointersMadeAvg / playerArr.length || 0
     const FreeThrowsMadeAverage = totalFreeThrowsMade / playerArr.length || 0
+    const FreeThrowsAttemptedAverage =
+      totalFreeThrowsAttempted / playerArr.length || 0
     const AssistsAverage = totalAssists / playerArr.length || 0
     const ReboundsAverage = totalRebounds / playerArr.length || 0
     const PersonalFoulsAverage = totalPersonalFouls / playerArr.length || 0
@@ -1021,6 +1164,7 @@ const calculateAverage = async (playersData, type = "") => {
       Points: PointsAverage.toFixed(2),
       ThreePointersMade: ThreePointersMadeAverage.toFixed(2),
       FreeThrowsMade: FreeThrowsMadeAverage.toFixed(2),
+      FreeThrowsAttempted: FreeThrowsAttemptedAverage.toFixed(2),
       Assists: AssistsAverage.toFixed(2),
       Rebounds: ReboundsAverage.toFixed(2),
       PersonalFouls: PersonalFoulsAverage.toFixed(2),
@@ -1043,6 +1187,13 @@ const calculateAverage = async (playersData, type = "") => {
       console.log("Deleted existing last ten games average")
       LastTenGamesAverage.insertMany(temp).then((_) =>
         console.log("Last ten games average inserted into database")
+      )
+    })
+  } else if (type === "Defence VS Position") {
+    SeasonDefenceVsPositionAverage.deleteMany().then(() => {
+      console.log("Deleted existing SeasonDefenceVsPositionAverage")
+      SeasonDefenceVsPositionAverage.insertMany(temp).then((_) =>
+        console.log("SeasonDefenceVsPositionAverage inserted into database")
       )
     })
   } else {
