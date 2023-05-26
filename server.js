@@ -266,7 +266,8 @@ const calculateLastTenDefenceVersusPositionStats = async () => {
             }
             if (index === scheduledGames.length - 1) {
               let allObjects = arr.flat()
-              let gamesByTeams = mergeSameTeamObjects(allObjects)
+              let gamesData = removeDuplicatesByArr(allObjects, "Day")
+              let gamesByTeams = mergeSameTeamObjects(gamesData)
               // console.log({ allObjects, combinedGames })
               calculateAverage(gamesByTeams, "Last ten DVP")
               calculateMedian(gamesByTeams, "Last ten DVP")
@@ -290,6 +291,19 @@ function removeDuplicatesByOpponentID(array) {
   array.forEach((object) => {
     if (!opponentIDs.includes(object.OpponentID)) {
       opponentIDs.push(object.OpponentID)
+      uniqueObjects.push(object)
+    }
+  })
+
+  return uniqueObjects
+}
+function removeDuplicatesByArr(array, attribute) {
+  const uniqueObjects = []
+  const opponentIDs = []
+
+  array.forEach((object) => {
+    if (!opponentIDs.includes(object[attribute])) {
+      opponentIDs.push(object[attribute])
       uniqueObjects.push(object)
     }
   })
@@ -365,18 +379,23 @@ const getLastTenGamesData = async () => {
     ]
     let lastTenGamesData = []
     teams.forEach(async (team, index) => {
-      const gamesForTeam = await PlayerGame.find({
-        SeasonType: { $in: [1, 3] },
-        Games: 1,
-        Team: team.name,
-      })
-        .sort({ Day: -1 })
-        .limit(10)
-        .lean()
-        .exec()
-      teams[index].games = gamesForTeam
-      lastTenGamesData[index] = gamesForTeam
-      gamesForTeam.forEach((item) => {
+      let gamesForTeam = await PlayerGame.aggregate([
+        // Group by the unique Day values
+        {
+          $group: {
+            _id: "$Day",
+            doc: { $first: "$$ROOT" },
+          },
+        },
+        // Sort by Day in descending order
+        { $sort: { _id: -1 } },
+        // Limit the results to the top ten records
+        { $limit: 10 },
+      ]).exec()
+      let docs = gamesForTeam.map((item) => item.doc)
+      teams[index].games = docs
+      lastTenGamesData[index] = docs
+      docs.forEach((item) => {
         if (item.Name === "Larry Nance Jr.") {
           console.log({ item })
         }
@@ -589,11 +608,6 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
           sortBySteals[middleIndex].Steals) /
         2
     }
-    Object.keys(playerArr[0]).forEach((key) => {
-      if (isNaN(playerArr[0][key]) && key === "Points") {
-        console.log(playerArr)
-      }
-    })
     tempArrForMedian.push({
       ...playerArr[0],
       Points: medianPoints,
@@ -607,19 +621,23 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       Steals: medianSteals,
       GamesCount: playerArr?.length,
     })
-    minStatsValue.push({
-      ...playerArr[0],
-      Points: sortByPoints[0].Points,
-      FreeThrowsMade: sortByFreeThrowsMade[0].FreeThrowsMade,
-      FreeThrowsAttempted: sortByFreeThrowsAttempted[0].FreeThrowsAttempted,
-      ThreePointersMade: sortByThreePointersMade[0].ThreePointersMade,
-      Assists: sortByAssists[0].Assists,
-      Rebounds: sortByRebounds[0].Rebounds,
-      PersonalFouls: sortByPersonalFouls[0].PersonalFouls,
-      BlockedShots: sortByBlockedShots[0].BlockedShots,
-      Steals: sortBySteals[0].Steals,
-      GamesCount: playerArr?.length,
-    })
+    let minutesPlayedInAllGames = 0
+    playerArr.forEach((game) => (minutesPlayedInAllGames += game.Minutes))
+    if (minutesPlayedInAllGames >= 20) {
+      minStatsValue.push({
+        ...playerArr[0],
+        Points: sortByPoints[0].Points,
+        FreeThrowsMade: sortByFreeThrowsMade[0].FreeThrowsMade,
+        FreeThrowsAttempted: sortByFreeThrowsAttempted[0].FreeThrowsAttempted,
+        ThreePointersMade: sortByThreePointersMade[0].ThreePointersMade,
+        Assists: sortByAssists[0].Assists,
+        Rebounds: sortByRebounds[0].Rebounds,
+        PersonalFouls: sortByPersonalFouls[0].PersonalFouls,
+        BlockedShots: sortByBlockedShots[0].BlockedShots,
+        Steals: sortBySteals[0].Steals,
+        GamesCount: playerArr?.length,
+      })
+    }
     maxStatsValue.push({
       ...playerArr[0],
       Points: sortByPoints[sortByPoints.length - 1].Points,
@@ -720,7 +738,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
         console.log("SeasonDefenceVsPositionMedian median saved successfully")
       )
     )
-  } else if(collectionName === "Last ten DVP") {
+  } else if (collectionName === "Last ten DVP") {
     LastTenDefenceVsPositionMedian.deleteMany().then((_) =>
       LastTenDefenceVsPositionMedian.insertMany(tempArrForMedian).then(() =>
         console.log("LastTenDefenceVsPositionMedian median saved successfully")
@@ -924,7 +942,7 @@ function calculateMode(playersGames, collectionName = "") {
         console.log("Saved SeasonDefenceVsPositionMode")
       )
     })
-  } else if(collectionName === "Last ten DVP") {
+  } else if (collectionName === "Last ten DVP") {
     LastTenDefenceVsPositionMode.deleteMany().then((_) => {
       LastTenDefenceVsPositionMode.insertMany(temp).then((_) =>
         console.log("Saved LastTenDefenceVsPositionMode")
@@ -1019,7 +1037,7 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
         console.log("SeasonDefenceVsPositionGeoMean saved into database")
       )
     })
-  } else if(collectionName === "Last ten DVP") {
+  } else if (collectionName === "Last ten DVP") {
     LastTenDefenceVsPositionGeoMean.deleteMany().then((_) => {
       LastTenDefenceVsPositionGeoMean.insertMany(playersGeoMeanData).then((_) =>
         console.log("LastTenDefenceVsPositionGeoMean saved into database")
@@ -1226,6 +1244,7 @@ const calculateAverage = async (playersData, type = "") => {
     let totalPersonalFouls = 0
     let totalBlockedShots = 0
     let totalSteals = 0
+    let totalMinutesPlayed = 0
     playerArr.forEach((playerObj) => {
       totalPoints += playerObj.Points
       totalThreePointersMadeAvg += playerObj.ThreePointersMade
@@ -1236,7 +1255,9 @@ const calculateAverage = async (playersData, type = "") => {
       totalPersonalFouls += playerObj.PersonalFouls
       totalBlockedShots += playerObj.BlockedShots
       totalSteals += playerObj.Steals
+      totalMinutesPlayed += playerObj.Minutes
     })
+    const MinutesAverage = totalMinutesPlayed / playerArr.length || 0
     const PointsAverage = totalPoints / playerArr.length || 0
     const ThreePointersMadeAverage =
       totalThreePointersMadeAvg / playerArr.length || 0
@@ -1269,7 +1290,7 @@ const calculateAverage = async (playersData, type = "") => {
       PersonalFouls: PersonalFoulsAverage.toFixed(2),
       BlockedShots: BlockedShotsAverage.toFixed(2),
       Steals: StealsAverage.toFixed(2),
-      // gamesPlayed: gamesPlayed,
+      Minutes: MinutesAverage.toFixed(2),
       GamesCount: playerArr?.length,
     }
     temp.push(playerWithAveragePoints)
@@ -1295,7 +1316,7 @@ const calculateAverage = async (playersData, type = "") => {
         console.log("SeasonDefenceVsPositionAverage inserted into database")
       )
     })
-  } else if(type === "Last ten DVP") {
+  } else if (type === "Last ten DVP") {
     LastTenDefenceVsPositionAverage.deleteMany().then(() => {
       console.log("Deleted existing LastTenDefenceVsPositionAverage")
       LastTenDefenceVsPositionAverage.insertMany(temp).then((_) =>
