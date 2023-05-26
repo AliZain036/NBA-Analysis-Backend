@@ -63,6 +63,10 @@ const {
   SeasonDefenceVsPositionMedian,
   SeasonDefenceVsPositionMode,
   SeasonDefenceVsPositionGeoMean,
+  LastTenDefenceVsPositionAverage,
+  LastTenDefenceVsPositionMedian,
+  LastTenDefenceVsPositionMode,
+  LastTenDefenceVsPositionGeoMean,
 } = require("./models/playerGameModal")
 const seasonRouter = require("./routes/seasonRoutes")
 const player = require("./models/player")
@@ -84,6 +88,7 @@ mongoose
       // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
+      // calculateLastTenDefenceVersusPositionStats()
     } catch (error) {
       console.error(error.message, " error")
     }
@@ -91,7 +96,7 @@ mongoose
   .catch((err) => console.error(err))
 
 const outputDir = "./sportsDataCSV"
-//
+
 // Create the output directory if it doesn't exist
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir)
@@ -130,6 +135,7 @@ async function downloadAndExtractZip() {
     convertToJSONandSavePlayerGameData()
     convertToJSONandSavePlayerSeasonData()
     calculateDefenceVersusPositionStats()
+    calculateLastTenDefenceVersusPositionStats()
   } catch (error) {
     console.error("Error downloading and extracting the zip file:", error)
   }
@@ -192,6 +198,7 @@ const calculateDefenceVersusPositionStats = async () => {
               Position: { $in: ["PG", "SG", "SF", "PF", "C"] },
               OpponentID: game.OpponentID,
             })
+              .sort({ Day: -1 })
               .lean()
               .exec()
             if (playerGames.length > 0) {
@@ -201,12 +208,70 @@ const calculateDefenceVersusPositionStats = async () => {
             }
             if (index === scheduledGames.length - 1) {
               let allObjects = arr.flat()
-              let combinedGames = mergeSamePlayerObjects(allObjects)
+              let gamesByTeams = mergeSameTeamObjects(allObjects)
               // console.log({ allObjects, combinedGames })
-              calculateAverage(combinedGames, "Defence VS Position")
-              calculateMedian(combinedGames, "Defence VS Position")
-              calculateMode(combinedGames, "Defence VS Position")
-              calculateGeoMean(combinedGames, "Defence VS Position")
+              calculateAverage(gamesByTeams, "Defence VS Position")
+              calculateMedian(gamesByTeams, "Defence VS Position")
+              calculateMode(gamesByTeams, "Defence VS Position")
+              calculateGeoMean(gamesByTeams, "Defence VS Position")
+            }
+          })
+          // res.send(data)
+        })
+      }
+    )
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const calculateLastTenDefenceVersusPositionStats = async () => {
+  try {
+    const month = new Date().getMonth() + 1
+    const date = new Date().getDate() - 1
+    const year = new Date().getFullYear()
+    https.get(
+      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
+        },
+      },
+      (response) => {
+        let data = ""
+        response.on("data", (chunk) => {
+          data += chunk
+        })
+        response.on("end", () => {
+          let scheduledGames = JSON.parse(data)
+          console.log({ scheduledGames })
+          let arr = []
+          scheduledGames = removeDuplicatesByOpponentID(scheduledGames)
+          scheduledGames.forEach(async (game, index) => {
+            let playerGames = await PlayerGame.find({
+              SeasonType: { $in: [1, 3] },
+              Games: 1,
+              Position: { $in: ["PG", "SG", "SF", "PF", "C"] },
+              OpponentID: game.OpponentID,
+            })
+              .sort({ Day: -1 })
+              .limit(10)
+              .lean()
+              .exec()
+            if (playerGames.length > 0) {
+              arr.push(playerGames)
+            } else {
+              console.log({ game })
+            }
+            if (index === scheduledGames.length - 1) {
+              let allObjects = arr.flat()
+              let gamesByTeams = mergeSameTeamObjects(allObjects)
+              // console.log({ allObjects, combinedGames })
+              calculateAverage(gamesByTeams, "Last ten DVP")
+              calculateMedian(gamesByTeams, "Last ten DVP")
+              calculateMode(gamesByTeams, "Last ten DVP")
+              calculateGeoMean(gamesByTeams, "Last ten DVP")
             }
           })
           // res.send(data)
@@ -244,6 +309,22 @@ function mergeSamePlayerObjects(playerData) {
   }
   for (const playerID in players) {
     result.push(players[playerID])
+  }
+  return result
+}
+
+function mergeSameTeamObjects(teamsData) {
+  let teams = []
+  let result = []
+  for (const team of teamsData) {
+    const opponentID = team.OpponentID
+    if (!teams[opponentID]) {
+      teams[opponentID] = []
+    }
+    teams[opponentID].push(team)
+  }
+  for (const opponentID in teams) {
+    result.push(teams[opponentID])
   }
   return result
 }
@@ -639,6 +720,12 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
         console.log("SeasonDefenceVsPositionMedian median saved successfully")
       )
     )
+  } else if(collectionName === "Last ten DVP") {
+    LastTenDefenceVsPositionMedian.deleteMany().then((_) =>
+      LastTenDefenceVsPositionMedian.insertMany(tempArrForMedian).then(() =>
+        console.log("LastTenDefenceVsPositionMedian median saved successfully")
+      )
+    )
   } else {
     try {
       PlayerSeasonMinimum.deleteMany().then((_) =>
@@ -837,6 +924,12 @@ function calculateMode(playersGames, collectionName = "") {
         console.log("Saved SeasonDefenceVsPositionMode")
       )
     })
+  } else if(collectionName === "Last ten DVP") {
+    LastTenDefenceVsPositionMode.deleteMany().then((_) => {
+      LastTenDefenceVsPositionMode.insertMany(temp).then((_) =>
+        console.log("Saved LastTenDefenceVsPositionMode")
+      )
+    })
   } else {
     PlayerSeasonMode.deleteMany().then((_) => {
       PlayerSeasonMode.insertMany(temp).then((_) =>
@@ -924,6 +1017,12 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
     SeasonDefenceVsPositionGeoMean.deleteMany().then((_) => {
       SeasonDefenceVsPositionGeoMean.insertMany(playersGeoMeanData).then((_) =>
         console.log("SeasonDefenceVsPositionGeoMean saved into database")
+      )
+    })
+  } else if(collectionName === "Last ten DVP") {
+    LastTenDefenceVsPositionGeoMean.deleteMany().then((_) => {
+      LastTenDefenceVsPositionGeoMean.insertMany(playersGeoMeanData).then((_) =>
+        console.log("LastTenDefenceVsPositionGeoMean saved into database")
       )
     })
   } else {
@@ -1194,6 +1293,13 @@ const calculateAverage = async (playersData, type = "") => {
       console.log("Deleted existing SeasonDefenceVsPositionAverage")
       SeasonDefenceVsPositionAverage.insertMany(temp).then((_) =>
         console.log("SeasonDefenceVsPositionAverage inserted into database")
+      )
+    })
+  } else if(type === "Last ten DVP") {
+    LastTenDefenceVsPositionAverage.deleteMany().then(() => {
+      console.log("Deleted existing LastTenDefenceVsPositionAverage")
+      LastTenDefenceVsPositionAverage.insertMany(temp).then((_) =>
+        console.log("LastTenDefenceVsPositionAverage inserted into database")
       )
     })
   } else {

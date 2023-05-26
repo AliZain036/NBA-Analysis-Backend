@@ -7,6 +7,10 @@ const {
   LastTenGamesMode,
   LastTenGamesMedian,
   LastTenGamesGeoMean,
+  LastTenDefenceVsPositionAverage,
+  LastTenDefenceVsPositionMode,
+  LastTenDefenceVsPositionMedian,
+  LastTenDefenceVsPositionGeoMean,
 } = require("../models/playerGameModal")
 
 const getLastTenGames = async (req, res) => {
@@ -55,6 +59,41 @@ const getLastTenGamesAverage = async (req, res) => {
     res.status(500).json({ success: true, message: error.message })
   }
 }
+
+const getLastTenDVPAverage = async (req, res) => {
+  try {
+    const docs = await LastTenDefenceVsPositionAverage.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+
+const getLastTenDVPMode = async (req, res) => {
+  try {
+    const docs = await LastTenDefenceVsPositionMode.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenDVPMedian = async (req, res) => {
+  try {
+    const docs = await LastTenDefenceVsPositionMedian.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+const getLastTenDVPGeoMean = async (req, res) => {
+  try {
+    const docs = await LastTenDefenceVsPositionGeoMean.find({})
+    res.status(200).json({ success: true, data: docs })
+  } catch (error) {
+    res.status(500).json({ success: true, message: error.message })
+  }
+}
+
 const getLastTenGamesMinimum = async (req, res) => {
   try {
     const docs = await LastTenGamesMinimum.find({})
@@ -114,4 +153,8 @@ module.exports = {
   getLastTenGamesMaximum,
   getLastTenGamesMinimum,
   getLastTenGamesRange,
+  getLastTenDVPAverage,
+  getLastTenDVPGeoMean,
+  getLastTenDVPMedian,
+  getLastTenDVPMode
 }

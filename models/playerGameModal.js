@@ -73,6 +73,10 @@ const SeasonDefenceVsPositionAverage = mongoose.model(
   "SeasonDefenceVsPositionAverage",
   PlayerGameSchema
 )
+const LastTenDefenceVsPositionAverage = mongoose.model(
+  "LastTenDefenceVsPositionAverage",
+  PlayerGameSchema
+)
 const SeasonVersusMedian = mongoose.model(
   "SeasonVersusMedian",
   PlayerGameSchema
@@ -81,14 +85,23 @@ const SeasonDefenceVsPositionMedian = mongoose.model(
   "SeasonDefenceVsPositionMedian",
   PlayerGameSchema
 )
+const LastTenDefenceVsPositionMedian = mongoose.model(
+  "LastTenDefenceVsPositionMedian",
+  PlayerGameSchema
+)
 const SeasonVersusMode = mongoose.model("SeasonVersusMode", PlayerGameSchema)
 const SeasonDefenceVsPositionMode = mongoose.model("SeasonDefenceVsPositionMode", PlayerGameSchema)
+const LastTenDefenceVsPositionMode = mongoose.model("LastTenDefenceVsPositionMode", PlayerGameSchema)
 const SeasonVersusGeoMean = mongoose.model(
   "SeasonVersusGeoMean",
   PlayerGameSchema
 )
 const SeasonDefenceVsPositionGeoMean = mongoose.model(
   "SeasonDefenceVsPositionGeoMean",
+  PlayerGameSchema
+)
+const LastTenDefenceVsPositionGeoMean = mongoose.model(
+  "LastTenDefenceVsPositionGeoMean",
   PlayerGameSchema
 )
 const SeasonVersusMinimum = mongoose.model(
@@ -126,5 +139,9 @@ module.exports = {
   SeasonDefenceVsPositionAverage,
   SeasonDefenceVsPositionMode,
   SeasonDefenceVsPositionMedian,
-  SeasonDefenceVsPositionGeoMean
+  SeasonDefenceVsPositionGeoMean,
+  LastTenDefenceVsPositionAverage,
+  LastTenDefenceVsPositionMode,
+  LastTenDefenceVsPositionMedian,
+  LastTenDefenceVsPositionGeoMean
 }
