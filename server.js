@@ -84,7 +84,7 @@ mongoose
       console.log("Connection successfully established")
       // calculateDefenceVersusPositionStats()
       // downloadAndExtractZip()
-      getLastTenGamesData()
+      // getLastTenGamesData()
       // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
