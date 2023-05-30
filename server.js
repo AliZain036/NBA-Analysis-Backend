@@ -84,7 +84,7 @@ mongoose
       console.log("Connection successfully established")
       // calculateDefenceVersusPositionStats()
       // downloadAndExtractZip()
-      // getLastTenGamesData()
+      getLastTenGamesData()
       // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
@@ -405,11 +405,29 @@ const getLastTenGamesData = async () => {
       if (index === 29) {
         let arr = []
         lastTenGamesData.forEach((teamGames) => arr.push(...teamGames))
-        let samePlayerGames = mergeSamePlayerObjects(arr)
-        calculateAverage(samePlayerGames, "Last Ten Games")
-        calculateMedian(samePlayerGames, "Last Ten Games")
-        calculateGeoMean(samePlayerGames, "Last Ten Games")
-        calculateMode(samePlayerGames, "Last Ten Games")
+        const games = removeDuplicatesByArr(arr, "GameID")
+        console.log({ games })
+        let players = []
+        games.forEach(async (game, index) => {
+          const data = await PlayerGame.find({
+            GameID: game.GameID,
+            SeasonType: { $in: [1, 3] },
+            Games: 1,
+          })
+            .sort({ Day: -1 })
+            .limit(10)
+            .lean()
+            .exec()
+          players.push(data)
+          if(index === games.length - 1) {
+            console.log({ players })
+            // let samePlayerGames = mergeSamePlayerObjects(arr)
+            calculateAverage(players, "Last Ten Games")
+            calculateMedian(players, "Last Ten Games")
+            calculateGeoMean(players, "Last Ten Games")
+            calculateMode(players, "Last Ten Games")
+          }
+        })
       }
     })
   } catch (error) {
