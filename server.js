@@ -84,7 +84,7 @@ mongoose
       console.log("Connection successfully established")
       // calculateDefenceVersusPositionStats()
       // downloadAndExtractZip()
-      // getLastTenGamesData()
+      getLastTenGamesData()
       // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
@@ -382,6 +382,13 @@ const getLastTenGamesData = async () => {
       let gamesForTeam = await PlayerGame.aggregate([
         // Group by the unique Day values
         {
+          $match: {
+            Team: team.name,
+            Games: 1,
+            SeasonType: { $in: [1, 3] },
+          },
+        },
+        {
           $group: {
             _id: "$Day",
             doc: { $first: "$$ROOT" },
@@ -395,11 +402,6 @@ const getLastTenGamesData = async () => {
       let docs = gamesForTeam.map((item) => item.doc)
       teams[index].games = docs
       lastTenGamesData[index] = docs
-      docs.forEach((item) => {
-        if (item.Name === "Larry Nance Jr.") {
-          console.log({ item })
-        }
-      })
       if (index === 29) {
         let arr = []
         lastTenGamesData.forEach((teamGames) => arr.push(...teamGames))
@@ -409,44 +411,6 @@ const getLastTenGamesData = async () => {
         calculateGeoMean(samePlayerGames, "Last Ten Games")
         calculateMode(samePlayerGames, "Last Ten Games")
       }
-    })
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const calculateSeasonAverage = async (data) => {
-  try {
-    const average = []
-    data.forEach((player) => {
-      if (player.Games >= 1) {
-        let playerAverage = {
-          ...player,
-          gamesPlayed: player.Games,
-          Points: (player.Points / player.Games).toFixed(2),
-          Assists: (player.Assists / player.Games).toFixed(2),
-          FreeThrowsMade: (player.FreeThrowsMade / player.Games).toFixed(2),
-          ThreePointersMade: (player.ThreePointersMade / player.Games).toFixed(
-            2
-          ),
-          PersonalFouls: (player.PersonalFouls / player.Games).toFixed(2),
-          BlockedShots: (player.BlockedShots / player.Games).toFixed(2),
-          Rebounds: (player.Rebounds / player.Games).toFixed(2),
-          Steals: (player.Steals / player.Games).toFixed(2),
-          GamesCount: player.Games,
-        }
-        Object.keys(playerAverage).forEach((key) => {
-          if (isNaN(playerAverage[key]) && key === "Points") {
-            console.log("key: " + key + " value: " + playerAverage[key], player)
-          }
-        })
-        average.push(playerAverage)
-      }
-    })
-    PlayerSeasonAverage.deleteMany({}).then((_) => {
-      PlayerSeasonAverage.insertMany(average).then((_) =>
-        console.log("Player season average calculated")
-      )
     })
   } catch (error) {
     console.error(error)
@@ -470,12 +434,6 @@ async function convertToJSONandSavePlayerSeasonData() {
           PlayerSeason.insertMany(playerSeasonData).then(async (_) => {
             {
               console.log("Player season data inserted successfully")
-              // const playerGameData = await PlayerSeason.find({
-              //   SeasonType: { $in: [1, 3] },
-              //   Games: { $ne: 0 },
-              // })
-              //   .lean()
-              //   .exec()
             }
           })
         })
