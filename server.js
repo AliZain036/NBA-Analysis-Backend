@@ -70,6 +70,7 @@ const {
 } = require("./models/playerGameModal")
 const seasonRouter = require("./routes/seasonRoutes")
 const player = require("./models/player")
+const Game = require("./models/game")
 
 const fantasyDataCSVFileUrl =
   "https://sportsdata.io/members/download-file?product=5aff2d7c-d41e-40a8-bb7c-b18096c1ca3b"
@@ -84,7 +85,7 @@ mongoose
       console.log("Connection successfully established")
       // calculateDefenceVersusPositionStats()
       // downloadAndExtractZip()
-      getLastTenGamesData()
+      // getLastTenGamesData()
       // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
@@ -186,8 +187,6 @@ const calculateDefenceVersusPositionStats = async () => {
         })
         response.on("end", () => {
           let scheduledGames = JSON.parse(data)
-          // const arr = [...scheduledGames.map((pl) => pl.OpponentID)]
-          // const uniqueArr = arr.filter((el) => !uniqueArr.includes(el))
           console.log({ scheduledGames })
           let arr = []
           scheduledGames = removeDuplicatesByOpponentID(scheduledGames)
@@ -228,7 +227,7 @@ const calculateDefenceVersusPositionStats = async () => {
 const calculateLastTenDefenceVersusPositionStats = async () => {
   try {
     const month = new Date().getMonth() + 1
-    const date = new Date().getDate() - 1
+    const date = new Date().getDate()
     const year = new Date().getFullYear()
     https.get(
       `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
@@ -345,6 +344,16 @@ function mergeSameTeamObjects(teamsData) {
 
 const getLastTenGamesData = async () => {
   try {
+    const filePath = "./sportsDataCSV/Game.2023.csv"
+    csvtojson()
+      .fromFile(filePath)
+      .then((data) => {
+        Game.deleteMany().then((_) => {
+          Game.insertMany(data).then((_) => {
+            console.log("Games inserted successfully")
+          })
+        })
+      })
     let teams = [
       { name: "ATL", games: [] },
       { name: "BKN", games: [] },
@@ -377,57 +386,53 @@ const getLastTenGamesData = async () => {
       { name: "UTA", games: [] },
       { name: "WAS", games: [] },
     ]
-    let lastTenGamesData = []
+    let games = await Game.find({ Status: { $in: ["Final", "F/OT"] } })
+      .sort({ GameID: -1 })
+      .lean()
+      .exec()
+    console.log({ games })
+    let teamGames = []
     teams.forEach(async (team, index) => {
-      let gamesForTeam = await PlayerGame.aggregate([
-        // Group by the unique Day values
-        {
-          $match: {
-            Team: team.name,
-            Games: 1,
+      try {
+        const TeamGames = games
+          .filter(
+            (item) => item.HomeTeam == team.name || item.AwayTeam == team.name
+          )
+          .slice(0, 10)
+        // TeamGames.sort((a, b) => b.GameID - a.GameID).slice(0, 10)
+        teamGames.push(TeamGames)
+        if (index === teams.length - 1) {
+          teamGames = teamGames.flat()
+          console.log(teamGames)
+          let gameIDs = teamGames.map((team) => team.GameID)
+          let playersData = []
+          let playerGameFileData = await PlayerGame.find({
             SeasonType: { $in: [1, 3] },
-          },
-        },
-        {
-          $group: {
-            _id: "$Day",
-            doc: { $first: "$$ROOT" },
-          },
-        },
-        // Sort by Day in descending order
-        { $sort: { _id: -1 } },
-        // Limit the results to the top ten records
-        { $limit: 10 },
-      ]).exec()
-      let docs = gamesForTeam.map((item) => item.doc)
-      teams[index].games = docs
-      lastTenGamesData[index] = docs
-      if (index === 29) {
-        let arr = []
-        lastTenGamesData.forEach((teamGames) => arr.push(...teamGames))
-        const games = removeDuplicatesByArr(arr, "GameID")
-        console.log({ games })
-        let players = []
-        games.forEach(async (game, index) => {
-          const data = await PlayerGame.find({
-            GameID: game.GameID,
-            SeasonType: { $in: [1, 3] },
-            Games: 1,
+            GameID: { $in: [...gameIDs] },
           })
-            .sort({ Day: -1 })
-            .limit(10)
             .lean()
             .exec()
-          players.push(data)
-          if(index === games.length - 1) {
-            console.log({ players })
-            // let samePlayerGames = mergeSamePlayerObjects(arr)
-            calculateAverage(players, "Last Ten Games")
-            calculateMedian(players, "Last Ten Games")
-            calculateGeoMean(players, "Last Ten Games")
-            calculateMode(players, "Last Ten Games")
-          }
-        })
+          console.log({ playerGameFileData })
+          let combinedGames = mergeSamePlayerObjects(playerGameFileData)
+          console.log(combinedGames)
+          let playerGames = combinedGames.map((plArr) =>
+            [...plArr].slice(0, 10)
+          )
+          combinedGames = []
+          playerGames.map((item) => {
+            let gamesArr = item.filter((game) => game.Games === 1)
+            if (gamesArr.length > 0) {
+              combinedGames.push(gamesArr)
+            }
+          })
+          console.log({ combinedGames })
+          calculateAverage(combinedGames, "Last Ten Games")
+          calculateMedian(combinedGames, "Last Ten Games")
+          calculateGeoMean(combinedGames, "Last Ten Games")
+          calculateMode(combinedGames, "Last Ten Games")
+        }
+      } catch (error) {
+        console.error(error)
       }
     })
   } catch (error) {
@@ -935,7 +940,7 @@ function calculateMode(playersGames, collectionName = "") {
 
 const calculateGeoMean = (playersData = [], collectionName = "") => {
   let playersGeoMeanData = []
-  playersData.forEach((player = []) => {
+  playersData?.forEach((player = []) => {
     let pointsProduct = 1
     let threePointersMadeProduct = 1
     let freeThrowsMadeProduct = 1
@@ -945,7 +950,7 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
     let personalFoulsProduct = 1
     let blockedShotsFoulsProduct = 1
     let stealsProduct = 1
-    player.forEach((item) => {
+    player?.forEach((item) => {
       pointsProduct *= item.Points
       threePointersMadeProduct *= item.ThreePointersMade
       freeThrowsMadeProduct *= item.FreeThrowsMade
