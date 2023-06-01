@@ -4,7 +4,7 @@ const GameSchema = new mongoose.Schema({
   Season: String,
   SeasonType: Number,
   Status: String,
-  Day: String,
+  Day: Date,
   DateTime: String,
   AwayTeam: String,
   HomeTeam: String,

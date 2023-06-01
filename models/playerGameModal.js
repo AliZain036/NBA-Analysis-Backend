@@ -15,7 +15,7 @@ const PlayerGameSchema = new mongoose.Schema({
   GameID: Number,
   OpponentID: Number,
   Opponent: String,
-  Day: String,
+  Day: Date,
   DateTime: String,
   HomeOrAway: String,
   Games: Number,

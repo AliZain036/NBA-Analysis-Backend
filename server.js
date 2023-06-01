@@ -83,12 +83,37 @@ mongoose
   .then(async (res) => {
     try {
       console.log("Connection successfully established")
+      // const filePath = "./sportsDataCSV/Game.2023.csv"
+      // csvtojson()
+      //   .fromFile(filePath)
+      //   .then((data) => {
+      //     let docs = data.map((item) => {
+      //       let dateString = item.Day
+      //       let date = new Date(dateString)
+      //       date.setDate(date.getDate() + 1)
+      //       const updatedDateString = date.toISOString()
+      //       const updatedDate = new Date(updatedDateString)
+      //       item["Day"] = updatedDate
+      //       return item
+      //     })
+          // Game.deleteMany().then((_) => {
+      //       Game.insertMany(docs).then((_) => {
+      //         console.log("Games inserted successfully")
+      //       })
+      //     })
+      //   })
       // calculateDefenceVersusPositionStats()
       // downloadAndExtractZip()
       // getLastTenGamesData()
       // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
       // convertToJSONandSavePlayerSeasonData()
+      // calculateLastTenDefenceVersusPositionStats()
+      // convertToJSONandSavePlayerData()
+      // calculateSeasonVersusCalculations()
+      // convertToJSONandSavePlayerGameData()
+      // convertToJSONandSavePlayerSeasonData()
+      // calculateDefenceVersusPositionStats()
       // calculateLastTenDefenceVersusPositionStats()
     } catch (error) {
       console.error(error.message, " error")
@@ -130,7 +155,7 @@ async function downloadAndExtractZip() {
 
     console.log("Zip file downloaded and extracted successfully!")
 
-    getLastTenGamesData()
+    // getLastTenGamesData()
     convertToJSONandSavePlayerData()
     calculateSeasonVersusCalculations()
     convertToJSONandSavePlayerGameData()
@@ -144,7 +169,7 @@ async function downloadAndExtractZip() {
 //
 app.get("PlayerGameProjectionStatsByDate", (req, res, next) => {
   const year = new Date().getFullYear()
-  const date = new Date().getDate()
+  const date = new Date().getDate() - 1 || 1
   const month = new Date().getMonth() + 1
   https.get(
     `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
@@ -170,7 +195,7 @@ app.get("PlayerGameProjectionStatsByDate", (req, res, next) => {
 const calculateDefenceVersusPositionStats = async () => {
   try {
     const month = new Date().getMonth() + 1
-    const date = new Date().getDate() - 1
+    const date = new Date().getDate() - 1 || 1
     const year = new Date().getFullYear()
     https.get(
       `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
@@ -227,7 +252,7 @@ const calculateDefenceVersusPositionStats = async () => {
 const calculateLastTenDefenceVersusPositionStats = async () => {
   try {
     const month = new Date().getMonth() + 1
-    const date = new Date().getDate()
+    const date = new Date().getDate() - 1 || 1
     const year = new Date().getFullYear()
     https.get(
       `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
@@ -344,16 +369,25 @@ function mergeSameTeamObjects(teamsData) {
 
 const getLastTenGamesData = async () => {
   try {
-    const filePath = "./sportsDataCSV/Game.2023.csv"
-    csvtojson()
-      .fromFile(filePath)
-      .then((data) => {
-        Game.deleteMany().then((_) => {
-          Game.insertMany(data).then((_) => {
-            console.log("Games inserted successfully")
-          })
-        })
-      })
+    // const filePath = "./sportsDataCSV/Game.2023.csv"
+    // csvtojson()
+    //   .fromFile(filePath)
+    //   .then((data) => {
+    //     let docs = data.map((item) => {
+    //       let dateString = item.Day;
+    //       let date = new Date(dateString)
+    //       date.setDate(date.getDate() + 1)
+    //       const updatedDateString = date.toISOString()
+    //       const updatedDate = new Date(updatedDateString)
+    //       item["Day"] = updatedDate
+    //       return item
+    //     })
+    //     Game.deleteMany().then((_) => {
+    //       Game.insertMany(docs).then((_) => {
+    //         console.log("Games inserted successfully")
+    //       })
+    //     })
+    //   })
     let teams = [
       { name: "ATL", games: [] },
       { name: "BKN", games: [] },
@@ -386,19 +420,21 @@ const getLastTenGamesData = async () => {
       { name: "UTA", games: [] },
       { name: "WAS", games: [] },
     ]
-    let games = await Game.find({ Status: { $in: ["Final", "F/OT"] } })
-      .sort({ GameID: -1 })
+    let games = await Game.find({
+      Status: { $in: ["Final", "F/OT"] },
+      SeasonType: { $in: [1, 3] },
+    })
+      .sort({ Day: -1 })
       .lean()
       .exec()
     console.log({ games })
     let teamGames = []
     teams.forEach(async (team, index) => {
       try {
-        const TeamGames = games
-          .filter(
-            (item) => item.HomeTeam == team.name || item.AwayTeam == team.name
-          )
-          .slice(0, 10)
+        const TeamGames = games.filter(
+          (item) => item.HomeTeam == team.name || item.AwayTeam == team.name
+        )
+        .slice(0, 10)
         // TeamGames.sort((a, b) => b.GameID - a.GameID).slice(0, 10)
         teamGames.push(TeamGames)
         if (index === teams.length - 1) {
@@ -410,6 +446,7 @@ const getLastTenGamesData = async () => {
             SeasonType: { $in: [1, 3] },
             GameID: { $in: [...gameIDs] },
           })
+            .sort({ Day: -1 })
             .lean()
             .exec()
           console.log({ playerGameFileData })
@@ -421,6 +458,9 @@ const getLastTenGamesData = async () => {
           combinedGames = []
           playerGames.map((item) => {
             let gamesArr = item.filter((game) => game.Games === 1)
+            // if(gamesArr[0].PlayerID === 20000441) {
+            //   console.log(gamesArr);
+            // }
             if (gamesArr.length > 0) {
               combinedGames.push(gamesArr)
             }
@@ -1040,21 +1080,30 @@ async function convertToJSONandSavePlayerGameData() {
       .fromFile(PlayerGameFilePath)
       .then((docs) => {
         console.log("Data converted to json")
+        let data = docs.map((item) => {
+          let dateString = item.Day
+          let date = new Date(dateString)
+          date.setDate(date.getDate() + 1)
+          const updatedDateString = date.toISOString()
+          const updatedDate = new Date(updatedDateString)
+          item["Day"] = updatedDate
+          return item
+        })
         PlayerGame.deleteMany({}).then((_) => {
-          PlayerGame.insertMany(docs).then(async (_) => {
+          PlayerGame.insertMany(data).then(async (_) => {
             console.log("Player game data saved successfully ======= ")
             getLastTenGamesData()
-            const playerGameData = await PlayerGame.find({
-              Games: 1,
-              SeasonType: { $in: [1, 3] },
-            })
-              .lean()
-              .exec()
-            const combinedGames = mergeSamePlayerObjects(playerGameData)
-            calculateAverage(combinedGames)
-            calculateMedian(combinedGames)
-            calculateMode(combinedGames)
-            calculateGeoMean(combinedGames)
+            // const playerGameData = await PlayerGame.find({
+            //   Games: 1,
+            //   SeasonType: { $in: [1, 3] },
+            // })
+            //   .lean()
+            //   .exec()
+            // const combinedGames = mergeSamePlayerObjects(playerGameData)
+            // calculateAverage(combinedGames)
+            // calculateMedian(combinedGames)
+            // calculateMode(combinedGames)
+            // calculateGeoMean(combinedGames)
           })
         })
       })
@@ -1119,7 +1168,7 @@ const file = fs.createWriteStream("./sportsDataCSV/Player.2023.csv")
 const calculateSeasonVersusCalculations = async () => {
   try {
     const month = new Date().getMonth() + 1
-    const date = new Date().getDate() - 1
+    const date = new Date().getDate() - 1 || 1
     const year = new Date().getFullYear()
     https.get(
       `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
