@@ -1250,7 +1250,7 @@ const file = fs.createWriteStream("./sportsDataCSV/Player.2023.csv")
 const calculateSeasonVersusCalculations = async () => {
   try {
     const month = new Date().getMonth() + 1
-    const date = new Date().getDate() - 1 || 1
+    const date = new Date().getDate() || 1
     const year = new Date().getFullYear()
     https.get(
       `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
