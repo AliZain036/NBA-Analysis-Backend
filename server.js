@@ -67,6 +67,7 @@ const {
   LastTenDefenceVsPositionMedian,
   LastTenDefenceVsPositionMode,
   LastTenDefenceVsPositionGeoMean,
+  PlayerGameProjection,
 } = require("./models/playerGameModal")
 const seasonRouter = require("./routes/seasonRoutes")
 const player = require("./models/player")
@@ -83,6 +84,7 @@ mongoose
   .then(async (res) => {
     try {
       console.log("Connection successfully established")
+      // downloadAndExtractZip()
       // const filePath = "./sportsDataCSV/Game.2023.csv"
       // csvtojson()
       //   .fromFile(filePath)
@@ -96,7 +98,7 @@ mongoose
       //       item["Day"] = updatedDate
       //       return item
       //     })
-          // Game.deleteMany().then((_) => {
+      // Game.deleteMany().then((_) => {
       //       Game.insertMany(docs).then((_) => {
       //         console.log("Games inserted successfully")
       //       })
@@ -215,12 +217,17 @@ const calculateDefenceVersusPositionStats = async () => {
           console.log({ scheduledGames })
           let arr = []
           scheduledGames = removeDuplicatesByOpponentID(scheduledGames)
+          let defenceVsPG = [],
+            defenceVsSG = [],
+            defenceVsSF = [],
+            defenceVsPF = [],
+            defenceVsC = []
           scheduledGames.forEach(async (game, index) => {
             let playerGames = await PlayerGame.find({
               SeasonType: { $in: [1, 3] },
               Games: 1,
-              Position: { $in: ["PG", "SG", "SF", "PF", "C"] },
-              OpponentID: game.OpponentID,
+              // Position: { $in: ["PG", "SG", "SF", "PF", "C"] },
+              OpponentID: game.TeamID,
             })
               .sort({ Day: -1 })
               .lean()
@@ -233,11 +240,11 @@ const calculateDefenceVersusPositionStats = async () => {
             if (index === scheduledGames.length - 1) {
               let allObjects = arr.flat()
               let gamesByTeams = mergeSameTeamObjects(allObjects)
-              // console.log({ allObjects, combinedGames })
-              calculateAverage(gamesByTeams, "Defence VS Position")
-              calculateMedian(gamesByTeams, "Defence VS Position")
-              calculateMode(gamesByTeams, "Defence VS Position")
-              calculateGeoMean(gamesByTeams, "Defence VS Position")
+              console.log({ allObjects, combinedGames })
+              // calculateAverage(gamesByTeams, "Defence VS Position")
+              // calculateMedian(gamesByTeams, "Defence VS Position")
+              // calculateMode(gamesByTeams, "Defence VS Position")
+              // calculateGeoMean(gamesByTeams, "Defence VS Position")
             }
           })
           // res.send(data)
@@ -251,58 +258,116 @@ const calculateDefenceVersusPositionStats = async () => {
 
 const calculateLastTenDefenceVersusPositionStats = async () => {
   try {
-    const month = new Date().getMonth() + 1
-    const date = new Date().getDate() - 1 || 1
+    const playerGameProjectionFilePath =
+      "./sportsDataCSV/PlayerGameProjection.2023.csv"
+    // csvtojson()
+    //   .fromFile(playerGameProjectionFilePath)
+    //   .then((json) => {
+    //     let docs = json.map((item) => {
+    //       let dateString = item.Day
+    //       let date = new Date(dateString)
+    //       date.setDate(date.getDate() + 1)
+    //       const updatedDateString = date.toISOString()
+    //       const updatedDate = new Date(updatedDateString)
+    //       item["Day"] = updatedDate
+    //       return item
+    //     })
+    //     // let jsonData = JSON.parse(docs)
+    //     const month = new Date().getMonth() + 1
+    //     const date = new Date().getDate() || 1
+    //     const year = new Date().getFullYear()
+    //     const day = `${month}/${date}/${year}`
+    //     let records = []
+    //     docs.forEach((item) => {
+    //       if (item.DateTime?.startsWith(day)) {
+    //         records.push(item)
+    //       }
+    //     })
+    //     console.log({ records })
+
+    //   })
+    // PlayerGameProjection.deleteMany().then(() => {
+    //   PlayerGameProjection.insertMany(docs).then(() => {
+    //     console.log("PlayerGameProjection JSON data added to db")
+    //     const month = new Date().getMonth() + 1
+    //     if (month.toString().length == 1) {
+    //       month = `0${month}`
+    //     }
+    //     const date = new Date().getDate() || 1
+    //     if (date.toString().length == 1) {
+    //       date = `0${date}`
+    //     }
+    //     const year = new Date().getFullYear()
+    //     const day = new Date(`${year}-${month}-${date}T19:00:00.000Z`)
+    //     let records = docs.filter((item) => item.DateTime?.includes(day))
+    //     console.log({ records })
+    //   })
+    // })
+
+    let month = new Date().getMonth() + 1
+    if (month.toString().length == 1) {
+      month = `0${month}`
+    }
+    let date = new Date().getDate() || 1
+    if (date.toString().length == 1) {
+      date = `0${date}`
+    }
     const year = new Date().getFullYear()
-    https.get(
-      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Ocp-Apim-Subscription-Key": process.env.OCP_APIM_SUBSCRIPTION_KEY,
-        },
-      },
-      (response) => {
-        let data = ""
-        response.on("data", (chunk) => {
-          data += chunk
-        })
-        response.on("end", () => {
-          let scheduledGames = JSON.parse(data)
-          console.log({ scheduledGames })
-          let arr = []
-          scheduledGames = removeDuplicatesByOpponentID(scheduledGames)
-          scheduledGames.forEach(async (game, index) => {
-            let playerGames = await PlayerGame.find({
-              SeasonType: { $in: [1, 3] },
-              Games: 1,
-              Position: { $in: ["PG", "SG", "SF", "PF", "C"] },
-              OpponentID: game.OpponentID,
-            })
-              .sort({ Day: -1 })
-              .limit(10)
-              .lean()
-              .exec()
-            if (playerGames.length > 0) {
-              arr.push(playerGames)
-            } else {
-              console.log({ game })
-            }
-            if (index === scheduledGames.length - 1) {
-              let allObjects = arr.flat()
-              let gamesData = removeDuplicatesByArr(allObjects, "Day")
-              let gamesByTeams = mergeSameTeamObjects(gamesData)
-              // console.log({ allObjects, combinedGames })
-              calculateAverage(gamesByTeams, "Last ten DVP")
-              calculateMedian(gamesByTeams, "Last ten DVP")
-              calculateMode(gamesByTeams, "Last ten DVP")
-              calculateGeoMean(gamesByTeams, "Last ten DVP")
-            }
-          })
-          // res.send(data)
-        })
+    const day = new Date(`${year}-${month}-${date}T19:00:00.000Z`)
+
+    let scheduledGames = await PlayerGameProjection.find({
+      Day: { $eq: day },
+    })
+    console.log({ scheduledGames })
+    scheduledGames = removeDuplicatesByOpponentID(scheduledGames)
+    let arr = []
+    scheduledGames.forEach(async (game, index) => {
+      let playerGames = await PlayerGame.find({
+        SeasonType: { $in: [1, 3] },
+        Games: 1,
+        OpponentID: game.TeamID,
+      })
+        .sort({ Day: -1 })
+        .lean()
+        .exec()
+      if (playerGames.length > 0) {
+        arr.push(playerGames)
+      } else {
+        console.log({ game })
       }
-    )
+      if (index === scheduledGames.length - 1) {
+        let allObjects = arr.flat()
+        // let gamesData = removeDuplicatesByArr(allObjects, "Day")
+        // let teamsData = mergeSameTeamObjects(allObjects)
+        // let gamesByPosition = mergeSamePositionObjects(gamesData)
+        let allGamesByPosition = []
+        const positions = ["PG", "SG", "SF", "PF", "C"]
+        positions.forEach((item) => {
+          let gamesByPosition = allObjects.filter(
+            (game) => game.Position === item
+          )
+          console.log(gamesByPosition, " ==== ", item)
+          if (gamesByPosition.length > 0) {
+            allGamesByPosition.push(gamesByPosition)
+          }
+        })
+        let topTenRecords = []
+        allGamesByPosition.forEach((arr, index) => {
+          const uniqueArrItems = removeDuplicatesByArr([...arr], "DateTime")
+          const topTen = [...uniqueArrItems].slice(0, 10)
+          topTenRecords.push(topTen)
+        })
+        console.log({ topTenRecords, allGamesByPosition })
+        calculateAverage(topTenRecords, "Last ten DVP")
+        calculateMedian(topTenRecords, "Last ten DVP")
+        calculateMode(topTenRecords, "Last ten DVP")
+        calculateGeoMean(topTenRecords, "Last ten DVP")
+        calculateAverage(allGamesByPosition, "Defence VS Position")
+        calculateMedian(allGamesByPosition, "Defence VS Position")
+        calculateMode(allGamesByPosition, "Defence VS Position")
+        calculateGeoMean(allGamesByPosition, "Defence VS Position")
+      }
+    })
   } catch (error) {
     console.error(error)
   }
@@ -363,6 +428,22 @@ function mergeSameTeamObjects(teamsData) {
   }
   for (const opponentID in teams) {
     result.push(teams[opponentID])
+  }
+  return result
+}
+
+function mergeSamePositionObjects(teamsData) {
+  let teams = []
+  let result = []
+  for (const team of teamsData) {
+    const position = team.Position
+    if (!teams[position]) {
+      teams[position] = []
+    }
+    teams[position].push(team)
+  }
+  for (const position in teams) {
+    result.push(teams[position])
   }
   return result
 }
@@ -431,10 +512,11 @@ const getLastTenGamesData = async () => {
     let teamGames = []
     teams.forEach(async (team, index) => {
       try {
-        const TeamGames = games.filter(
-          (item) => item.HomeTeam == team.name || item.AwayTeam == team.name
-        )
-        .slice(0, 10)
+        const TeamGames = games
+          .filter(
+            (item) => item.HomeTeam == team.name || item.AwayTeam == team.name
+          )
+          .slice(0, 10)
         // TeamGames.sort((a, b) => b.GameID - a.GameID).slice(0, 10)
         teamGames.push(TeamGames)
         if (index === teams.length - 1) {
@@ -1093,17 +1175,17 @@ async function convertToJSONandSavePlayerGameData() {
           PlayerGame.insertMany(data).then(async (_) => {
             console.log("Player game data saved successfully ======= ")
             getLastTenGamesData()
-            // const playerGameData = await PlayerGame.find({
-            //   Games: 1,
-            //   SeasonType: { $in: [1, 3] },
-            // })
-            //   .lean()
-            //   .exec()
-            // const combinedGames = mergeSamePlayerObjects(playerGameData)
-            // calculateAverage(combinedGames)
-            // calculateMedian(combinedGames)
-            // calculateMode(combinedGames)
-            // calculateGeoMean(combinedGames)
+            const playerGameData = await PlayerGame.find({
+              Games: 1,
+              SeasonType: { $in: [1, 3] },
+            })
+              .lean()
+              .exec()
+            const combinedGames = mergeSamePlayerObjects(playerGameData)
+            calculateAverage(combinedGames)
+            calculateMedian(combinedGames)
+            calculateMode(combinedGames)
+            calculateGeoMean(combinedGames)
           })
         })
       })
@@ -1323,7 +1405,9 @@ const calculateAverage = async (playersData, type = "") => {
       Minutes: MinutesAverage.toFixed(2),
       GamesCount: playerArr?.length,
     }
-    temp.push(playerWithAveragePoints)
+    if (MinutesAverage >= 20) {
+      temp.push(playerWithAveragePoints)
+    }
   })
   if (type === "Season Versus") {
     SeasonVersusAverage.deleteMany().then((_) => {

@@ -52,12 +52,28 @@ const PlayerGameSchema = new mongoose.Schema({
 })
 
 const PlayerGame = mongoose.model("PlayerGame", PlayerGameSchema)
-const LastTenGamesAverage = mongoose.model("LastTenGamesAverage", PlayerGameSchema)
+const PlayerGameProjection = mongoose.model("PlayerGameProjection", PlayerGameSchema)
+const LastTenGamesAverage = mongoose.model(
+  "LastTenGamesAverage",
+  PlayerGameSchema
+)
 const LastTenGamesMode = mongoose.model("LastTenGamesMode", PlayerGameSchema)
-const LastTenGamesMedian = mongoose.model("LastTenGamesMedian", PlayerGameSchema)
-const LastTenGamesGeoMean = mongoose.model("LastTenGamesGeoMean", PlayerGameSchema)
-const LastTenGamesMinimum = mongoose.model("LastTenGamesMinimum", PlayerGameSchema)
-const LastTenGamesMaximum = mongoose.model("LastTenGamesMaximum", PlayerGameSchema)
+const LastTenGamesMedian = mongoose.model(
+  "LastTenGamesMedian",
+  PlayerGameSchema
+)
+const LastTenGamesGeoMean = mongoose.model(
+  "LastTenGamesGeoMean",
+  PlayerGameSchema
+)
+const LastTenGamesMinimum = mongoose.model(
+  "LastTenGamesMinimum",
+  PlayerGameSchema
+)
+const LastTenGamesMaximum = mongoose.model(
+  "LastTenGamesMaximum",
+  PlayerGameSchema
+)
 const LastTenGamesRange = mongoose.model("LastTenGamesRange", PlayerGameSchema)
 const SeasonMinimum = mongoose.model("SeasonMinimum", PlayerGameSchema)
 const SeasonMaximum = mongoose.model("SeasonMaximum", PlayerGameSchema)
@@ -90,8 +106,14 @@ const LastTenDefenceVsPositionMedian = mongoose.model(
   PlayerGameSchema
 )
 const SeasonVersusMode = mongoose.model("SeasonVersusMode", PlayerGameSchema)
-const SeasonDefenceVsPositionMode = mongoose.model("SeasonDefenceVsPositionMode", PlayerGameSchema)
-const LastTenDefenceVsPositionMode = mongoose.model("LastTenDefenceVsPositionMode", PlayerGameSchema)
+const SeasonDefenceVsPositionMode = mongoose.model(
+  "SeasonDefenceVsPositionMode",
+  PlayerGameSchema
+)
+const LastTenDefenceVsPositionMode = mongoose.model(
+  "LastTenDefenceVsPositionMode",
+  PlayerGameSchema
+)
 const SeasonVersusGeoMean = mongoose.model(
   "SeasonVersusGeoMean",
   PlayerGameSchema
@@ -143,5 +165,6 @@ module.exports = {
   LastTenDefenceVsPositionAverage,
   LastTenDefenceVsPositionMode,
   LastTenDefenceVsPositionMedian,
-  LastTenDefenceVsPositionGeoMean
+  LastTenDefenceVsPositionGeoMean,
+  PlayerGameProjection
 }
