@@ -85,10 +85,10 @@ mongoose
     try {
       console.log("Connection successfully established")
       // downloadAndExtractZip()
-      calculateSeasonVersusCalculations()
-      convertToJSONandSavePlayerGameData()
-      convertToJSONandSavePlayerSeasonData()
-      calculateDefenceVersusPositionStats()
+      // calculateSeasonVersusCalculations()
+      // convertToJSONandSavePlayerGameData()
+      // convertToJSONandSavePlayerSeasonData()
+      // calculateDefenceVersusPositionStats()
     } catch (error) {
       console.error(error.message, " error")
     }
