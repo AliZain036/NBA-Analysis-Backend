@@ -12,7 +12,7 @@ TeamID,[Key],Active,City,Name,LeagueID,StadiumID,Conference,Division,PrimaryColo
 11,CHI,True,Chicago,Bulls,3,11,Eastern,Central,CE1141,000000,,,https://upload.wikimedia.org/wikipedia/en/6/67/Chicago_Bulls_logo.svg,
 12,CLE,True,Cleveland,Cavaliers,3,12,Eastern,Central,860038,BC945C,000000,,https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Cleveland_Cavaliers_logo.svg/1024px-Cleveland_Cavaliers_logo.svg.png,
 13,IND,True,Indiana,Pacers,3,13,Eastern,Central,002D62,FDBB30,BEC0C2,,https://upload.wikimedia.org/wikipedia/en/1/1b/Indiana_Pacers.svg,
-14,DET,True,Detroit,Pistons,3,14,Eastern,Central,1D428A,C8102E,BEC0C2,002D62,https://upload.wikimedia.org/wikipedia/commons/7/7c/Pistons_logo17.svg,
+14,DET,True,Detroit,Pistons,3,14,Eastern,Central,1D428A,C8102E,BEC0C2,002D62,https://upload.wikimedia.org/wikipedia/commons/c/c9/Logo_of_the_Detroit_Pistons.svg,
 15,MIL,True,Milwaukee,Bucks,3,15,Eastern,Central,00471B,EEE1C6,0077C0,000000,https://upload.wikimedia.org/wikipedia/en/4/4a/Milwaukee_Bucks_logo.svg,
 16,MIN,True,Minnesota,Timberwolves,3,16,Western,Northwest,0C2340,78BE20,236192,9EA2A2,https://upload.wikimedia.org/wikipedia/en/c/c2/Minnesota_Timberwolves_logo.svg,
 17,UTA,True,Utah,Jazz,3,17,Western,Northwest,000000,FFF21F,E5E7E6,31006F,https://upload.wikimedia.org/wikipedia/en/5/52/Utah_Jazz_logo_2022.svg,

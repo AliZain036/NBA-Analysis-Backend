@@ -1,5 +1,5 @@
 PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,Height,Weight,BirthDate,College,PhotoUrl,Experience,InjuryStatus,FanDuelPlayerID,DraftKingsPlayerID,FanDuelName,DraftKingsName
-20000441,Active,1,WAS,3,G,SG,Bradley,Beal,76,207,6/28/1993 12:00:00 AM,Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000441.png,10,,15595,606912,Bradley Beal,Bradley Beal
+20000441,Active,29,PHO,3,G,SG,Bradley,Beal,76,207,6/28/1993 12:00:00 AM,Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000441.png,10,,15595,606912,Bradley Beal,Bradley Beal
 20000442,Inactive,,,,G,PG,John,Wall,75,210,9/6/1990 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000442.png,10,,12332,509456,John Wall,John Wall
 20000443,Active,10,TOR,32,F,SF,Otto,Porter Jr.,80,198,6/3/1993 12:00:00 AM,Georgetown,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000443.png,9,,15628,609256,Otto Porter,Otto Porter Jr.
 20000452,Active,23,NO,41,G,SG,Garrett,Temple,78,195,5/8/1986 12:00:00 AM,Louisiana State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000452.png,12,,11074,263903,Garrett Temple,Garrett Temple
@@ -14,7 +14,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000468,Active,27,LAL,3,C,C,Anthony,Davis,82,253,3/11/1993 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000468.png,10,,15755,603096,Anthony Davis,Anthony Davis
 20000471,Active,28,LAC,10,F,SF,Eric,Gordon,75,215,12/25/1988 12:00:00 AM,Indiana,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000471.png,14,,9556,401085,Eric Gordon,Eric Gordon
 20000474,Active,15,MIL,21,G,PG,Jrue,Holiday,77,205,6/12/1990 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000474.png,13,,9663,457576,Jrue Holiday,Jrue Holiday
-20000482,Active,26,GS,23,F,PF,Draymond,Green,78,230,3/4/1990 12:00:00 AM,Michigan State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000482.png,10,,15860,468895,Draymond Green,Draymond Green
+20000482,Inactive,,,,F,PF,Draymond,Green,78,230,3/4/1990 12:00:00 AM,Michigan State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000482.png,10,,15860,468895,Draymond Green,Draymond Green
 20000483,Active,30,SAC,40,F,SF,Harrison,Barnes,80,225,5/30/1992 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000483.png,10,,15946,552336,Harrison Barnes,Harrison Barnes
 20000485,Active,26,GS,30,G,PG,Stephen,Curry,74,185,3/14/1988 12:00:00 AM,Davidson,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000485.png,13,,9524,338365,Stephen Curry,Stephen Curry
 20000486,Active,26,GS,11,G,SG,Klay,Thompson,78,220,2/8/1990 12:00:00 AM,Washington State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000486.png,9,,14509,457611,Klay Thompson,Klay Thompson
@@ -48,7 +48,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000554,Active,11,CHI,21,G,PG,Patrick,Beverley,74,180,7/12/1988 12:00:00 AM,Arkansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000554.png,10,,12474,332691,Patrick Beverley,Patrick Beverley
 20000558,Inactive,,,,C,C,Tyler,Zeller,84,255,1/17/1990 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000558.png,8,,15961,462461,Tyler Zeller,Tyler Zeller
 20000559,Inactive,,,,G,SG,Avery,Bradley,75,180,11/26/1990 12:00:00 AM,Texas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000559.png,12,,12334,513607,Avery Bradley,Avery Bradley
-20000560,Active,9,BOS,36,G,PG,Marcus,Smart,76,220,3/6/1994 12:00:00 AM,Oklahoma State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000560.png,8,,23670,697132,Marcus Smart,Marcus Smart
+20000560,Active,21,MEM,36,G,PG,Marcus,Smart,76,220,3/6/1994 12:00:00 AM,Oklahoma State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000560.png,8,,23670,697132,Marcus Smart,Marcus Smart
 20000561,Inactive,,,,G,PG,Isaiah,Thomas,69,185,2/7/1989 12:00:00 AM,Washington,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000561.png,8,,14559,457605,Isaiah Thomas,Isaiah Thomas
 20000562,Active,15,MIL,99,F,PF,Jae,Crowder,78,235,7/6/1990 12:00:00 AM,Marquette,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000562.png,10,,15800,552381,Jae Crowder,Jae Crowder
 20000564,Active,17,UTA,41,F,PF,Kelly,Olynyk,83,240,4/19/1991 12:00:00 AM,Gonzaga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000564.png,9,,22541,514882,Kelly Olynyk,Kelly Olynyk
@@ -75,7 +75,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000606,Active,27,LAL,17,G,PG,Dennis,Schroder,73,172,9/15/1993 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000606.png,9,,40201,739958,Dennis Schroder,Dennis Schroder
 20000608,Inactive,,,,G,SG,Kent,Bazemore,76,195,7/1/1989 12:00:00 AM,Old Dominion,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000608.png,10,,19781,410764,Kent Bazemore,Kent Bazemore
 20000609,Inactive,,,,F,PF,Mike,Scott,79,237,7/16/1988 12:00:00 AM,Virginia,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000609.png,8,,16368,398034,Mike Scott,Mike Scott
-20000613,Active,9,BOS,57,C,C,Mike,Muscala,83,240,7/1/1991 12:00:00 AM,Bucknell,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000613.png,9,,17894,520388,Mike Muscala,Mike Muscala
+20000613,Active,1,WAS,,C,C,Mike,Muscala,83,240,7/1/1991 12:00:00 AM,Bucknell,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000613.png,9,,17894,520388,Mike Muscala,Mike Muscala
 20000615,Inactive,,,,F,SF,Thabo,Sefolosha,78,215,5/2/1984 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000615.png,14,,9647,329187,Thabo Sefolosha,Thabo Sefolosha
 20000616,Inactive,,,,F,PF,LaMarcus,Aldridge,83,250,7/19/1985 12:00:00 AM,Texas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000616.png,15,,9688,266554,LaMarcus Aldridge,LaMarcus Aldridge
 20000617,Active,28,LAC,33,F,PF,Nicolas,Batum,80,230,12/14/1988 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000617.png,14,,9809,456451,Nicolas Batum,Nicolas Batum
@@ -89,7 +89,6 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000633,Inactive,,,,C,C,Marc,Gasol,83,255,1/29/1985 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000633.png,12,,9581,393441,Marc Gasol,Marc Gasol
 20000634,Inactive,,,,G,SG,Courtney,Lee,77,215,10/3/1985 12:00:00 AM,Western Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000634.png,12,,9615,276755,Courtney Lee,Courtney Lee
 20000635,Active,16,MIN,10,G,PG,Mike,Conley,73,175,10/11/1987 12:00:00 AM,Ohio State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000635.png,15,,9575,329468,Mike Conley,Mike Conley
-20000638,Inactive,,,,G,SG,Vince,Carter,78,220,1/26/1977 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000638.png,22,,9654,3230,Vince Carter,Vince Carter
 20000642,Active,26,GS,1,F,PF,JaMychal,Green,81,227,6/21/1990 12:00:00 AM,Alabama,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000642.png,8,,15405,460833,JaMychal Green,JaMychal Green
 20000646,Active,28,LAC,2,F,SF,Kawhi,Leonard,79,225,6/29/1991 12:00:00 AM,San Diego State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000646.png,10,,14513,512591,Kawhi Leonard,Kawhi Leonard
 20000650,Active,12,CLE,14,G,SG,Danny,Green,78,215,6/22/1987 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000650.png,13,,9758,295922,Danny Green,Danny Green
@@ -100,7 +99,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000659,Active,16,MIN,5,F,SF,Kyle,Anderson,81,230,9/20/1993 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000659.png,8,,23716,697720,Kyle Anderson,Kyle Anderson
 20000661,Active,9,BOS,91,F,PF,Blake,Griffin,81,250,3/16/1989 12:00:00 AM,Oklahoma,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000661.png,12,,9560,399725,Blake Griffin,Blake Griffin
 20000663,Active,20,DEN,6,C,C,DeAndre,Jordan,83,265,7/21/1988 12:00:00 AM,Texas A&M,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000663.png,14,,9561,398142,DeAndre Jordan,DeAndre Jordan
-20000664,Active,29,PHO,3,G,PG,Chris,Paul,72,175,5/6/1985 12:00:00 AM,Wake Forest,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000664.png,17,,9623,229598,Chris Paul,Chris Paul
+20000664,Active,26,GS,3,G,PG,Chris,Paul,72,175,5/6/1985 12:00:00 AM,Wake Forest,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000664.png,17,,9623,229598,Chris Paul,Chris Paul
 20000665,Inactive,,,,F,SF,J.J.,Redick,75,200,6/24/1984 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000665.png,13,,9655,172643,JJ Redick,JJ Redick
 20000666,Inactive,,,,G,SG,Jamal,Crawford,77,185,3/20/1980 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000666.png,20,,9448,3388,Jamal Crawford,Jamal Crawford
 20000667,Active,16,MIN,25,G,PG,Austin,Rivers,76,200,8/1/1992 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000667.png,10,,15592,601139,Austin Rivers,Austin Rivers
@@ -112,7 +111,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000681,Active,20,DEN,50,F,PF,Aaron,Gordon,80,235,9/16/1995 12:00:00 AM,Arizona,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000681.png,8,,41594,748788,Aaron Gordon,Aaron Gordon
 20000684,Active,7,PHI,14,C,C,Dewayne,Dedmon,82,245,8/12/1989 12:00:00 AM,Southern California,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000684.png,9,,16301,606642,Dewayne Dedmon,Dewayne Dedmon
 20000686,Inactive,,,,F,SF,Maurice,Harkless,81,220,5/11/1993 12:00:00 AM,St. John's,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000686.png,10,,16178,609843,Maurice Harkless,Moe Harkless
-20000689,Active,4,MIA,4,G,SG,Victor,Oladipo,76,213,5/4/1992 12:00:00 AM,Indiana,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000689.png,9,Out,15684,553166,Victor Oladipo,Victor Oladipo
+20000689,Active,4,MIA,4,G,SG,Victor,Oladipo,76,213,5/4/1992 12:00:00 AM,Indiana,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000689.png,9,,15684,553166,Victor Oladipo,Victor Oladipo
 20000691,Inactive,,,,F,SF,Darius,Miller,78,225,3/21/1990 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000691.png,6,,15762,469484,Darius Miller,Darius Miller
 20000697,Inactive,,,,F,PF,Tarik,Black,81,250,11/22/1991 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000697.png,4,,17332,551761,Tarik Black,Tarik Black
 20000698,Inactive,,,,G,SG,Troy,Daniels,76,205,7/15/1991 12:00:00 AM,Virginia Commonwealth,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000698.png,7,,20805,513526,Troy Daniels,Troy Daniels
@@ -141,7 +140,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000773,Inactive,,,,G,PG,Mario,Chalmers,74,190,5/19/1986 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000773.png,8,,9583,296572,Mario Chalmers,Mario Chalmers
 20000775,Inactive,,,,G,PG,Shabazz,Napier,72,175,7/14/1991 12:00:00 AM,Connecticut,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000775.png,6,,15560,552982,Shabazz Napier,Shabazz Napier
 20000776,Inactive,,,,F,SF,James,Ennis III,78,215,7/1/1990 12:00:00 AM,Long Beach State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000776.png,6,,17491,602135,James Ennis,James Ennis III
-20000780,Active,4,MIA,40,F,PF,Udonis,Haslem,80,235,6/9/1980 12:00:00 AM,Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000780.png,19,,9589,226806,Udonis Haslem,Udonis Haslem
+20000780,Inactive,,,,F,PF,Udonis,Haslem,80,235,6/9/1980 12:00:00 AM,Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000780.png,19,,9589,226806,Udonis Haslem,Udonis Haslem
 20000784,Inactive,,,,F,PF,Carmelo,Anthony,79,238,5/29/1984 12:00:00 AM,Syracuse,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000784.png,18,,9508,172890,Carmelo Anthony,Carmelo Anthony
 20000788,Active,25,DAL,11,F,SF,Tim,Hardaway Jr.,77,205,3/16/1992 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000788.png,9,,15846,551771,Tim Hardaway,Tim Hardaway Jr.
 20000795,Active,26,GS,22,F,SF,Andrew,Wiggins,79,197,2/23/1995 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000795.png,8,,49116,794503,Andrew Wiggins,Andrew Wiggins
@@ -154,7 +153,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20000813,Active,22,HOU,14,G,PG,D.J.,Augustin,71,183,11/10/1987 12:00:00 AM,Texas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000813.png,12,,9466,329524,D.J. Augustin,D.J. Augustin
 20000816,Active,8,BKN,26,G,PG,Spencer,Dinwiddie,77,215,4/6/1993 12:00:00 AM,Colorado,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000816.png,8,,15542,602411,Spencer Dinwiddie,Spencer Dinwiddie
 20000818,Inactive,,,,C,C,Greg,Monroe,82,250,6/4/1990 12:00:00 AM,Georgetown,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000818.png,8,,12337,467468,Greg Monroe,Greg Monroe
-20000822,Active,9,BOS,8,F,PF,Danilo,Gallinari,82,236,8/8/1988 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000822.png,13,,9637,456448,Danilo Gallinari,Danilo Gallinari
+20000822,Active,1,WAS,,F,PF,Danilo,Gallinari,82,236,8/8/1988 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000822.png,13,,9637,456448,Danilo Gallinari,Danilo Gallinari
 20000824,Inactive,,,,F,SF,Wilson,Chandler,80,235,5/10/1987 12:00:00 AM,DePaul,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000824.png,12,,9636,295941,Wilson Chandler,Wilson Chandler
 20000827,Active,19,POR,27,C,C,Jusuf,Nurkic,84,290,8/23/1994 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000827.png,7,,55057,830642,Jusuf Nurkic,Jusuf Nurkic
 20000828,Active,25,DAL,0,C,C,JaVale,McGee,84,270,1/19/1988 12:00:00 AM,Nevada,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20000828.png,14,,9739,333212,JaVale McGee,JaVale McGee
@@ -203,7 +202,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20001004,Inactive,,,,F,SF,James,Nunnally,79,208,7/14/1990 12:00:00 AM,UC Santa Barbara,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001004.png,1,,17541,478206,James Nunnally,James Nunnally
 20001023,Inactive,,,,G,SG,Scotty,Hopson,79,215,8/8/1989 12:00:00 AM,Tennessee,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,16607,461025,Scotty Hopson,Scotty Hopson
 20001261,Inactive,,,6,F,SF,Adam,Morrison,80,205,7/19/1984 12:00:00 AM,,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
-20001389,Active,30,SAC,22,F,PF,Richaun,Holmes,80,235,10/15/1993 12:00:00 AM,Bowling Green,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001389.png,7,,23447,695069,Richaun Holmes,Richaun Holmes
+20001389,Active,25,DAL,22,F,PF,Richaun,Holmes,80,235,10/15/1993 12:00:00 AM,Bowling Green,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001389.png,7,,23447,695069,Richaun Holmes,Richaun Holmes
 20001391,Inactive,,,,C,C,Jahlil,Okafor,83,274,12/15/1995 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001391.png,6,,58083,842301,Jahlil Okafor,Jahlil Okafor
 20001393,Active,2,CHA,12,F,SF,Kelly,Oubre Jr.,78,203,12/9/1995 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001393.png,7,,58153,843271,Kelly Oubre,Kelly Oubre Jr.
 20001396,Active,22,HOU,33,F,PF,Frank,Kaminsky,84,240,4/4/1993 12:00:00 AM,Wisconsin,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001396.png,7,,16448,606731,Frank Kaminsky,Frank Kaminsky III
@@ -212,7 +211,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20001403,Inactive,,,,G,SG,Mario,Hezonja,80,220,2/25/1995 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001403.png,5,,63123,840595,Mario Hezonja,Mario Hezonja
 20001404,Inactive,,,,G,PG,Jerian,Grant,76,204,10/9/1992 12:00:00 AM,Notre Dame,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001404.png,5,,15996,552319,Jerian Grant,Jerian Grant
 20001405,Active,23,NO,9,C,C,Willy,Hernangomez,83,250,5/27/1994 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001405.png,6,,63127,840567,Willy Hernangomez,Guillermo Hernangomez
-20001406,Active,1,WAS,6,C,C,Kristaps,Porzingis,87,240,8/2/1995 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001406.png,6,,63122,877869,Kristaps Porzingis,Kristaps Porzingis
+20001406,Active,9,BOS,,C,C,Kristaps,Porzingis,87,240,8/2/1995 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001406.png,6,,63122,877869,Kristaps Porzingis,Kristaps Porzingis
 20001408,Inactive,,,,F,SF,Rondae,Hollis-Jefferson,78,217,1/3/1995 12:00:00 AM,Arizona,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001408.png,5,,42148,750654,Rondae Hollis-Jefferson,Rondae Hollis-Jefferson
 20001413,Active,2,CHA,3,G,PG,Terry,Rozier,73,190,3/17/1994 12:00:00 AM,Louisville,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001413.png,7,,42677,786293,Terry Rozier,Terry Rozier
 20001416,Active,28,LAC,24,F,SF,Norman,Powell,76,215,5/25/1993 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001416.png,7,,16293,609861,Norman Powell,Norman Powell
@@ -224,7 +223,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20001424,Active,13,IND,33,C,C,Myles,Turner,83,250,3/24/1996 12:00:00 AM,Texas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001424.png,7,,58253,843762,Myles Turner,Myles Turner
 20001427,Inactive,,,,F,SF,Stanley,Johnson,78,242,5/29/1996 12:00:00 AM,Arizona,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001427.png,7,,58350,844331,Stanley Johnson,Stanley Johnson
 20001429,Inactive,,,,F,PF,Nemanja,Bjelica,81,234,5/9/1988 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001429.png,6,,12368,550431,Nemanja Bjelica,Nemanja Bjelica
-20001430,Active,21,MEM,21,G,PG,Tyus,Jones,74,196,5/10/1996 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001430.png,7,,58081,842297,Tyus Jones,Tyus Jones
+20001430,Active,1,WAS,,G,PG,Tyus,Jones,74,196,5/10/1996 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001430.png,7,,58081,842297,Tyus Jones,Tyus Jones
 20001431,Active,16,MIN,32,F,PF,Karl-Anthony,Towns,84,248,11/15/1995 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001431.png,7,,58462,837030,Karl-Anthony Towns,Karl-Anthony Towns
 20001433,Active,30,SAC,41,F,PF,Trey,Lyles,81,234,11/5/1995 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001433.png,7,,58461,845596,Trey Lyles,Trey Lyles
 20001434,Active,12,CLE,19,G,PG,Raul,Neto,74,180,5/19/1992 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001434.png,7,,40208,739966,Raul Neto,Raul Neto
@@ -265,7 +264,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20001665,Inactive,,,,,,David,Fizdale,,,,,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
 20001666,Active,20,DEN,27,G,PG,Jamal,Murray,76,215,2/23/1997 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001666.png,5,,66108,891352,Jamal Murray,Jamal Murray
 20001667,Inactive,,,,C,C,Thon,Maker,84,221,2/25/1997 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001667.png,5,,70820,920067,Thon Maker,Thon Maker
-20001668,Active,25,DAL,44,F,PF,Davis,Bertans,82,225,11/12/1992 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001668.png,6,,14543,599814,Davis Bertans,Davis Bertans
+20001668,Active,18,OKC,44,F,PF,Davis,Bertans,82,225,11/12/1992 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001668.png,6,,14543,599814,Davis Bertans,Davis Bertans
 20001670,Active,17,UTA,11,G,PG,Kris,Dunn,75,205,3/18/1994 12:00:00 AM,Providence,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001670.png,0,,23802,698968,Kris Dunn,Kris Dunn
 20001671,Active,23,NO,14,F,SF,Brandon,Ingram,80,190,9/2/1997 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001671.png,6,,66048,887665,Brandon Ingram,Brandon Ingram
 20001672,Active,9,BOS,7,G,SG,Jaylen,Brown,78,223,10/24/1996 12:00:00 AM,California,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001672.png,6,,67026,883436,Jaylen Brown,Jaylen Brown
@@ -312,7 +311,6 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20001795,Active,27,LAL,0,G,PG,Shaquille,Harrison,76,195,10/6/1993 12:00:00 AM,Tulsa,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001795.png,5,,82744,692654,Shaquille Harrison,Shaquille Harrison
 20001796,Active,11,CHI,5,F,SF,Derrick,Jones Jr.,78,210,2/15/1997 12:00:00 AM,UNLV,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001796.png,6,,66968,892925,Derrick Jones,Derrick Jones Jr.
 20001801,Active,11,CHI,6,G,SG,Alex,Caruso,77,186,2/28/1994 12:00:00 AM,Texas A&M,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001801.png,5,,23981,697644,Alex Caruso,Alex Caruso
-20001809,Inactive,,,,,,Mark,Baker,,,,,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,2,,,,,
 20001820,Inactive,,,,G,SG,David,Nwaba,77,219,1/14/1993 12:00:00 AM,Cal Poly,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001820.png,6,,42733,787141,David Nwaba,David Nwaba
 20001822,Active,14,DET,6,G,SG,Hamidou,Diallo,77,202,7/31/1998 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001822.png,4,,84699,970444,Hamidou Diallo,Hamidou Diallo
 20001823,Active,11,CHI,2,G,PG,Lonzo,Ball,78,190,10/27/1997 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001823.png,5,Out,80806,946714,Lonzo Ball,Lonzo Ball
@@ -347,7 +345,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20001854,Inactive,,,,F,PF,Caleb,Swanigan,81,260,4/18/1997 12:00:00 AM,Purdue,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001854.png,3,,66185,882772,Caleb Swanigan,Caleb Swanigan
 20001856,Active,9,BOS,9,G,SG,Derrick,White,76,190,7/2/1994 12:00:00 AM,Colorado,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001856.png,5,,49675,796009,Derrick White,Derrick White
 20001857,Inactive,,,,C,C,Tony,Bradley,83,248,1/8/1998 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001857.png,5,,80823,950065,Tony Bradley,Tony Bradley
-20001858,Active,1,WAS,33,F,PF,Kyle,Kuzma,81,221,7/24/1995 12:00:00 AM,Utah,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001858.png,5,,58377,844476,Kyle Kuzma,Kyle Kuzma
+20001858,Inactive,,,,F,PF,Kyle,Kuzma,81,221,7/24/1995 12:00:00 AM,Utah,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001858.png,5,,58377,844476,Kyle Kuzma,Kyle Kuzma
 20001859,Inactive,,,,G,SG,Davon,Reed,77,206,6/11/1995 12:00:00 AM,Miami,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001859.png,3,,40255,740382,Davon Reed,Davon Reed
 20001860,Inactive,,,,G,PG,Frank,Mason III,71,190,4/3/1994 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001860.png,2,,49114,794504,Frank Mason,Frank Mason III
 20001861,Inactive,,,,F,SF,Dwayne,Bacon,78,221,8/30/1995 12:00:00 AM,Florida State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20001861.png,4,,66061,879502,Dwayne Bacon,Dwayne Bacon
@@ -418,7 +416,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002016,Active,6,NY,23,C,C,Mitchell,Robinson,84,240,4/1/1998 12:00:00 AM,Western Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002016.png,4,,84709,1076265,Mitchell Robinson,Mitchell Robinson
 20002017,Inactive,,,,F,PF,Kostas,Antetokounmpo,82,200,11/20/1997 12:00:00 AM,Dayton,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002017.png,3,,84725,950367,Kostas Antetokounmpo,Kostas Antetokounmpo
 20002018,Inactive,,,,G,PG,Isaac,Bonga,80,180,11/8/1999 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002018.png,2,,84722,1121333,Isaac Bonga,Isaac Bonga
-20002019,Active,29,PHO,14,G,SG,Landry,Shamet,76,190,3/13/1997 12:00:00 AM,Wichita State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002019.png,4,,84724,893100,Landry Shamet,Landry Shamet
+20002019,Active,1,WAS,,G,SG,Landry,Shamet,76,190,3/13/1997 12:00:00 AM,Wichita State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002019.png,4,,84724,893100,Landry Shamet,Landry Shamet
 20002020,Inactive,,,,F,PF,Ray,Spalding,82,215,3/11/1997 12:00:00 AM,Louisville,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002020.png,1,,84726,879703,Ray Spalding,Ray Spalding
 20002021,Inactive,,,,G,SG,Khyri,Thomas,75,210,5/8/1996 12:00:00 AM,Creighton,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002021.png,2,,84723,880784,Khyri Thomas,Khyri Thomas
 20002022,Inactive,,,,F,PF,Rodions,Kurucs,81,228,2/5/1998 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002022.png,0,,84700,1121334,Rodions Kurucs,Rodions Kurucs
@@ -481,9 +479,8 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002244,Inactive,,,,G,PG,Ryan,Broekhoff,78,215,8/23/1990 12:00:00 AM,Valparaiso,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002244.png,2,,84833,507632,Ryan Broekhoff,Ryan Broekhoff
 20002251,Inactive,,,25,G,PG,Abdul,Gaddy,75,185,1/26/1992 12:00:00 AM,Washington,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002251.png,0,,16400,509348,Abdul Gaddy,Abdul Gaddy
 20002254,Active,4,MIA,2,G,PG,Gabe,Vincent,75,200,6/14/1996 12:00:00 AM,California-Santa Barbara,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002254.png,3,,101387,851253,Gabe Vincent,Gabe Vincent
-20002263,Inactive,,,,G,PG,Dusty,Hannahs,76,195,,Arkansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,103221,708919,Dusty Hannahs,Dusty Hannahs
 20002264,Inactive,,,,F,PF,Jemerrio,Jones,77,174,4/9/1995 12:00:00 AM,New Mexico State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002264.png,1,,103241,956193,Jemerrio Jones,Jemerrio Jones
-20002266,Active,21,MEM,12,G,PG,Ja,Morant,74,174,8/10/1999 12:00:00 AM,Murray State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002266.png,3,Out,110344,1065906,Ja Morant,Ja Morant
+20002266,Suspended,21,MEM,12,G,PG,Ja,Morant,74,174,8/10/1999 12:00:00 AM,Murray State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002266.png,3,Out,110344,1065906,Ja Morant,Ja Morant
 20002268,Active,3,ATL,12,F,SF,De'Andre,Hunter,80,221,12/2/1997 12:00:00 AM,Virginia,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002268.png,3,,110338,942857,De'Andre Hunter,De'Andre Hunter
 20002270,Active,12,CLE,10,G,PG,Darius,Garland,73,192,1/26/2000 12:00:00 AM,Vanderbilt,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002270.png,3,,110342,1134262,Darius Garland,Darius Garland
 20002271,Active,23,NO,1,F,PF,Zion,Williamson,78,284,7/6/2000 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002271.png,2,,110310,1132025,Zion Williamson,Zion Williamson
@@ -499,7 +496,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002281,Inactive,,,,F,PF,Sekou,Doumbouya,80,230,12/23/2000 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002281.png,1,,110639,1172131,Sekou Doumbouya,Sekou Doumbouya
 20002282,Active,5,ORL,35,C,C,Goga,Bitadze,83,250,7/20/1999 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002282.png,3,,110359,1172132,Goga Bitadze,Goga Bitadze
 20002283,Active,21,MEM,15,F,PF,Brandon,Clarke,80,215,9/19/1996 12:00:00 AM,Gonzaga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002283.png,3,,110353,892914,Brandon Clarke,Brandon Clarke
-20002284,Active,4,MIA,14,G,SG,Tyler,Herro,77,195,1/20/2000 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002284.png,3,Out,110312,1134176,Tyler Herro,Tyler Herro
+20002284,Active,4,MIA,14,G,SG,Tyler,Herro,77,195,1/20/2000 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002284.png,3,,110312,1134176,Tyler Herro,Tyler Herro
 20002285,Active,16,MIN,9,G,SG,Nickeil,Alexander-Walker,77,205,9/2/1998 12:00:00 AM,Virginia Tech,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002285.png,3,,110356,1067668,Nickeil Alexander-Walker,Nickeil Alexander-Walker
 20002286,Active,29,PHO,55,F,PF,Darius,Bazley,81,216,6/12/2000 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002286.png,3,,110637,1172134,Darius Bazley,Darius Bazley
 20002287,Active,5,ORL,3,F,PF,Chuma,Okeke,80,229,8/18/1998 12:00:00 AM,Auburn,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002287.png,2,,110336,1061658,Chuma Okeke,Chuma Okeke
@@ -515,10 +512,10 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002297,Active,6,NY,18,F,PF,Isaiah,Roby,80,230,2/3/1998 12:00:00 AM,Nebraska,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002297.png,3,,110346,944969,Isaiah Roby,Isaiah Roby
 20002298,Inactive,,,,F,SF,Deividas,Sirvydis,80,190,6/10/2000 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002298.png,2,,110638,1172138,Deividas Sirvydis,Deividas Sirvydis
 20002299,Inactive,,,,F,PF,Eric,Paschall,78,255,11/4/1996 12:00:00 AM,Villanova,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002299.png,3,,110323,846627,Eric Paschall,Eric Paschall
-20002300,Active,26,GS,3,G,PG,Jordan,Poole,76,194,6/19/1999 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002300.png,3,,110322,1067671,Jordan Poole,Jordan Poole
+20002300,Active,1,WAS,,G,PG,Jordan,Poole,76,194,6/19/1999 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002300.png,3,,110322,1067671,Jordan Poole,Jordan Poole
 20002301,Inactive,,,,F,PF,Alen,Smailagic,82,215,8/18/2000 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002301.png,1,,110365,1148770,Alen Smailagic,Alen Smailagic
 20002302,Active,9,BOS,28,C,C,Mfiondu,Kabengele,82,250,8/14/1997 12:00:00 AM,Florida State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002302.png,2,,110355,941357,Mfiondu Kabengele,Mfiondu Kabengele
-20002303,Active,17,UTA,0,G,SG,Talen,Horton-Tucker,76,234,11/25/2000 12:00:00 AM,Iowa State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002303.png,3,,110337,1132824,Talen Horton-Tucker,Talen Horton-Tucker
+20002303,Active,17,UTA,5,G,SG,Talen,Horton-Tucker,76,234,11/25/2000 12:00:00 AM,Iowa State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002303.png,3,,110337,1132824,Talen Horton-Tucker,Talen Horton-Tucker
 20002304,Inactive,,,,F,PF,KZ,Okpala,80,215,4/28/1999 12:00:00 AM,Stanford,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002304.png,3,,110309,1061544,KZ Okpala,KZ Okpala
 20002305,Inactive,,,,G,PG,Didi,Louzada,78,190,2/7/1999 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002305.png,1,,110641,1172136,Didi Louzada,Didi Louzada
 20002306,Active,3,ATL,24,C,C,Bruno,Fernando,82,240,8/15/1998 12:00:00 AM,Maryland,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002306.png,3,,110329,1076674,Bruno Fernando,Bruno Fernando
@@ -597,7 +594,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002490,Active,3,ATL,25,G,SG,Garrison,Mathews,78,215,10/24/1996 12:00:00 AM,Lipscomb,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002490.png,3,,111622,888431,Garrison Mathews,Garrison Mathews
 20002491,Active,4,MIA,16,F,PF,Caleb,Martin,77,205,9/28/1995 12:00:00 AM,Nevada,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002491.png,3,,113267,842969,Caleb Martin,Caleb Martin
 20002493,Active,30,SAC,3,G,SG,Terence,Davis,76,201,5/16/1997 12:00:00 AM,Mississippi,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002493.png,3,,116340,886404,Terence Davis,Terence Davis
-20002494,Inactive,,,,G,PG,Mychal,Mulder,75,195,6/12/1994 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002494.png,2,,117273,891351,Mychal Mulder,Mychal Mulder
+20002494,Active,9,BOS,,G,PG,Mychal,Mulder,75,195,6/12/1994 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002494.png,2,,117273,891351,Mychal Mulder,Mychal Mulder
 20002495,Inactive,,,,G,PG,Marko,Guduric,78,201,3/8/1995 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002495.png,1,,113306,1180048,Marko Guduric,Marko Guduric
 20002496,Inactive,,,,G,PG,Hassani,Gravett,74,188,7/16/1996 12:00:00 AM,South Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002496.png,0,,116148,949192,Hassani Gravett,Hassani Gravett
 20002497,Inactive,,,,G,PG,Matt,Mooney,75,200,2/7/1997 12:00:00 AM,Texas Tech,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002497.png,0,,117292,846853,Matt Mooney,Matt Mooney
@@ -629,7 +626,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002546,Active,7,PHI,0,G,PG,Tyrese,Maxey,74,200,11/4/2000 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002546.png,2,,145331,1186160,Tyrese Maxey,Tyrese Maxey
 20002547,Active,20,DEN,22,C,C,Zeke,Nnaji,81,240,1/9/2001 12:00:00 AM,Arizona,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002547.png,2,,145305,1193676,Zeke Nnaji,Zeke Nnaji
 20002548,Inactive,,,,F,SF,Leandro,Bolmaro,78,200,9/11/2000 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002548.png,1,,145535,1257425,Leandro Bolmaro,Leandro Bolmaro
-20002549,Active,14,DET,14,G,PG,R.J.,Hampton,76,175,2/7/2001 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002549.png,2,,145541,1257426,R.J. Hampton,R.J. Hampton
+20002549,Inactive,,,,G,PG,R.J.,Hampton,76,175,2/7/2001 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002549.png,2,,145541,1257426,R.J. Hampton,R.J. Hampton
 20002550,Active,6,NY,5,G,PG,Immanuel,Quickley,74,190,6/17/1999 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002550.png,2,,145348,1134175,Immanuel Quickley,Immanuel Quickley
 20002551,Active,9,BOS,11,G,PG,Payton,Pritchard,73,195,1/28/1998 12:00:00 AM,Oregon,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002551.png,2,,145335,945610,Payton Pritchard,Payton Pritchard
 20002552,Active,17,UTA,20,C,C,Udoka,Azubuike,83,270,9/17/1999 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002552.png,2,,145309,944169,Udoka Azubuike,Udoka Azubuike
@@ -710,7 +707,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002632,Inactive,,,,C,C,Kaleb,Wesson,81,270,7/27/1999 12:00:00 AM,Ohio State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,145832,1061219,Kaleb Wesson,Kaleb Wesson
 20002633,Inactive,,,,G,SG,Jake,Toolson,77,205,3/6/1996 12:00:00 AM,BYU,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002633.png,0,,145739,850105,Jake Toolson,Jake Toolson
 20002634,Inactive,,,,F,PF,Tadija,Dragicevic,81,245,1/28/1986 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
-20002635,Inactive,,,,C,C,Jon,Teske,85,265,5/4/2020 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002635.png,0,,145831,944809,Jon Teske,Jon Teske
+20002635,Inactive,,,,C,C,Jon,Teske,85,265,5/4/1997 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002635.png,0,,145831,944809,Jon Teske,Jon Teske
 20002636,Inactive,,,,C,C,Will,Magnay,82,234,6/10/1998 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002636.png,0,,145745,934675,Will Magnay,Will Magnay
 20002637,Inactive,,,,F,PF,Yoeli,Childs,80,225,1/13/1998 12:00:00 AM,BYU,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002637.png,0,,145829,955873,Yoeli Childs,Yoeli Childs
 20002638,Inactive,,,,G,PG,Keandre,Cook,77,187,5/1/1997 12:00:00 AM,Missouri State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002638.png,0,,145820,1135223,Keandre Cook,Keandre Cook
@@ -768,7 +765,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002693,Active,14,DET,12,F,SF,Isaiah,Livers,78,232,7/28/1998 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002693.png,1,,157810,1067672,Isaiah Livers,Isaiah Livers
 20002694,Active,2,CHA,21,F,PF,JT,Thor,81,203,8/26/2002 12:00:00 AM,Auburn,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002694.png,1,,157815,1251663,JT Thor,JT Thor
 20002695,Inactive,,,,G,SG,Joshua,Primo,78,189,12/24/2002 12:00:00 AM,Alabama,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002695.png,1,,157813,1231214,Joshua Primo,Joshua Primo
-20002696,Active,1,WAS,14,F,PF,Isaiah,Todd,81,219,10/17/2001 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002696.png,1,,157910,1271713,Isaiah Todd,Isaiah Todd
+20002696,Active,29,PHO,,F,PF,Isaiah,Todd,81,219,10/17/2001 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002696.png,1,,157910,1271713,Isaiah Todd,Isaiah Todd
 20002697,Active,8,BKN,20,C,C,Day'Ron,Sharpe,81,265,11/6/2001 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002697.png,1,,157839,1243725,Day'Ron Sharpe,Day'Ron Sharpe
 20002698,Inactive,,,,G,SG,Joel,Ayayi,77,180,3/5/2000 12:00:00 AM,Gonzaga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002698.png,0,,158135,1077553,Joel Ayayi,Joel Ayayi
 20002699,Active,23,NO,5,F,SF,Herbert,Jones,79,206,10/6/1998 12:00:00 AM,Alabama,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002699.png,1,,157848,1061638,Herbert Jones,Herbert Jones
@@ -803,7 +800,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002732,Active,23,NO,15,G,PG,Jose,Alvarado,72,179,4/12/1998 12:00:00 AM,Georgia Tech,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002732.png,1,,158373,1060919,Jose Alvarado,Jose Alvarado
 20002734,Inactive,,,,F,SF,Chris,Smith,81,215,12/24/1999 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002734.png,0,,158853,1061552,Chris Smith,Chris Smith
 20002735,Active,1,WAS,34,C,C,Jay,Huff,85,240,8/25/1998 12:00:00 AM,Virignia,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002735.png,1,,159097,942843,Jay Huff,Jay Huff
-20002736,Active,1,WAS,7,G,PG,Jordan,Goodwin,75,200,10/23/1998 12:00:00 AM,St. Louis,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002736.png,1,,160174,1062104,Jordan Goodwin,Jordan Goodwin
+20002736,Active,29,PHO,,G,PG,Jordan,Goodwin,75,200,10/23/1998 12:00:00 AM,St. Louis,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002736.png,1,,160174,1062104,Jordan Goodwin,Jordan Goodwin
 20002737,Inactive,,,,G,SG,MaCio,Teague,76,195,6/11/1997 12:00:00 AM,Baylor,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002737.png,0,,159736,953266,MaCio Teague,MaCio Teague
 20002738,Active,11,CHI,32,F,SF,Terry,Taylor,76,230,9/23/1999 12:00:00 AM,Austin Peay,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002738.png,1,,158371,1077609,Terry Taylor,Terry Taylor
 20002739,Inactive,,,,G,PG,D.J.,Carton,74,200,2/25/2001 12:00:00 AM,Marquette,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,161668,1176224,DJ Carton,D.J. Carton
@@ -864,7 +861,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002859,Active,18,OKC,12,F,SF,Lindy,Waters III,78,210,7/28/1997 12:00:00 AM,Oklahoma State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002859.png,1,,165854,944248,Lindy Waters,Lindy Waters III
 20002860,Inactive,,,,G,SG,Gabriel,Lundberg,76,203,12/4/1994 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002860.png,0,,166823,1379209,Iffe Lundberg,Gabriel Lundberg
 20002861,Active,17,UTA,30,G,SG,Ochai,Agbaji,77,215,4/20/2000 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002861.png,0,,171781,1132831,Ochai Agbaji,Ochai Agbaji
-20002862,Active,26,GS,7,F,SF,Patrick,Baldwin Jr.,81,220,11/18/2002 12:00:00 AM,Milwaukee,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002862.png,0,,171773,1324451,Patrick Baldwin,Patrick Baldwin Jr.
+20002862,Active,1,WAS,,F,SF,Patrick,Baldwin Jr.,81,220,11/18/2002 12:00:00 AM,Milwaukee,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002862.png,0,,171773,1324451,Patrick Baldwin,Patrick Baldwin Jr.
 20002863,Active,5,ORL,5,F,PF,Paolo,Banchero,82,250,11/12/2002 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002863.png,0,,171770,1323993,Paolo Banchero,Paolo Banchero
 20002864,Active,24,SA,26,F,PF,Dominick,Barlow,81,250,5/16/2003 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002864.png,0,,171925,1419291,Dominick Barlow,Dominick Barlow
 20002865,Active,15,MIL,0,G,SG,MarJon,Beauchamp,79,199,10/12/2000 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002865.png,0,,171802,1357744,MarJon Beauchamp,Marjon Beauchamp
@@ -909,11 +906,12 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20002908,Active,5,ORL,2,G,SG,Caleb,Houstan,80,205,1/9/2003 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002908.png,0,,171771,1324361,Caleb Houstan,Caleb Houstan
 20002910,Active,21,MEM,3,F,PF,Jake,LaRavia,79,235,11/3/2001 12:00:00 AM,Wake Forest,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002910.png,0,,171757,1175125,Jake LaRavia,Jake LaRavia
 20002911,Active,11,CHI,34,F,SF,Justin,Lewis,79,245,4/12/2002 12:00:00 AM,Marquette,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002911.png,0,,171673,1232475,Justin Lewis,Justin Lewis
+20002912,Active,16,MIN,33,F,PF,Leonard,Miller,82,211,11/26/2003 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
 20002913,Active,16,MIN,8,F,PF,Josh,Minott,80,205,11/25/2002 12:00:00 AM,Memphis,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002913.png,0,,171776,1324299,Josh Minott,Josh Minott
 20002914,Active,13,IND,2,G,PG,Andrew,Nembhard,75,191,1/16/2000 12:00:00 AM,Gonzaga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002914.png,0,,171747,1134158,Andrew Nembhard,Andrew Nembhard
 20002915,Active,27,LAL,14,G,PG,Scotty,Pippen Jr.,73,170,11/10/2000 12:00:00 AM,Vanderbilt,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002915.png,0,,171661,1176798,Scotty Pippen,Scotty Pippen Jr.
 20002916,Active,21,MEM,27,F,PF,David,Roddy,76,255,3/27/2001 12:00:00 AM,Colorado State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002916.png,0,,171755,1193593,David Roddy,David Roddy
-20002917,Active,26,GS,2,G,SG,Ryan,Rollins,75,180,7/3/2002 12:00:00 AM,Toledo,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002917.png,0,,171772,1232221,Ryan Rollins,Ryan Rollins
+20002917,Active,1,WAS,,G,SG,Ryan,Rollins,75,180,7/3/2002 12:00:00 AM,Toledo,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002917.png,0,,171772,1232221,Ryan Rollins,Ryan Rollins
 20002918,Active,23,NO,0,G,SG,Dereon,Seabron,77,180,5/26/2000 12:00:00 AM,North Carolina State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002918.png,0,,171670,1175098,Dereon Seabron,Dereon Seabron
 20002919,Active,19,POR,34,F,PF,Jabari,Walker,79,200,7/30/2002 12:00:00 AM,Colorado,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002919.png,0,,171764,1232517,Jabari Walker,Jabari Walker
 20002920,Active,20,DEN,8,F,SF,Peyton,Watson,79,200,9/11/2002 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20002920.png,0,,171761,1326502,Peyton Watson,Peyton Watson
@@ -967,7 +965,7 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20003012,Inactive,,,,G,SG,Pat,Spencer,75,205,7/4/1996 12:00:00 AM,Northwestern,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20003012.png,0,,174501,1176145,Pat Spencer,Pat Spencer
 20003013,Inactive,,,,F,PF,Sacha,Killeya-Jones,83,220,8/10/1998 12:00:00 AM,North Carolina State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,175177,957491,Sacha Killeya-Jones,Sacha Killeya-Jones
 20003014,Inactive,,,,C,C,Makur,Maker,82,232,11/4/2000 12:00:00 AM,Howard,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,1252425,,Makur Maker
-20003015,Inactive,,,,C,C,Mouhamed,Gueye,83,210,11/9/2022 12:00:00 AM,Washington State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,177490,1176251,Mouhamadou Gueye,Mouhamadou Gueye
+20003015,Active,3,ATL,,C,C,Mouhamed,Gueye,83,210,11/9/2002 12:00:00 AM,Washington State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,177490,1176251,Mouhamadou Gueye,Mouhamadou Gueye
 20003016,Inactive,,,,G,SG,Tommy,Kuhse,74,185,1/5/1998 12:00:00 AM,Mount Saint Mary's,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,178880,955997,Tommy Kuhse,Tommy Kuhse
 20003017,Inactive,,,,G,SG,Jaylen,Sims,78,210,12/11/1998 12:00:00 AM,North Carolina-Wilmington,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20003017.png,0,,179707,1138072,Jaylen Sims,Jaylen Sims
 20003018,Inactive,,,,F,PF,Anthony,Duruji,79,209,7/22/1998 12:00:00 AM,Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/20003018.png,0,,179709,1062521,Anthony Duruji,Anthony Duruji
@@ -976,3 +974,108 @@ PlayerID,Status,TeamID,Team,Jersey,PositionCategory,Position,FirstName,LastName,
 20003022,Inactive,,,,G,SG,Stanley,Umude,78,210,4/12/1999 12:00:00 AM,Arkansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,180484,1066839,Stanley Umude,Stanley Umude
 20003025,Inactive,,,,G,SG,Nate,Pierre-Louis,76,205,12/23/1998 12:00:00 AM,Temple,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,180753,1060761,Nate Pierre-Louis,Nate Pierre-Louis
 20003028,Inactive,,,,G,SG,Alex,O'Connell,78,185,6/2/1999 12:00:00 AM,Creighton,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003031,Active,24,SA,1,F,PF,Victor,Wembanyama,89,220,1/4/2004 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003032,Active,2,CHA,24,F,SF,Brandon,Miller,81,200,11/22/2002 12:00:00 AM,Alabama,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003033,Active,19,POR,0,G,PG,Scoot,Henderson,74,196,2/3/2004 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003034,Active,22,HOU,1,G,PG,Amen,Thompson,79,215,1/30/2003 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003035,Active,13,IND,1,F,PF,Jarace,Walker,80,240,9/4/2003 12:00:00 AM,Houston,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003036,Active,14,DET,9,G,SG,Ausar,Thompson,79,220,1/30/2003 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003037,Active,22,HOU,20,F,SF,Cam,Whitmore,79,232,7/8/2004 12:00:00 AM,Villanova,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003038,Active,5,ORL,0,G,PG,Anthony,Black,79,198,1/20/2004 12:00:00 AM,Arkansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003039,Active,10,TOR,,G,SG,Gradey,Dick,80,205,11/20/2003 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003040,Active,17,UTA,0,F,PF,Taylor,Hendricks,81,210,11/22/2003 12:00:00 AM,Central Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003041,Active,23,NO,24,G,SG,Jordan,Hawkins,77,195,4/29/2002 12:00:00 AM,Connecticut,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003042,Active,18,OKC,22,G,PG,Cason,Wallace,76,195,11/7/2003 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003043,Active,2,CHA,0,G,PG,Nick,Smith Jr.,77,185,4/18/2004 12:00:00 AM,Arkansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003044,Active,17,UTA,3,G,SG,Keyonte,George,76,185,11/8/2003 12:00:00 AM,Baylor,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003045,Active,27,LAL,,G,PG,Jalen,Hood-Schifino,76,215,6/19/2003 12:00:00 AM,Indiana,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003046,Active,8,BKN,21,F,PF,Noah,Clowney,82,210,7/14/2004 12:00:00 AM,Alabama,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003047,Active,5,ORL,13,G,SG,Jett,Howard,80,215,9/14/2003 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003048,Active,19,POR,72,G,SG,Rayan,Rupert,78,195,5/31/2004 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003049,Active,3,ATL,2,G,PG,Kobe,Bufkin,76,190,9/21/2003 12:00:00 AM,Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003050,Active,17,UTA,8,F,SF,Brice,Sensabaugh,78,235,10/30/2003 12:00:00 AM,Ohio State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003052,Active,1,WAS,0,G,SG,Bilal,Coulibaly,80,195,7/26/2004 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003053,Active,2,CHA,,C,C,James,Nnaji,84,250,8/14/2004 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003054,Active,19,POR,8,F,PF,Kris,Murray,79,215,8/19/2000 12:00:00 AM,Iowa,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003055,Active,25,DAL,,C,C,Dereck,Lively II,85,230,2/12/2004 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003056,Active,8,BKN,7,G,SG,Dariq,Whitehead,79,220,8/1/2004 12:00:00 AM,Duke,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003057,Active,27,LAL,,F,SF,Maxwell,Lewis,78,207,7/27/2002 12:00:00 AM,Pepperdine,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003058,Active,30,SAC,,G,SG,Colby,Jones,76,200,5/28/2002 12:00:00 AM,Xavier,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003059,Active,15,MIL,,G,SG,Andre,Jackson,78,200,11/13/2001 12:00:00 AM,Connecticut,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003060,Active,4,MIA,11,F,SF,Jaime,Jaquez Jr.,78,225,2/16/2001 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003061,Active,7,PHI,,G,PG,Terquavion,Smith,75,165,12/31/2002 12:00:00 AM,North Carolina State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003062,Active,24,SA,25,G,SG,Sidy,Cissoko,80,200,4/2/2001 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003064,Active,21,MEM,,F,PF,Gregory,Jackson,81,215,12/17/2004 12:00:00 AM,South Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003065,Active,26,GS,32,F,PF,Trayce,Jackson-Davis,81,245,2/22/2000 12:00:00 AM,Indiana,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003066,Active,12,CLE,,F,SF,Emoni,Bates,82,170,1/28/2004 12:00:00 AM,Eastern Michigan,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003067,Active,25,DAL,,F,PF,Olivier-Maxence,Prosper,80,230,7/3/2002 12:00:00 AM,Marquette,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003068,Active,26,GS,2,G,SG,Brandin,Podziemski,77,205,2/25/2003 12:00:00 AM,Santa Clara,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003069,Active,14,DET,25,G,PG,Marcus,Sasser,73,195,9/21/2000 12:00:00 AM,Houston,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003070,Active,13,IND,26,F,SF,Ben,Sheppard,78,190,7/16/2001 12:00:00 AM,Belmont,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003071,Active,20,DEN,,F,SF,Julian,Strawther,79,210,4/18/2002 12:00:00 AM,Gonzaga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003072,Active,28,LAC,,F,PF,Kobe,Brown,80,250,1/1/2000 12:00:00 AM,Missouri,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003073,Active,20,DEN,,G,SG,Jalen,Pickett,76,200,10/22/1999 12:00:00 AM,Penn State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003074,Active,11,CHI,,F,SF,Julian,Phillips,79,200,11/5/2003 12:00:00 AM,Tennessee,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003075,Active,20,DEN,,F,SF,Hunter,Tyson,80,215,6/13/2000 12:00:00 AM,Clemson,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003076,Active,9,BOS,27,F,SF,Jordan,Walsh,79,205,3/3/2004 12:00:00 AM,Arkansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003077,Active,2,CHA,,G,PG,Amari,Bailey,75,190,2/17/2004 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003078,Active,1,WAS,,F,PF,Tristan,Vukcevic,83,225,3/11/2003 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003080,Active,3,ATL,,G,SG,Seth,Lundy,78,220,4/2/2000 12:00:00 AM,Penn State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003082,Active,28,LAC,,F,SF,Jordan,Miller,79,195,1/23/2000 12:00:00 AM,Miami,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003083,Active,18,OKC,18,F,SF,Keyontae,Johnson,76,240,5/24/1999 12:00:00 AM,Kansas State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003084,Active,8,BKN,22,F,SF,Jalen,Wilson,80,230,11/4/2000 12:00:00 AM,Kansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003085,Active,29,PHO,,F,SF,Toumani,Camara,80,220,5/8/2000 12:00:00 AM,Dayton,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003086,Active,16,MIN,0,G,PG,Jaylen,Clark,77,210,10/13/2001 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003087,Active,30,SAC,,F,PF,Jalen,Slawson,79,215,10/22/1999 12:00:00 AM,Furman,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003088,Active,13,IND,,G,PG,Isaiah,Wong,74,185,1/28/2001 12:00:00 AM,Miami (FL),https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003090,Active,15,MIL,,F,SF,Chris,Livingston,78,220,10/15/2003 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003091,Active,24,SA,,G,PG,Sir'Jabari,Rice,76,180,12/28/1998 12:00:00 AM,Texas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003092,Active,27,LAL,,C,C,Colin,Castleton,83,250,5/25/2000 12:00:00 AM,Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003093,Active,25,DAL,,G,PG,Mike,Miles Jr.,74,195,8/24/2002 12:00:00 AM,TCU,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,0,,,,,
+20003094,Active,27,LAL,,G,PG,D'Moi,Hodge,76,188,12/20/1998 12:00:00 AM,Missouri,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003095,Active,10,TOR,,G,PG,Markquis,Nowell,68,160,12/25/1999 12:00:00 AM,Kansas St,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003096,Active,7,PHI,,G,SG,Ricky,Council IV,78,210,8/3/2001 12:00:00 AM,Arkansas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003097,Active,7,PHI,,F,SF,Marcus,Bagley,80,215,10/23/2001 12:00:00 AM,Arizona State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003098,Active,7,PHI,,C,C,Azuolas,Tubelis,83,245,3/22/2002 12:00:00 AM,Arizona,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003100,Active,27,LAL,,F,SF,Alex,Fudge,81,194,5/6/2003 12:00:00 AM,Florida,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003101,Active,26,GS,,F,SF,Javan,Johnson,78,198,1/5/1999 12:00:00 AM,DePaul,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003102,Active,15,MIL,,G,PG,Omari,Moore,78,195,9/18/2002 12:00:00 AM,San Jose St.,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003103,Active,11,CHI,,C,C,Adama,Sanogo,81,245,2/12/2002 12:00:00 AM,Connecticut,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003104,Active,17,UTA,,F,PF,Joey,Hauser,81,220,7/19/1999 12:00:00 AM,Michigan State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003105,Active,6,NY,,F,SF,Jaylen,Martin,78,219,1/28/2004 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003107,Active,6,NY,,F,SF,Jacob,Toppin,81,205,5/8/2000 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003108,Active,15,MIL,,F,PF,Drew,Timme,82,235,9/9/2000 12:00:00 AM,Gonzaga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003109,Active,4,MIA,,F,PF,Drew,Peterson,80,192,11/9/1999 12:00:00 AM,Southern California,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003112,Active,24,SA,,C,C,Charles,Bediako,84,225,3/10/2002 12:00:00 AM,Alabama,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003113,Active,20,DEN,,G,SG,Armaan,Franklin,76,200,11/17/2002 12:00:00 AM,Virginia,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003114,Active,19,POR,,G,PG,Antoine,Davis,73,165,10/3/1998 12:00:00 AM,Detroit-Mercy,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003115,Active,23,NO,,G,SG,Landers,Nolley II,79,220,3/5/2000 12:00:00 AM,Cincinnati,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003116,Active,23,NO,,F,PF,Tevian,Jones,79,197,6/29/2000 12:00:00 AM,Southern Utah,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003117,Active,23,NO,,C,C,Liam,Robbins,84,250,7/12/1999 12:00:00 AM,Vanderbilt,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003118,Active,19,POR,,G,SG,Malachi,Smith,76,205,12/6/1999 12:00:00 AM,Gonzaga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003119,Active,4,MIA,,G,PG,Justin,Powell,78,197,5/9/2001 12:00:00 AM,Washington State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003120,Active,3,ATL,,F,PF,Miles,Norris,82,220,4/15/2000 12:00:00 AM,California-Santa Barbara,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003121,Active,3,ATL,,G,SG,David,Singleton,76,210,10/27/1998 12:00:00 AM,UCLA,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003122,Active,25,DAL,1,G,PG,Jordan,Walker,71,170,8/11/1999 12:00:00 AM,UAB,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003123,Active,2,CHA,,F,PF,Angelo,Allegri,79,215,4/28/1999 12:00:00 AM,Eastern Washington,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003124,Active,2,CHA,,F,PF,Nathan,Mensah,82,230,4/9/1998 12:00:00 AM,San Diego State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003125,Active,15,MIL,,G,PG,Jazian,Gortman,74,170,4/14/2003 12:00:00 AM,None,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003126,Active,18,OKC,,G,SG,Adam,Flagler,75,185,12/1/1999 12:00:00 AM,Baylor,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003127,Active,3,ATL,,G,PG,Jarkel,Joiner,73,180,5/20/1999 12:00:00 AM,NC State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003128,Active,16,MIN,,G,PG,Brendan,Adams,76,205,4/3/2000 12:00:00 AM,George Washington,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003129,Active,13,IND,,F,PF,Nate,Laszewski,82,230,7/19/1999 12:00:00 AM,Notre Dame,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003130,Active,13,IND,,C,C,Oscar,Tshiebwe,81,260,11/27/1999 12:00:00 AM,Kentucky,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003131,Active,24,SA,,F,SF,Setric,Millner Jr.,79,205,6/29/2000 12:00:00 AM,Toledo,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003132,Active,4,MIA,,G,SG,Caleb,Daniels,76,210,5/17/1999 12:00:00 AM,Villanova,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003133,Active,12,CLE,,G,PG,Craig,Porter Jr.,74,186,2/26/2000 12:00:00 AM,Wichita State,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003134,Active,14,DET,,F,SF,Tosan,Evbuomwan,80,217,2/16/2001 12:00:00 AM,Princeton,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003135,Active,28,LAC,,G,PG,Xavier,Castaneda,73,195,3/26/2000 12:00:00 AM,Akron,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003136,Active,18,OKC,,F,SF,Caleb,McConnell,79,200,6/8/1999 12:00:00 AM,Rutgers,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003138,Active,24,SA,,G,PG,Logan,Johnson,74,177,10/11/1999 12:00:00 AM,St. Mary's,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003139,Active,17,UTA,,G,SG,Taevion,Kinsey,77,190,3/10/2000 12:00:00 AM,Marshall,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003140,Active,30,SAC,,C,C,Jake,Stephens,84,275,11/5/1999 12:00:00 AM,Chattanoga,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003141,Active,2,CHA,,F,SF,Leaky,Black,81,205,6/14/1999 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003142,Active,12,CLE,,F,PF,Pete,Nance,83,230,2/19/2000 12:00:00 AM,North Carolina,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003143,Active,6,NY,,G,PG,De'Vion,Harmon,74,205,1/22/2001 12:00:00 AM,Texas Tech,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003144,Active,21,MEM,,F,SF,Timmy,Allen,78,210,1/9/2000 12:00:00 AM,Texas,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,
+20003145,Active,26,GS,,G,PG,Kendric,Davis,72,177,5/14/1999 12:00:00 AM,Memphis,https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nba/low-res/0.png,,,,,,

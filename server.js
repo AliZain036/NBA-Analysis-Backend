@@ -85,6 +85,10 @@ mongoose
     try {
       console.log("Connection successfully established")
       // downloadAndExtractZip()
+      calculateSeasonVersusCalculations()
+      convertToJSONandSavePlayerGameData()
+      convertToJSONandSavePlayerSeasonData()
+      calculateDefenceVersusPositionStats()
     } catch (error) {
       console.error(error.message, " error")
     }
@@ -435,15 +439,19 @@ const calculateDefenceVersusPositionStats = async () => {
 
           SeasonDefenceVsPositionGeoMean.deleteMany().then((_) => {
             console.log(_)
-            SeasonDefenceVsPositionGeoMean.insertMany(geoMean.flat()).then(() => {
-              console.log("Season geomean dvp inserted successfully")
-            })
+            SeasonDefenceVsPositionGeoMean.insertMany(geoMean.flat()).then(
+              () => {
+                console.log("Season geomean dvp inserted successfully")
+              }
+            )
           })
-          
+
           lastTenAvg.push(
             calculateAverageOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -451,7 +459,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenAvg.push(
             calculateAverageOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -459,14 +469,18 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenAvg.push(
             calculateAverageOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
           lastTenAvg.push(
             calculateAverageOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -474,7 +488,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenAvg.push(
             calculateAverageOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByC.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByC.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -490,7 +506,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMode.push(
             calculateModeOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -498,7 +516,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMode.push(
             calculateModeOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -506,7 +526,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMode.push(
             calculateModeOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -514,7 +536,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMode.push(
             calculateModeOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -522,22 +546,28 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMode.push(
             calculateModeOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByC.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByC.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
 
           LastTenDefenceVsPositionMode.deleteMany().then((_) => {
             console.log(_)
-            LastTenDefenceVsPositionMode.insertMany(lastTenMode.flat()).then(() => {
-              console.log("last ten mode dvp inserted successfully")
-            })
+            LastTenDefenceVsPositionMode.insertMany(lastTenMode.flat()).then(
+              () => {
+                console.log("last ten mode dvp inserted successfully")
+              }
+            )
           })
 
           lastTenMedian.push(
             calculateMedianOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -545,7 +575,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMedian.push(
             calculateMedianOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -553,7 +585,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMedian.push(
             calculateMedianOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -561,7 +595,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMedian.push(
             calculateMedianOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -569,14 +605,18 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenMedian.push(
             calculateMedianOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByC.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByC.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
 
           LastTenDefenceVsPositionMedian.deleteMany().then((_) => {
             console.log(_)
-            LastTenDefenceVsPositionMedian.insertMany(lastTenMedian.flat()).then(() => {
+            LastTenDefenceVsPositionMedian.insertMany(
+              lastTenMedian.flat()
+            ).then(() => {
               console.log("last ten median dvp inserted successfully")
             })
           })
@@ -584,7 +624,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenGeoMean.push(
             calculateGeoMeanOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -592,7 +634,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenGeoMean.push(
             calculateGeoMeanOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySG.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySG.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -600,7 +644,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenGeoMean.push(
             calculateGeoMeanOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedBySF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedBySF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -608,7 +654,9 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenGeoMean.push(
             calculateGeoMeanOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByPF.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByPF.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
@@ -616,14 +664,18 @@ const calculateDefenceVersusPositionStats = async () => {
           lastTenGeoMean.push(
             calculateGeoMeanOfGamesByPosition(
               scheduledGames.map((game) =>
-                topTenGroupedByC.filter((item) => item.OpponentID == game.TeamID)
+                topTenGroupedByC.filter(
+                  (item) => item.OpponentID == game.TeamID
+                )
               )
             )
           )
 
           LastTenDefenceVsPositionGeoMean.deleteMany().then((_) => {
             console.log(_)
-            LastTenDefenceVsPositionGeoMean.insertMany(lastTenGeoMean.flat()).then(() => {
+            LastTenDefenceVsPositionGeoMean.insertMany(
+              lastTenGeoMean.flat()
+            ).then(() => {
               console.log("Last ten geomean dvp inserted successfully")
             })
           })
@@ -941,19 +993,6 @@ function removeDuplicatesByOpponentID(array) {
 
   return uniqueObjects
 }
-function removeDuplicatesByArr(array, attribute) {
-  const uniqueObjects = []
-  const opponentIDs = []
-
-  array.forEach((object) => {
-    if (!opponentIDs.includes(object[attribute])) {
-      opponentIDs.push(object[attribute])
-      uniqueObjects.push(object)
-    }
-  })
-
-  return uniqueObjects
-}
 
 function mergeSamePlayerObjects(playerData) {
   let players = []
@@ -971,59 +1010,40 @@ function mergeSamePlayerObjects(playerData) {
   return result
 }
 
-function mergeSameTeamObjects(teamsData) {
-  let teams = []
-  let result = []
-  for (const team of teamsData) {
-    const opponentID = team.OpponentID
-    if (!teams[opponentID]) {
-      teams[opponentID] = []
-    }
-    teams[opponentID].push(team)
-  }
-  for (const opponentID in teams) {
-    result.push(teams[opponentID])
-  }
-  return result
-}
+// function mergeSameTeamObjects(teamsData) {
+//   let teams = []
+//   let result = []
+//   for (const team of teamsData) {
+//     const opponentID = team.OpponentID
+//     if (!teams[opponentID]) {
+//       teams[opponentID] = []
+//     }
+//     teams[opponentID].push(team)
+//   }
+//   for (const opponentID in teams) {
+//     result.push(teams[opponentID])
+//   }
+//   return result
+// }
 
-function mergeSamePositionObjects(teamsData) {
-  let teams = []
-  let result = []
-  for (const team of teamsData) {
-    const position = team.Position
-    if (!teams[position]) {
-      teams[position] = []
-    }
-    teams[position].push(team)
-  }
-  for (const position in teams) {
-    result.push(teams[position])
-  }
-  return result
-}
+// function mergeSamePositionObjects(teamsData) {
+//   let teams = []
+//   let result = []
+//   for (const team of teamsData) {
+//     const position = team.Position
+//     if (!teams[position]) {
+//       teams[position] = []
+//     }
+//     teams[position].push(team)
+//   }
+//   for (const position in teams) {
+//     result.push(teams[position])
+//   }
+//   return result
+// }
 
 const getLastTenGamesData = async () => {
   try {
-    // const filePath = "./sportsDataCSV/Game.2023.csv"
-    // csvtojson()
-    //   .fromFile(filePath)
-    //   .then((data) => {
-    //     let docs = data.map((item) => {
-    //       let dateString = item.Day;
-    //       let date = new Date(dateString)
-    //       date.setDate(date.getDate() + 1)
-    //       const updatedDateString = date.toISOString()
-    //       const updatedDate = new Date(updatedDateString)
-    //       item["Day"] = updatedDate
-    //       return item
-    //     })
-    //     Game.deleteMany().then((_) => {
-    //       Game.insertMany(docs).then((_) => {
-    //         console.log("Games inserted successfully")
-    //       })
-    //     })
-    //   })
     let teams = [
       { name: "ATL", games: [] },
       { name: "BKN", games: [] },
@@ -1078,7 +1098,6 @@ const getLastTenGamesData = async () => {
           teamGames = teamGames.flat()
           console.log(teamGames)
           let gameIDs = teamGames.map((team) => team.GameID)
-          let playersData = []
           let playerGameFileData = await PlayerGame.find({
             SeasonType: { $in: [1, 3] },
             GameID: { $in: [...gameIDs] },
@@ -1086,7 +1105,6 @@ const getLastTenGamesData = async () => {
             .sort({ Day: -1 })
             .lean()
             .exec()
-          console.log({ playerGameFileData })
           let combinedGames = mergeSamePlayerObjects(playerGameFileData)
           console.log(combinedGames)
           let playerGames = combinedGames.map((plArr) =>
@@ -1095,14 +1113,10 @@ const getLastTenGamesData = async () => {
           combinedGames = []
           playerGames.map((item) => {
             let gamesArr = item.filter((game) => game.Games === 1)
-            // if(gamesArr[0].PlayerID === 20000441) {
-            //   console.log(gamesArr);
-            // }
             if (gamesArr.length > 0) {
               combinedGames.push(gamesArr)
             }
           })
-          console.log({ combinedGames })
           calculateAverage(combinedGames, "Last Ten Games")
           calculateMedian(combinedGames, "Last Ten Games")
           calculateGeoMean(combinedGames, "Last Ten Games")
@@ -1189,21 +1203,6 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       (a, b) => a.BlockedShots - b.BlockedShots
     )
     const sortBySteals = [...playerArr].sort((a, b) => a.Steals - b.Steals)
-    // if (index === 0) {
-    //   sortByPoints.forEach((item) => console.log("Points ==", item.Points))
-    //   sortByThreePointersMade.forEach((item) =>
-    //     console.log("Points ==", item.ThreePointersMade)
-    //   )
-    //   sortByFreeThrowsMade.forEach((item) =>
-    //     console.log("Points ==", item.FreeThrowsMade)
-    //   )
-    //   sortByAssists.forEach((item) => console.log("Points ==", item.Assists))
-    //   sortByRebounds.forEach((item) => console.log("Points ==", item.Rebounds))
-    //   sortByBlockedShots.forEach((item) =>
-    //     console.log("Points ==", item.BlockedShots)
-    //   )
-    //   sortBySteals.forEach((item) => console.log("Points ==", item.Steals))
-    // }
 
     const length = playerArr.length
     const middleIndex = Math.floor(length / 2)
@@ -1267,7 +1266,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
         2
     }
     tempArrForMedian.push({
-      ...playerArr[0],
+      ...playerArr[playerArr.length > 10 ? playerArr.length - 1 : 0],
       Points: medianPoints,
       ThreePointersMade: medianThreePointersMade,
       FreeThrowsMade: medianFreeThrowsMade,
@@ -1283,7 +1282,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
     playerArr.forEach((game) => (minutesPlayedInAllGames += game.Minutes))
     if (minutesPlayedInAllGames >= 20) {
       minStatsValue.push({
-        ...playerArr[0],
+        ...playerArr[playerArr.length > 10 ? playerArr.length - 1 : 0],
         Points: sortByPoints[0].Points,
         FreeThrowsMade: sortByFreeThrowsMade[0].FreeThrowsMade,
         FreeThrowsAttempted: sortByFreeThrowsAttempted[0].FreeThrowsAttempted,
@@ -1297,7 +1296,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       })
     }
     maxStatsValue.push({
-      ...playerArr[0],
+      ...playerArr[playerArr.length > 10 ? playerArr.length - 1 : 0],
       Points: sortByPoints[sortByPoints.length - 1].Points,
       FreeThrowsMade:
         sortByFreeThrowsMade[sortByFreeThrowsMade?.length - 1].FreeThrowsMade,
@@ -1317,7 +1316,7 @@ const calculateMedian = async (playersGames = [], collectionName = "") => {
       GamesCount: playerArr?.length,
     })
     rangeStatsArr.push({
-      ...playerArr[0],
+      ...playerArr[playerArr.length > 10 ? playerArr.length - 1 : 0],
       Points:
         sortByPoints[sortByPoints?.length - 1].Points - sortByPoints[0].Points,
       FreeThrowsMade:
@@ -1569,7 +1568,7 @@ function calculateMode(playersGames, collectionName = "") {
     ).map((entry) => entry[0])
 
     temp.push({
-      ...playerData[0],
+      ...playerData[playerData.length > 10 ? playerData.length - 1 : 0],
       Points: +modes[0],
       ThreePointersMade: +ThreePointersMadeModes[0],
       FreeThrowsMade: +FreeThrowsMadeModes[0],
@@ -1664,7 +1663,7 @@ const calculateGeoMean = (playersData = [], collectionName = "") => {
     const stealsGeoMean = Math.pow(stealsProduct, 1 / player.length)
 
     playersGeoMeanData.push({
-      ...player[0],
+      ...player[player.length > 10 ? player.length - 1 : 0],
       Points: pointsGeoMean.toFixed(2),
       ThreePointersMade: threePointersMadeGeoMean.toFixed(2),
       FreeThrowsMade: freeThrowsMadeGeoMean.toFixed(2),
@@ -1759,48 +1758,9 @@ nodeCron
   })
   .start()
 
-const filePath = "./file.csv"
-
 const stripe = Stripe(
   "sk_test_51Mg4d0A5j1K1pUTFhowYmQMWTVOMvzelqTl3GQ3U2aVNm7qj9Q8E1uncv7jtDNF3Qep4EMWKNh7OdcL9CCdNALJA00gu74VIgF"
 )
-
-let jsonData = {}
-const file = fs.createWriteStream("./sportsDataCSV/Player.2023.csv")
-
-// const downloadFile = (url, dest) => {
-//   return new Promise((resolve, reject) => {
-//     // function deleteFilesInDirectory(directoryPath) {
-//     fs.readdir("./sportsDataCSV", (err, files) => {
-//       if (err) {
-//         console.error("Error reading directory:", err)
-//         return
-//       }
-
-//       files.forEach((file) => {
-//         const filePath = path.join("./sportsDataCSV", file)
-
-//         fs.unlink(filePath, (error) => {
-//           if (error) {
-//             console.error("Error deleting file:", filePath, error)
-//           } else {
-//           }
-//         })
-//       })
-//     })
-//     // }
-//     const fileStream = fs.createWriteStream(dest)
-//     request(url)
-//       .pipe(fileStream)
-//       .on("finish", () => {
-//         console.log("downloaded zip file")
-//         resolve()
-//       })
-//       .on("error", (err) => {
-//         reject(err)
-//       })
-//   })
-// }
 
 const calculateSeasonVersusCalculations = async () => {
   try {
@@ -2305,7 +2265,7 @@ function calculateGeoMeanOfGamesByPosition(data) {
     const stealsGeoMean = Math.pow(stealsProduct, 1 / player.length)
 
     playersGeoMeanData.push({
-      ...player[0],
+      ...player[player.length > 10 ? player.length - 1 : 0],
       Points: pointsGeoMean.toFixed(2),
       ThreePointersMade: threePointersMadeGeoMean.toFixed(2),
       FreeThrowsMade: freeThrowsMadeGeoMean.toFixed(2),
@@ -2328,47 +2288,6 @@ const calculateAverage = async (playersData, type = "") => {
   // Calculate Points average for each player
   playersData?.map((playerArr = [], index) => {
     const avg = 0
-    // const result = playerArr.reduce(
-    //   (accumulator, currentObject) => {
-    //     if (currentObject.PlayerID === accumulator.PlayerID) {
-    //       accumulator.Points += currentObject.Points
-    //       accumulator.ThreePointersMade += currentObject.ThreePointersMade
-    //       accumulator.FreeThrowsMade += currentObject.FreeThrowsMade
-    //       accumulator.Assists += currentObject.Assists
-    //       accumulator.Rebounds += currentObject.Rebounds
-    //       accumulator.PersonalFouls += currentObject.PersonalFouls
-    //       accumulator.BlockedShots += currentObject.BlockedShots
-    //       accumulator.Steals += currentObject.Steals
-    //       accumulator.Count++
-    //     } else {
-    //       accumulator = {
-    //         PlayerID: currentObject.PlayerID,
-    //         Points: currentObject.Points,
-    //         ThreePointersMade: currentObject.ThreePointersMade,
-    //         FreeThrowsMade: currentObject.FreeThrowsMade,
-    //         Assists: currentObject.Assists,
-    //         Rebounds: currentObject.Rebounds,
-    //         PersonalFouls: currentObject.PersonalFouls,
-    //         BlockedShots: currentObject.BlockedShots,
-    //         Steals: currentObject.Steals,
-    //         Count: 1,
-    //       }
-    //     }
-    //     return accumulator
-    //   },
-    //   {
-    //     PlayerID: playerArr[0]?.PlayerID,
-    //     Points: playerArr[0]?.Points,
-    //     ThreePointersMade: playerArr[0]?.ThreePointersMade,
-    //     FreeThrowsMade: playerArr[0]?.FreeThrowsMade,
-    //     Assists: playerArr[0]?.Assists,
-    //     Rebounds: playerArr[0]?.Rebounds,
-    //     PersonalFouls: playerArr[0]?.PersonalFouls,
-    //     BlockedShots: playerArr[0]?.BlockedShots,
-    //     Steals: playerArr[0]?.Steals,
-    //     Count: 0,
-    //   }
-    // )
     let totalPoints = 0
     let totalThreePointersMadeAvg = 0
     let totalFreeThrowsMade = 0
@@ -2404,17 +2323,9 @@ const calculateAverage = async (playersData, type = "") => {
     const BlockedShotsAverage = totalBlockedShots / playerArr.length || 0
     const StealsAverage = totalSteals / playerArr.length || 0
 
-    // const gamesPlayed = playerArr.reduce((acc, player) => {
-    //   if (player.Games === 1) {
-    //     return acc + 1
-    //   } else {
-    //     return acc
-    //   }
-    // }, 0)
-
     // Create object with calculated average for requireed fields and push it in array to show in the table
     const playerWithAveragePoints = {
-      ...playerArr[0],
+      ...playerArr[playerArr.length > 10 ? playerArr.length - 1 : 0],
       Points: PointsAverage.toFixed(2),
       ThreePointersMade: ThreePointersMadeAverage.toFixed(2),
       FreeThrowsMade: FreeThrowsMadeAverage.toFixed(2),
