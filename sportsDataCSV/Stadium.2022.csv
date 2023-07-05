@@ -15,7 +15,7 @@ StadiumID,Active,Name,Address,City,State,Zip,Country,Capacity,GeoLat,GeoLong
 14,True,Little Caesars Arena,2645 Woodward Ave,Detroit,MI,48201,USA,20491,42.551262,-83.217862
 15,True,Fiserv Forum,1001 N Fourth St.,Milwaukee,WI,53203,USA,19000,43.043611,-87.916944
 16,True,Target Center,600 First Ave. North,Minneapolis,MN,55403,USA,19356,44.979444,-93.276111
-17,True,Vivint Arena,301 W. South Temple St.,Salt Lake City,UT,84101,USA,19911,40.768333,-111.901111
+17,True,Delta Center,301 W. South Temple St.,Salt Lake City,UT,84101,USA,19911,40.768333,-111.901111
 18,True,Paycom Center,100 W. Reno Ave.,Oklahoma City,OK,73102,USA,18203,35.463333,-97.515000
 19,True,Moda Center,1 Center Court,Portland,OR,97227,USA,19980,45.531667,-122.666667
 20,True,Ball Arena,1000 Chopper Circle,Denver,CO,80204,USA,19155,39.748611,-105.007500

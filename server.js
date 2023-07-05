@@ -85,8 +85,8 @@ mongoose
     try {
       console.log("Connection successfully established")
       // downloadAndExtractZip()
-      // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerGameData()
+      calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerSeasonData()
       // calculateDefenceVersusPositionStats()
     } catch (error) {
@@ -131,10 +131,9 @@ async function downloadAndExtractZip() {
 
     // getLastTenGamesData()
     convertToJSONandSavePlayerData()
-    calculateSeasonVersusCalculations()
     convertToJSONandSavePlayerGameData()
     convertToJSONandSavePlayerSeasonData()
-    calculateDefenceVersusPositionStats()
+    // calculateDefenceVersusPositionStats()
     // calculateLastTenDefenceVersusPositionStats()
   } catch (error) {
     console.error("Error downloading and extracting the zip file:", error)
@@ -171,9 +170,9 @@ const calculateDefenceVersusPositionStats = async () => {
     const month = new Date().getMonth() + 1
     const date = new Date().getDate() || 1
     const year = new Date().getFullYear()
-    const scheduledGames = await PlayerGameProjection.findOne({
-      Day: new Date(`${year}-${month}-${date}`),
-    })
+    // const scheduledGames = await PlayerGameProjection.findOne({
+    //   Day: new Date(`${year}-${month}-${date}`),
+    // })
     const url = `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`
     https.get(
       url,
@@ -1728,6 +1727,8 @@ async function convertToJSONandSavePlayerGameData() {
         PlayerGame.deleteMany({}).then((_) => {
           PlayerGame.insertMany(data).then(async (_) => {
             console.log("Player game data saved successfully ======= ")
+            calculateSeasonVersusCalculations()
+            calculateDefenceVersusPositionStats()
             getLastTenGamesData()
             const playerGameData = await PlayerGame.find({
               Games: 1,
@@ -1768,7 +1769,8 @@ const calculateSeasonVersusCalculations = async () => {
     const date = new Date().getDate() || 1
     const year = new Date().getFullYear()
     https.get(
-      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
+      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${"2023"}-${"6"}-${"12"}`,
+      // `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -1785,7 +1787,11 @@ const calculateSeasonVersusCalculations = async () => {
           // const arr = [...scheduledGames.map((pl) => pl.OpponentID)]
           // const uniqueArr = arr.filter((el) => !uniqueArr.includes(el))
           let arr = []
+          console.log({ scheduledGames })
           scheduledGames.forEach(async (game, index) => {
+            if(game?.PlayerID == 20001441) {
+              console.log(arr);
+            }
             let playerGames = await PlayerGame.find({
               SeasonType: { $in: [1, 3] },
               Games: 1,
@@ -2310,6 +2316,12 @@ const calculateAverage = async (playersData, type = "") => {
       totalSteals += playerObj.Steals
       totalMinutesPlayed += playerObj.Minutes
     })
+    if (playerArr[0].Name == "Nikola Jokic") {
+      console.log("Nikola Jokic");
+      console.log(playerArr[0])
+    } else {
+      console.log(playerArr[0])
+    }
     const MinutesAverage = totalMinutesPlayed / playerArr.length || 0
     const PointsAverage = totalPoints / playerArr.length || 0
     const ThreePointersMadeAverage =
