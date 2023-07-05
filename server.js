@@ -86,7 +86,7 @@ mongoose
       console.log("Connection successfully established")
       // downloadAndExtractZip()
       // convertToJSONandSavePlayerGameData()
-      calculateSeasonVersusCalculations()
+      // calculateSeasonVersusCalculations()
       // convertToJSONandSavePlayerSeasonData()
       // calculateDefenceVersusPositionStats()
     } catch (error) {
@@ -1769,8 +1769,8 @@ const calculateSeasonVersusCalculations = async () => {
     const date = new Date().getDate() || 1
     const year = new Date().getFullYear()
     https.get(
-      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${"2023"}-${"6"}-${"12"}`,
-      // `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
+      // `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${"2023"}-${"6"}-${"12"}`,
+      `https://api.sportsdata.io/api/nba/fantasy/json/PlayerGameProjectionStatsByDate/${year}-${month}-${date}`,
       {
         headers: {
           "Content-Type": "application/json",
